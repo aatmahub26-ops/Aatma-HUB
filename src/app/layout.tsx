@@ -1,0 +1,115 @@
+import type {Metadata, Viewport} from 'next';
+import './globals.css';
+import { Toaster } from "@/components/ui/toaster"
+import { AuthProvider } from "@/context/AuthContext";
+import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { PersonalizationProvider } from "@/context/PersonalizationContext";
+import { FirebaseErrorListener } from "@/components/FirebaseErrorListener";
+import { AnnouncementBanner } from "@/components/layout/AnnouncementBanner";
+import { FloatingSupport } from "@/components/layout/FloatingSupport";
+import { BottomNav } from "@/components/layout/BottomNav";
+import { WelcomeEventPopup } from "@/components/modals/WelcomeEventPopup";
+import { AnalyticsNode } from "@/components/analytics/AnalyticsNode";
+import Script from "next/script";
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://aatmahub.com'),
+  title: {
+    default: 'Aatma HUB | Premier Esports Marketplace & Game Top-ups',
+    template: '%s | Aatma HUB'
+  },
+  description: 'Instantly top-up MLBB, BGMI, Free Fire and more. Aatma HUB provides 0s latency dispatches, secure UPI payments, and exclusive gaming rewards in India.',
+  keywords: ['MLBB topup', 'BGMI UC', 'Free Fire diamonds', 'gaming marketplace', 'instant recharge', 'Aatma HUB', 'gaming rewards'],
+  authors: [{ name: 'Aatma HUB Squad' }],
+  creator: 'Aatma HUB HQ',
+  publisher: 'Aatma HUB Ecosystem',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://aatmahub.com',
+    siteName: 'Aatma HUB',
+    title: 'Aatma HUB | Instant Game Top-ups & Digital Services',
+    description: 'The elite destination for gamers. Instant delivery for all major titles and premium OTT services.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Aatma HUB Gaming Ecosystem',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Aatma HUB | Elite Gaming Dispatches',
+    description: 'Join the HUB for instant top-ups and squad rewards.',
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#9E66FF',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" className="dark">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@400;600;700&family=Orbitron:wght@400;700&family=Exo+2:wght@400;700&family=Rajdhani:wght@400;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet" />
+      </head>
+      <body className="font-body antialiased min-h-screen relative">
+        <PersonalizationProvider>
+          <AuthProvider>
+            <ThemeProvider>
+              <CartProvider>
+                <WishlistProvider>
+                  <FirebaseErrorListener />
+                  <WelcomeEventPopup />
+                  <AnalyticsNode />
+                  <div className="flex flex-col min-h-screen relative z-10 bg-background text-foreground">
+                    <AnnouncementBanner />
+                    <div className="flex-1">
+                      {children}
+                    </div>
+                    <BottomNav />
+                    <FloatingSupport />
+                  </div>
+                  <Toaster />
+                </WishlistProvider>
+              </CartProvider>
+            </ThemeProvider>
+          </AuthProvider>
+        </PersonalizationProvider>
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
+      </body>
+    </html>
+  );
+}
