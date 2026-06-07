@@ -1,0 +1,182 @@
+
+"use client";
+
+import { GAMES, type GameCategory } from "@/lib/data";
+import Link from "next/link";
+import { Gamepad2, Tv, CreditCard, Zap, Smartphone, Globe, Trophy, Swords, Flame, ShieldCheck, Target, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
+
+interface FeaturedGamesProps {
+  category: string;
+}
+
+const isItemInCategory = (item: any, target: string) => {
+  const itemCat = item.category?.toUpperCase();
+  const targetCat = target?.toUpperCase();
+
+  if (targetCat === 'COMING SOON') return !!item.isComingSoon;
+
+  switch (targetCat) {
+    case 'MOBILE LEGENDS':
+      return itemCat === 'MOBILE LEGENDS';
+    case 'BATTLEGROUNDS':
+      return itemCat === 'BATTLEGROUNDS' || itemCat === 'BATTLE ROYALE' || itemCat === 'SHOOTER GAMES';
+    case 'MOBA GAMES':
+      return itemCat === 'MOBA GAMES' || itemCat === 'ANIME & RPG' || itemCat === 'SUPERCELL' || itemCat === 'MOBILE LEGENDS';
+    case 'OTT SERVICES':
+      return itemCat === 'OTT SERVICES';
+    case 'SOCIAL SERVICES':
+      return itemCat === 'SOCIAL SERVICES';
+    case 'GIFT CARDS':
+      return itemCat === 'GIFT CARDS';
+    default:
+      return false;
+  }
+};
+
+function getBrandConfig(name: string, category: string) {
+  const n = name.toLowerCase();
+  if (n.includes('mobile legends')) return { color: 'from-blue-600/20 to-blue-900/10' };
+  if (n.includes('bgmi')) return { color: 'from-orange-600/20 to-orange-900/10' };
+  if (n.includes('pubg')) return { color: 'from-yellow-600/20 to-yellow-900/10' };
+  if (category.toUpperCase() === 'OTT SERVICES') return { color: 'from-red-700/20 to-black/10' };
+  if (category.toUpperCase() === 'GIFT CARDS') return { color: 'from-orange-400/20 to-orange-900/10' };
+  if (category.toUpperCase() === 'SOCIAL SERVICES') return { color: 'from-pink-500/20 to-pink-900/10' };
+  return { color: 'from-primary/20 to-slate-900/10' };
+}
+
+export function FeaturedGames({ category }: FeaturedGamesProps) {
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<any[]>([]);
+
+  useEffect(() => {
+    const q = query(collection(db, "catalog"), where("isEnabled", "==", true));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const liveItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const allPossible = [...GAMES];
+      
+      liveItems.forEach(live => {
+        const idx = allPossible.findIndex(p => p.id === live.id);
+        if (idx > -1) allPossible[idx] = { ...allPossible[idx], ...live };
+        else allPossible.push(live);
+      });
+
+      const filtered = allPossible.filter(item => {
+        if (!item.isEnabled) return false;
+        return isItemInCategory(item, category);
+      });
+
+      setProducts(filtered);
+      setLoading(false);
+    }, (error) => {
+      const filtered = GAMES.filter(item => {
+        if (!item.isEnabled) return false;
+        return isItemInCategory(item, category);
+      });
+      setProducts(filtered);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, [category]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-hide">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="flex-shrink-0 w-[64px] md:w-32">
+            <Skeleton className="aspect-square w-full rounded-lg bg-card" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+     return (
+        <div className="py-2 text-center bg-card/30 rounded-lg border-dashed border-white/5 opacity-50">
+           <p className="text-[6px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Buffer Empty</p>
+        </div>
+     );
+  }
+
+  return (
+    <div className="relative w-full">
+      <div className="flex items-start gap-1.5 md:gap-3 overflow-x-auto pb-2 scrollbar-hide scroll-smooth">
+        {products.map((game) => (
+          <GameIconCard key={game.id} game={game} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function GameIconCard({ game }: { game: any }) {
+  const brand = getBrandConfig(game.name, game.category);
+  const minPrice = game.packages?.length > 0 ? Math.min(...game.packages.map((p: any) => p.price)) : 0;
+  const placeholder = PlaceHolderImages.find(p => p.id === game.image);
+  const logoSrc = game.imageUrl?.startsWith('http') ? game.imageUrl : (placeholder?.imageUrl || '/logos/default.png');
+  const [imgError, setImgError] = useState(false);
+
+  // Logic for dynamic initials if image is missing
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+  };
+
+  return (
+    <div className="group/card block flex-shrink-0 transition-all duration-300 w-[64px] md:w-[130px]">
+      <Link href={`/catalog/${game.id}`} className="space-y-1 text-center">
+        <div 
+          className={`relative aspect-square w-full rounded-lg overflow-hidden border border-white/5 bg-card flex items-center justify-center transition-all duration-500 shadow-sm hover:border-primary/40`}
+          data-image-protected="true"
+        >
+           <div className={`absolute inset-0 bg-gradient-to-br ${brand.color} opacity-20 group-hover/card:opacity-40 transition-opacity`} />
+           
+           <div className="relative w-full h-full p-1.5 md:p-3 game-logo z-10 flex items-center justify-center">
+              {!imgError ? (
+                <Image 
+                  src={logoSrc}
+                  alt={game.name}
+                  fill
+                  className={`object-contain p-1.5 transition-transform duration-700 logo-protected ${game.isComingSoon ? '' : 'group-hover/card:scale-105'}`}
+                  sizes="(max-width: 768px) 64px, 130px"
+                  onError={() => setImgError(true)}
+                />
+              ) : (
+                <div className="w-full h-full rounded-md bg-primary/20 flex flex-col items-center justify-center p-1 border border-primary/20">
+                   <span className="text-[10px] font-black text-primary leading-none">{getInitials(game.name)}</span>
+                </div>
+              )}
+           </div>
+
+           {game.isComingSoon && (
+             <div className="absolute inset-0 bg-black/70 backdrop-blur-[1px] flex items-center justify-center z-20">
+                <Badge className="bg-primary text-white text-[5px] font-bold px-1.5 py-0.5 border-none uppercase tracking-widest shadow-2xl">SOON</Badge>
+             </div>
+           )}
+           <div className="absolute top-1 right-1 z-20 scale-50 md:scale-75">
+              {game.flag && <span className="text-[10px] drop-shadow-2xl">{game.flag}</span>}
+           </div>
+        </div>
+        <div className="px-0.5 space-y-0.5">
+          <h4 className="font-bold text-[7px] md:text-[10px] text-[#F5F5F5] line-clamp-1 uppercase tracking-tight group-hover/card:text-primary transition-colors leading-none">
+            {game.name}
+          </h4>
+          {!game.isComingSoon ? (
+            <div className="flex items-center justify-center gap-0.5">
+               <span className="text-[5px] font-bold text-[#B8B8C0] uppercase tracking-widest opacity-50">₹</span>
+               <span className="text-[9px] md:text-[11px] font-headline font-black text-[#A855F7] tracking-tighter">{minPrice}</span>
+            </div>
+          ) : (
+            <p className="text-[6px] md:text-[8px] font-bold text-primary uppercase tracking-widest leading-none mt-0.5">Coming Soon</p>
+          )}
+        </div>
+      </Link>
+    </div>
+  );
+}
