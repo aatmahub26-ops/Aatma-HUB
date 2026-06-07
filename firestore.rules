@@ -1,0 +1,131 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- HELPER FUNCTIONS ---
+    
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && getUserData().role == "admin";
+    }
+    
+    function isStaff() {
+      return isSignedIn() && (getUserData().role == "admin" || getUserData().role == "staff");
+    }
+    
+    function isSupport() {
+      return isSignedIn() && (getUserData().role == "admin" || getUserData().role == "staff" || getUserData().role == "support");
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // --- COLLECTION RULES ---
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isSupport();
+      allow list: if isStaff(); 
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      // Prevent users from escalating roles or adjusting their own balance
+      allow update: if (isOwner(userId) && 
+                      !request.resource.data.diff(resource.data).affectedKeys()
+                        .hasAny(['role', 'walletBalance', 'isBanned', 'loyaltyPoints', 'lifetimeRechargeAmount', 'totalReferralEarnings', 'resellerStatus']))
+                    || isAdmin();
+      
+      match /cart/{itemId} {
+        allow read, write: if isOwner(userId);
+      }
+      match /wishlist/{gameId} {
+        allow read, write: if isOwner(userId);
+      }
+      match /user_coupons/{couponId} {
+        allow read: if isOwner(userId);
+        allow write: if isSignedIn(); // User marks as used during checkout
+      }
+      match /ai_usage/{date} {
+        allow read: if isOwner(userId);
+        allow write: if isSignedIn(); // Allow incrementing usage count
+      }
+    }
+
+    match /wallets/{userId} {
+      allow read: if isOwner(userId) || isStaff();
+      allow write: if isAdmin(); 
+    }
+
+    match /transactions/{txnId} {
+      allow read: if isSignedIn() && (isStaff() || resource.data.userId == request.auth.uid);
+      allow create: if isSignedIn(); // System creates during checkout/deposit
+      allow write: if isAdmin();
+    }
+
+    match /deposit_requests/{reqId} {
+      allow read: if isSignedIn() && (isStaff() || resource.data.userId == request.auth.uid);
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isStaff();
+    }
+
+    match /coupons/{couponId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /notifications/{notifId} {
+      allow list: if isSignedIn() && (isSupport() || resource.data.userId == request.auth.uid);
+      allow get: if isSignedIn() && (isSupport() || resource.data.userId == request.auth.uid);
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid && 
+                    request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read']);
+      allow create: if isStaff() || isSignedIn(); // System can create for users
+      allow delete: if isStaff();
+    }
+
+    match /orders/{orderId} {
+      allow list: if isSignedIn() && (isSupport() || resource.data.userId == request.auth.uid);
+      allow get: if isSignedIn() && (isSupport() || resource.data.userId == request.auth.uid);
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isStaff();
+      allow delete: if isAdmin();
+    }
+
+    match /catalog/{prodId} {
+      allow read: if true;
+      allow write: if isStaff();
+    }
+
+    match /providers/{provId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /admin_activity_logs/{logId} {
+      allow read: if isStaff();
+      allow write: if isSignedIn(); // Log attempts even if unauthorized
+    }
+
+    match /referrals/{refId} {
+      allow read: if isSignedIn() && (isStaff() || resource.data.referrerId == request.auth.uid);
+      allow write: if isAdmin();
+    }
+
+    match /ai_chats/{userId} {
+      allow read: if isOwner(userId) || isSupport();
+      allow write: if isOwner(userId);
+      
+      match /messages/{msgId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Default restricted
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
