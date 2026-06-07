@@ -1,0 +1,130 @@
+
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user identity, wallet balance, referral information, and personalization settings.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "walletBalance": { "type": "number" },
+        "totalDeposits": { "type": "number" },
+        "totalSpent": { "type": "number" },
+        "totalReferralEarnings": { "type": "number" },
+        "lifetimeRechargeAmount": { "type": "number" },
+        "currentRank": { "type": "string" },
+        "referralCode": { "type": "string" },
+        "referredBy": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin", "reseller"] },
+        "resellerStatus": { "type": "string", "enum": ["Pending", "Approved", "Rejected", "Frozen"] },
+        "resellerLevel": { "type": "string" },
+        "businessName": { "type": "string" },
+        "lifetimeVolume": { "type": "number" },
+        "kycStatus": { "type": "string", "enum": ["None", "Pending", "Approved", "Rejected"] },
+        "kycVerified": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "personalization": {
+          "type": "object",
+          "properties": {
+            "theme": { "type": "string" },
+            "wallpaper": { "type": "string" },
+            "customWallpaperUrl": { "type": "string" },
+            "fontFamily": { "type": "string" },
+            "fontSize": { "type": "string" },
+            "fontWeight": { "type": "string" },
+            "primaryColor": { "type": "string" },
+            "secondaryColor": { "type": "string" },
+            "accentColor": { "type": "string" },
+            "layoutMode": { "type": "string" },
+            "uiStyle": { "type": "string" },
+            "animationsEnabled": { "type": "boolean" },
+            "glowEnabled": { "type": "boolean" },
+            "lowPerformanceMode": { "type": "boolean" }
+          }
+        }
+      },
+      "required": ["uid", "email", "walletBalance"]
+    },
+    "Wallet": {
+      "title": "User Wallet",
+      "description": "Financial core for a user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "balance": { "type": "number" },
+        "totalDeposits": { "type": "number" },
+        "totalSpent": { "type": "number" },
+        "totalReferralEarned": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "balance"]
+    },
+    "Transaction": {
+      "title": "Wallet Transaction",
+      "description": "Ledger of financial events.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["deposit", "purchase", "referral"] },
+        "amount": { "type": "number" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "DepositRequest": {
+      "title": "Deposit Proof",
+      "description": "User submission for manual/automated funds verification.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "utr": { "type": "string" },
+        "screenshotUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "GlobalWallpaper": {
+      "title": "Platform Wallpaper",
+      "description": "System-wide wallpapers managed by admins.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "url": { "type": "string" },
+        "isFeatured": { "type": "boolean" },
+        "isEnabled": { "type": "boolean" }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["email"]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents."
+    },
+    "/wallets/{userId}": {
+      "schema": "Wallet",
+      "description": "User liquidity node."
+    },
+    "/transactions/{txnId}": {
+      "schema": "Transaction",
+      "description": "Financial ledger node."
+    },
+    "/deposit_requests/{reqId}": {
+      "schema": "DepositRequest",
+      "description": "Recharge verification requests."
+    },
+    "/system_settings/wallpapers/list/{wpId}": {
+      "schema": "GlobalWallpaper",
+      "description": "Platform-wide wallpaper directory."
+    }
+  }
+}
