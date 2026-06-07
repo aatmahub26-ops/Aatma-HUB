@@ -1,0 +1,108 @@
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { ArrowRight, Zap, Trophy, ShieldCheck, Gamepad2 } from "lucide-react";
+import Image from "next/image";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
+
+export function Hero() {
+  const heroImg = PlaceHolderImages.find(img => img.id === 'hero-bg') || PlaceHolderImages[0];
+
+  return (
+    <section className="relative w-full py-20 lg:py-32 overflow-hidden border-b border-white/5">
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden">
+        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-secondary/10 blur-[120px] rounded-full" />
+      </div>
+
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-8 text-center lg:text-left">
+            <div className="inline-flex items-center space-x-2 bg-primary/10 border border-primary/20 px-3 py-1 rounded-full text-primary text-sm font-bold animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <Zap className="h-4 w-4 fill-primary" />
+              <span>LEVEL UP YOUR EXPERIENCE</span>
+            </div>
+            <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tighter leading-none text-white animate-in fade-in slide-in-from-bottom-6 duration-700">
+              DOMINATE THE <br />
+              <span className="text-gradient">GAMING WORLD</span>
+            </h1>
+            <p className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto lg:mx-0 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+              Instant top-ups, secure transactions, and best prices for your favorite titles. Join thousands of elite gamers at Aatma HUB.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4 animate-in fade-in slide-in-from-bottom-10 duration-1000">
+              <Button size="lg" className="h-14 px-8 text-lg font-bold neon-glow-hover transition-all w-full sm:w-auto" asChild>
+                <Link href="/catalog">
+                  Start Top-up
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-bold w-full sm:w-auto" asChild>
+                <Link href="/referral">Join Affiliate</Link>
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 pt-8 animate-in fade-in duration-1000 delay-500">
+              <div className="flex flex-col items-center lg:items-start">
+                <span className="text-2xl font-bold font-headline">50k+</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-widest font-bold">Active Users</span>
+              </div>
+              <div className="flex flex-col items-center lg:items-start">
+                <span className="text-2xl font-bold font-headline">1M+</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-widest font-bold">Total Orders</span>
+              </div>
+              <div className="flex flex-col items-center lg:items-start">
+                <span className="text-2xl font-bold font-headline">4.9/5</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-widest font-bold">User Rating</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative hidden lg:block animate-in zoom-in duration-1000">
+            <div className="relative aspect-square max-w-[500px] ml-auto">
+              <div className="absolute inset-0 bg-primary/20 blur-[80px] rounded-full animate-pulse" />
+              <div className="relative z-10 rounded-3xl overflow-hidden border border-white/10 shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                {heroImg?.imageUrl ? (
+                  <Image
+                    src={heroImg.imageUrl}
+                    alt="Aatma HUB Hero"
+                    width={600}
+                    height={600}
+                    className="object-cover"
+                    data-ai-hint={heroImg.imageHint}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-muted flex items-center justify-center">
+                    <Gamepad2 className="h-20 w-20 text-primary/20" />
+                  </div>
+                )}
+              </div>
+              {/* Floating Cards Mock */}
+              <div className="absolute -left-12 top-1/4 z-20 glass-card p-4 rounded-2xl animate-bounce" style={{ animationDuration: '3s' }}>
+                <div className="flex items-center space-x-3">
+                  <div className="h-10 w-10 bg-green-500/20 rounded-lg flex items-center justify-center">
+                    <ShieldCheck className="h-6 w-6 text-green-500" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Order Status</p>
+                    <p className="text-sm font-bold">Instant Delivery</p>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute -right-8 bottom-1/4 z-20 glass-card p-4 rounded-2xl animate-bounce" style={{ animationDuration: '4s' }}>
+                <div className="flex items-center space-x-3">
+                  <div className="h-10 w-10 bg-primary/20 rounded-lg flex items-center justify-center">
+                    <Trophy className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Reward</p>
+                    <p className="text-sm font-bold">Extra Bonus Points</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

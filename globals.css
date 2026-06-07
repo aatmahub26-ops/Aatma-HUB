@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Premium Dark Gaming Palette - Refined for Contrast */
+    --background: 240 10% 4%;    /* #0B0B0F - Deeper Midnight */
+    --foreground: 0 0% 100%;      /* #FFFFFF */
+    --card: 240 10% 9%;           /* #12121A - Visible Surface */
+    --card-foreground: 0 0% 100%;
+    --popover: 240 10% 7%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 262 100% 70%;      /* #9E66FF - Vibrant Purple */
+    --primary-foreground: 264 27% 8%;
+    --secondary: 240 10% 12%;    
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 10% 12%;          
+    --muted-foreground: 240 5% 85%; /* Brighter Grays */
+    --accent: 240 10% 15%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 10% 15%;      
+    --input: 240 10% 12%;
+    --ring: 262 100% 70%;
+    --radius: 1.25rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border transition-all duration-300;
+  }
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary selection:text-primary-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    background-image: radial-gradient(circle at top right, hsla(262, 100%, 70%, 0.08), transparent 600px),
+                      radial-gradient(circle at bottom left, hsla(262, 100%, 70%, 0.05), transparent 600px);
+  }
+}
+
+.glass-card {
+  @apply bg-card/90 backdrop-blur-2xl border border-white/10 shadow-2xl;
+}
+
+.neon-glow {
+  @apply shadow-[0_0_25px_rgba(158,102,255,0.4)];
+}
+
+.premium-card-hover {
+  @apply hover:border-primary/60 hover:shadow-[0_0_40px_rgba(158,102,255,0.2)] hover:-translate-y-1.5;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-white to-primary;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* BRAND SANCTUARY */
+.logo-protected,
+.product-image,
+.game-logo {
+  filter: drop-shadow(0 0 12px rgba(0,0,0,0.5)) !important;
+  opacity: 1 !important;
+}
+
+/* Section Title Polish */
+.section-title {
+  @apply font-headline font-bold text-white uppercase tracking-tighter drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)];
+}
