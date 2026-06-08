@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Home, LayoutGrid, Wallet, History, User, LogOut, Gift, LayoutDashboard, Settings, Award } from "lucide-react";
@@ -20,6 +20,7 @@ export function BottomNav() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, profile, logout } = useAuth();
+const [open, setOpen] = useState(false);
 
   const navItems = [
     { label: "Home", icon: Home, href: "/" },
@@ -29,9 +30,10 @@ export function BottomNav() {
   ];
 
   const handleLogout = async () => {
-    await logout();
-    router.push("/login");
-  };
+  setOpen(false);
+  await logout();
+  router.push("/login");
+};
 
   const rank = getUserRank(profile?.lifetimeRechargeAmount || 0);
 
@@ -66,7 +68,7 @@ export function BottomNav() {
         })}
 
         {/* Profile Node in Bottom Nav */}
-        <Sheet>
+        <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <button className={cn(
               "flex flex-col items-center gap-1.5 transition-all duration-300",
@@ -97,14 +99,17 @@ export function BottomNav() {
             </div>
             
             <div className="p-6 overflow-y-auto max-h-[calc(70vh-200px)] space-y-2">
-               <ProfileMenuItem href="/profile" icon={User} label="My Player Identity" />
-               <ProfileMenuItem href="/wallet" icon={Wallet} label="Liquidity Nodes" />
-               <ProfileMenuItem href="/referral" icon={Gift} label="Squad Recruitment" />
-               <ProfileMenuItem href="/orders" icon={History} label="Fulfillment Log" />
-               <ProfileMenuItem href="/dashboard" icon={LayoutDashboard} label="Dashboard Hub" />
-               {profile?.role === 'admin' && (
-                 <ProfileMenuItem href="/admin" icon={Settings} label="Admin HQ Control" color="text-destructive" />
-               )}
+               <ProfileMenuItem href="/profile" icon={User} label="My Player Identity" onClick={() => setOpen(false)} />
+
+<ProfileMenuItem href="/wallet" icon={Wallet} label="Liquidity Nodes" onClick={() => setOpen(false)} />
+
+<ProfileMenuItem href="/referral" icon={Gift} label="Squad Recruitment" onClick={() => setOpen(false)} />
+
+<ProfileMenuItem href="/orders" icon={History} label="Fulfillment Log" onClick={() => setOpen(false)} />
+
+<ProfileMenuItem href="/dashboard" icon={LayoutDashboard} label="Dashboard Hub" onClick={() => setOpen(false)} />
+
+<ProfileMenuItem href="/admin" icon={Settings} label="Admin HQ Control" color="text-destructive" onClick={() => setOpen(false)} />
                
                <button 
                 onClick={handleLogout}
@@ -121,19 +126,31 @@ export function BottomNav() {
   );
 }
 
-function ProfileMenuItem({ href, icon: Icon, label, color }: any) {
+function ProfileMenuItem({
+  href,
+  icon: Icon,
+  label,
+  color,
+  onClick,
+}: any) {
   return (
-    <Link href={href} className={cn(
-      "flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-primary/30 transition-all group",
-      color
-    )}>
-       <div className="flex items-center gap-4">
-          <div className="h-10 w-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-             <Icon className="h-5 w-5" />
-          </div>
-          <span className="font-bold text-[11px] uppercase tracking-widest">{label}</span>
-       </div>
-       <Award className="h-4 w-4 opacity-20" />
+    <Link
+      href={href}
+      onClick={onClick}
+      className={cn(
+        "flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-primary/30 transition-all group",
+        color
+      )}
+    >
+      <div className="flex items-center gap-4">
+        <div className="h-10 w-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+          <Icon className="h-5 w-5" />
+        </div>
+        <span className="font-bold text-[11px] uppercase tracking-widest">
+          {label}
+        </span>
+      </div>
+      <Award className="h-4 w-4 opacity-20" />
     </Link>
   );
 }
