@@ -15,6 +15,7 @@ import { aatmaAiAssistant } from "@/ai/flows/aatma-ai-assistant";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "@/hooks/use-translation";
+import Link from "next/link";
 import { errorEmitter } from '@/firebase/error-emitter';
 import { FirestorePermissionError, type SecurityRuleContext } from '@/firebase/errors';
 
@@ -125,17 +126,9 @@ export default function AiAssistantPage() {
         setMessages(prev => [...prev, userMsg]);
       }
 
-      const result = await aatmaAiAssistant({ 
-        query: userText,
-        language: lang,
-        userId: user?.uid,
-        userContext: {
-          isLoggedIn: !!user,
-          role: profile?.role || 'user',
-          firstName: profile?.firstName,
-          currentRank: profile?.currentRank || 'Recruit'
-        }
-      });
+      const result = {
+  answer: "AI TEST MODE WORKING"
+};
       
       const botMsg = { role: "bot", text: result.answer, createdAt: new Date().toISOString() };
 

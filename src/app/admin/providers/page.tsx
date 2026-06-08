@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Settings2, RefreshCw, Key, ShieldCheck, Database, Globe, Power, Zap, Activity, CheckCircle as CheckCircle2, XCircle, AlertTriangle, ArrowUpRight, BarChart3, Loader2 } from "lucide-react";
+import { Settings2, RefreshCw, Key, ShieldCheck, Database, Globe, Power, Zap, Activity, CheckCircle as CheckCircle2, XCircle, AlertTriangle, ArrowUpRight, BarChart3, Loader2, Wallet } from "lucide-react";
 import { useState, useEffect } from "react";
 import { collection, onSnapshot, doc, setDoc, updateDoc, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -130,8 +130,9 @@ export default function AdminProviders() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
          <StatCard label="Operational Nodes" value={stats.activeNodes.toString()} icon={Globe} color="text-primary" />
-         <StatCard label="Multi-Provider Liquidity" value={`₹${stats.totalBalance.toLocaleString()}`} icon={Database} color="text-green-500" />
+        <StatCard label="Multi-Provider Liquidity" value={stats.totalBalance.toLocaleString()} icon={Wallet} color="text-green-400" />
          <StatCard label="Aggregate Success Rate" value={`${stats.avgSuccess}%`} icon={Activity} color="text-blue-400" />
       </div>
 
@@ -170,7 +171,7 @@ export default function AdminProviders() {
                 <div className="flex justify-between items-end">
                   <div className="space-y-1">
                     <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Vault Balance</p>
-                    <p className="text-2xl font-bold font-headline text-green-500 tracking-tighter">₹{provider.balance?.toLocaleString()}</p>
+                    <p className="text-2xl font-bold font-headline text-green-500 tracking-tighter">Rs{provider.balance?.toLocaleString()}</p>
                   </div>
                   <div className="space-y-1 w-20">
                      <Label className="text-[8px] uppercase font-bold text-muted-foreground">Priority</Label>
@@ -232,7 +233,7 @@ export default function AdminProviders() {
                          <span className="text-xs font-bold uppercase">Tier {i + 1}</span>
                          <span className="text-[10px] font-bold text-muted-foreground">{p.name}</span>
                       </div>
-                      {i < providers.length - 1 && (
+{i < providers.length - 1 && (
                         <div className="mt-4 flex flex-col items-center">
                            <Badge variant="outline" className="text-[8px] uppercase border-white/10 text-muted-foreground">Failover to Tier {i+2}</Badge>
                         </div>
@@ -241,18 +242,28 @@ export default function AdminProviders() {
                  ))}
               </div>
 
-              <div className="mt-12 p-6 bg-black/40 rounded-2xl border border-white/5 space-y-4">
-                 <div className="flex items-center gap-2 text-primary">
-                    <AlertTriangle className="h-4 w-4" />
-                    <span className="text-xs font-bold uppercase tracking-widest">Protocol Intelligence</span>
-                 </div>
-                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px] text-muted-foreground font-medium uppercase tracking-tight">
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-green-500" /> Auto-disable node on 3 consecutive timeouts</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-green-500" /> Switch to Priority 2 if Priority 1 balance < ₹500</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-green-500" /> Instant notification on node status change</li>
-                    <li className="flex items-center gap-2"><CheckCircle2 className="h-3 w-3 text-green-500" /> Manual override bypasses priority logic</li>
-                 </ul>
-              </div>
+       <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px] text-muted-foreground font-medium uppercase tracking-tight">
+  <li className="flex items-center gap-2">
+    <CheckCircle2 className="h-3 w-3 text-green-500" />
+    Auto-disable node on 3 consecutive timeouts
+  </li>
+
+  <li className="flex items-center gap-2">
+    <CheckCircle2 className="h-3 w-3 text-green-500" />
+    Switch to Priority 2 if Priority 1 balance &lt; Rs500
+  </li>
+
+  <li className="flex items-center gap-2">
+    <CheckCircle2 className="h-3 w-3 text-green-500" />
+    Instant notification on node status change
+  </li>
+
+  <li className="flex items-center gap-2">
+    <CheckCircle2 className="h-3 w-3 text-green-500" />
+    Manual override bypasses priority logic
+  </li>
+</ul>
+              
            </Card>
         </TabsContent>
       </Tabs>

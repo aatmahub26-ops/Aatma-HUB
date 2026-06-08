@@ -152,18 +152,24 @@ function CheckoutContent() {
         const rank = getUserRank(currentLifetime);
         const pointsEarned = Math.floor((finalPrice / 10) * rank.pointMultiplier);
 
-        // 2. Update User Profile
-        transaction.update(userRef, {
-          walletBalance: currentBalance - finalPrice,
-          totalSpent: currentSpent + finalPrice,
-          totalOrders: increment(1),
-          loyaltyPoints: increment(pointsEarned)
-        });
+       let referrerRef = null;
+let referrerSnap = null;
 
-        // 3. Process Referral Payout
-        if (userData.referredBy) {
-          const referrerRef = doc(db, "users", userData.referredBy);
-          const referrerSnap = await transaction.get(referrerRef);
+if (userData.referredBy) {
+  referrerRef = doc(db, "users", userData.referredBy);
+  referrerSnap = await transaction.get(referrerRef);
+}
+
+// 2. Update User Profile
+transaction.update(userRef, {
+  walletBalance: currentBalance - finalPrice,
+  totalSpent: currentSpent + finalPrice,
+  totalOrders: increment(1),
+  loyaltyPoints: increment(pointsEarned)
+});
+
+// 3. Process Referral Payout
+if (referrerSnap && referrerSnap.exists()) {
           
           if (referrerSnap.exists()) {
              const rData = referrerSnap.data();

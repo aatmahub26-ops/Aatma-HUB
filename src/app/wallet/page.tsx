@@ -4,7 +4,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Wallet, Plus, ArrowUpRight, ArrowDownLeft, History, Clock, Loader2, RefreshCw, Smartphone, TrendingUp, PiggyBank, CreditCard, Gift, AlertCircle, Star, Coins } from "lucide-react";
+import { Wallet, Plus, ArrowUpRight, ArrowDownLeft, History, Clock, Loader2, RefreshCw, Smartphone, TrendingUp, PiggyBank, CreditCard, Gift, AlertCircle, Star, Coins,Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/context/AuthContext";

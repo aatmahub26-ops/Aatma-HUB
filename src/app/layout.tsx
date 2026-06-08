@@ -11,7 +11,7 @@ import { AnnouncementBanner } from "@/components/layout/AnnouncementBanner";
 import { FloatingSupport } from "@/components/layout/FloatingSupport";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { WelcomeEventPopup } from "@/components/modals/WelcomeEventPopup";
-import { AnalyticsNode } from "@/components/analytics/AnalyticsNode";
+
 import Script from "next/script";
 
 export const metadata: Metadata = {
@@ -93,7 +93,7 @@ export default function RootLayout({
                 <WishlistProvider>
                   <FirebaseErrorListener />
                   <WelcomeEventPopup />
-                  <AnalyticsNode />
+                 
                   <div className="flex flex-col min-h-screen relative z-10 bg-background text-foreground">
                     <AnnouncementBanner />
                     <div className="flex-1">

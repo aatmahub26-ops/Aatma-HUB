@@ -19,12 +19,28 @@ export function Navbar() {
   const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
-    if (user) {
-      const q = query(collection(db, "notifications"), where("userId", "==", user.uid), where("read", "==", false));
-      const unsub = onSnapshot(q, (snap) => setUnreadCount(snap.size));
-      return () => unsub();
+  if (!user) {
+    setUnreadCount(0);
+    return;
+  }
+
+  const q = query(
+    collection(db, "notifications"),
+    where("userId", "==", user.uid),
+    where("read", "==", false)
+  );
+
+  const unsub = onSnapshot(
+    q,
+    (snap) => setUnreadCount(snap.size),
+    (err) => {
+      console.error("Notification listener error:", err);
+      setUnreadCount(0);
     }
-  }, [user]);
+  );
+
+  return () => unsub();
+}, [user]);
 
   const isAdmin = profile?.role === 'admin';
 

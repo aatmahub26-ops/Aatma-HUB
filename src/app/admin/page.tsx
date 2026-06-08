@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Users, ShoppingBag, CreditCard, TrendingUp, DollarSign, Activity, Loader2, Settings2, ShieldCheck, ToggleLeft, ToggleRight, Bot, MessageSquare, Clock, CheckCircle2, XCircle, AlertTriangle, ShieldAlert, Database, Search, Rocket, Zap, Globe, Lock } from "lucide-react";
+import { Users, ShoppingBag , Wallet , CreditCard, TrendingUp, DollarSign, Activity, Loader2, Settings2, ShieldCheck, ToggleLeft, ToggleRight, Bot, MessageSquare, Clock, CheckCircle2, XCircle, AlertTriangle, ShieldAlert, Database, Search, Rocket, Zap, Globe, Lock } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { useState, useEffect } from "react";
 import { collection, query, getDocs, orderBy, limit, onSnapshot, setDoc, doc, where } from "firebase/firestore";

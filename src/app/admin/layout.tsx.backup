@@ -2,7 +2,7 @@
 "use client";
 
 import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
-import { LayoutDashboard, Users, ShoppingCart, Settings, BellRing, ArrowLeft, ShieldAlert, CreditCard, Wallet, Loader2, ShieldCheck, Gamepad2, Gift, Briefcase, Megaphone, History, Activity, Tag, Database } from "lucide-react";
+import { LayoutDashboard, Users, ShoppingCart, Settings, BellRing, ArrowLeft, ShieldAlert, CreditCard, Wallet, Loader2, ShieldCheck, Gamepad2, Gift, Briefcase, Megaphone, History, Activity, Tag } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -43,13 +43,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { title: "KYC Center", icon: ShieldCheck, url: "/admin/kyc", roles: ['admin', 'staff', 'support'] },
     { title: "Recharge Queue", icon: Wallet, url: "/admin/recharges", roles: ['admin', 'staff', 'support'] },
     { title: "System Logic", icon: Settings, url: "/admin/providers", roles: ['admin'] },
-{ title: "Media Manager", icon: Database, url: "/admin/media", roles: ['admin'] },
-{ title: "Articles", icon: BellRing, url: "/admin/articles", roles: ['admin'] },
-{ title: "Admin Tools", icon: Settings, url: "/admin/tools", roles: ['admin'] },
-{ title: "Reseller Settings", icon: Briefcase, url: "/admin/resellers/settings", roles: ['admin'] },
-{ title: "Reseller Users", icon: Users, url: "/admin/resellers/users", roles: ['admin'] },
-{ title: "Reseller Earnings", icon: Wallet, url: "/admin/resellers/earnings", roles: ['admin'] },
-{ title: "Applications", icon: ShieldCheck, url: "/admin/resellers/applications", roles: ['admin'] },
   ].filter(item => item.roles.includes(role));
 
   if (loading || (user && profile && !['admin', 'staff', 'support'].includes(profile.role || ''))) {
