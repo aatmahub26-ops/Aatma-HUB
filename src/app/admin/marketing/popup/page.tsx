@@ -46,7 +46,7 @@ export default function PopupManager() {
         ...config,
         updatedAt: new Date().toISOString()
       }, { merge: true });
-      toast({ title: "Protocol Synchronized", description: "Welcome popup configuration updated globally." });
+      toast({ title: "Settings Saved", description: "Welcome popup configuration updated globally." });
     } catch (e: any) {
       toast({ title: "Sync Failed", description: e.message, variant: "destructive" });
     } finally {
@@ -76,7 +76,7 @@ export default function PopupManager() {
     <div className="space-y-8 animate-in fade-in duration-700">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight text-white">Popup Intelligence</h2>
+          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight text-white">Popup Management</h2>
           <p className="text-muted-foreground">Manage the Welcome Event sequence for the Aatma HUB ecosystem.</p>
         </div>
         <div className="flex items-center gap-4 bg-white/5 px-6 py-3 rounded-2xl border border-white/5">
@@ -110,11 +110,11 @@ export default function PopupManager() {
                       <Input value={deal.title} onChange={(e) => updateItem('flashDeals', idx, 'title', e.target.value)} className="h-10" />
                    </div>
                    <div className="space-y-2">
-                      <Label className="text-[10px] uppercase font-bold text-muted-foreground">Yield Price</Label>
+                      <Label className="text-[10px] uppercase font-bold text-muted-foreground">Offer Price</Label>
                       <Input value={deal.price} onChange={(e) => updateItem('flashDeals', idx, 'price', e.target.value)} className="h-10" />
                    </div>
                    <Button variant="destructive" size="sm" className="w-full h-9 uppercase font-bold text-[9px]" onClick={() => removeItem('flashDeals', idx)}>
-                      <Trash2 className="mr-2 h-3.5 w-3.5" /> Purge Node
+                      <Trash2 className="mr-2 h-3.5 w-3.5" /> Delete Offer
                    </Button>
                 </Card>
               ))}
@@ -124,7 +124,7 @@ export default function PopupManager() {
                 onClick={() => addItem('flashDeals', { title: "New Deal", price: "₹00.00" })}
               >
                 <Plus className="h-8 w-8 text-muted-foreground" />
-                <span className="text-[10px] font-bold uppercase tracking-widest">Add Flash Node</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest">Add Flash Deal</span>
               </Button>
            </div>
         </TabsContent>
@@ -147,7 +147,7 @@ export default function PopupManager() {
                 </div>
               ))}
               <Button onClick={() => addItem('offers', { title: "Bonus Title", desc: "Description here" })} className="w-full h-12 bg-white/5 border border-white/10 font-bold uppercase text-xs">
-                 <Plus className="mr-2 h-4 w-4" /> Add Special Offer Node
+                 <Plus className="mr-2 h-4 w-4" /> Add Special Offer
               </Button>
            </div>
         </TabsContent>
@@ -183,7 +183,7 @@ export default function PopupManager() {
                 </div>
               ))}
               <Button variant="outline" onClick={() => addItem('tasks', { label: "Verification Task", status: "Pending" })} className="h-full min-h-[100px] border-dashed uppercase font-bold text-[10px]">
-                 <Plus className="mr-2 h-4 w-4" /> Initialize Onboarding Task
+                 <Plus className="mr-2 h-4 w-4" /> Add Task
               </Button>
            </div>
         </TabsContent>
@@ -191,7 +191,7 @@ export default function PopupManager() {
 
       <Button className="w-full h-16 font-bold neon-glow text-xl uppercase tracking-tighter" onClick={handleSave} disabled={isSaving}>
          {isSaving ? <Loader2 className="h-6 w-6 animate-spin mr-3" /> : <Save className="h-6 w-6 mr-3" />}
-         Commit Marketing Protocol
+         Save Changes
       </Button>
     </div>
   );

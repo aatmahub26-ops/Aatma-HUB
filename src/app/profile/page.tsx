@@ -146,7 +146,7 @@ export default function ProfilePage() {
                              <span className="text-sm font-bold text-white">x{currentRank.pointMultiplier} Dispatch Yield</span>
                           </div>
                           <div className="flex justify-between items-center">
-                             <span className="text-[10px] font-bold text-muted-foreground uppercase">Support Node</span>
+                             <span className="text-[10px] font-bold text-muted-foreground uppercase">Support</span>
                              <span className="text-sm font-bold text-primary">{currentRank.threshold > 10000 ? 'PRIORITY' : 'STANDARD'}</span>
                           </div>
                           <div className="flex justify-between items-center">
@@ -163,7 +163,7 @@ export default function ProfilePage() {
                        </CardHeader>
                        <CardContent className="p-6 space-y-4">
                           <div className="space-y-1">
-                             <p className="text-[9px] font-bold text-muted-foreground uppercase">Referral Protocol</p>
+                             <p className="text-[9px] font-bold text-muted-foreground uppercase">Referral</p>
                              <p className="text-sm font-mono font-bold text-primary tracking-widest uppercase">{profile?.referralCode}</p>
                           </div>
                           <Button variant="outline" size="sm" className="w-full h-8 text-[9px] uppercase font-bold border-white/10" asChild>
@@ -175,7 +175,7 @@ export default function ProfilePage() {
 
                  <Card className="bg-card border-white/5">
                     <CardHeader className="border-b border-white/5 bg-white/5">
-                       <CardTitle className="font-headline font-bold text-lg uppercase tracking-widest">Operator Logic Nodes</CardTitle>
+                       <CardTitle className="font-headline font-bold text-lg uppercase tracking-widest">Quick Actions</CardTitle>
                        <CardDescription>Synchronize your identity across the global distribution layer.</CardDescription>
                     </CardHeader>
                     <CardContent className="p-8 space-y-8">

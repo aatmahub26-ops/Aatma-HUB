@@ -28,7 +28,7 @@ const isItemInCategory = (item: any, target: string) => {
     case 'BATTLEGROUNDS':
       return itemCat === 'BATTLEGROUNDS' || itemCat === 'BATTLE ROYALE' || itemCat === 'SHOOTER GAMES';
     case 'MOBA GAMES':
-      return itemCat === 'MOBA GAMES' || itemCat === 'ANIME & RPG' || itemCat === 'SUPERCELL' || itemCat === 'MOBILE LEGENDS';
+      return itemCat === 'MOBA GAMES' || itemCat === 'ANIME & RPG' || itemCat === 'SUPERCELL';
     case 'OTT SERVICES':
       return itemCat === 'OTT SERVICES';
     case 'SOCIAL SERVICES':
@@ -87,9 +87,9 @@ export function FeaturedGames({ category }: FeaturedGamesProps) {
 
   if (loading) {
     return (
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-hide">
+     <div className="grid grid-cols-3 md:grid-cols-5 gap-2">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="flex-shrink-0 w-[64px] md:w-32">
+          <div key={i} className="flex-shrink-0 w-[90px] md:w-32">
             <Skeleton className="aspect-square w-full rounded-lg bg-card" />
           </div>
         ))}
@@ -129,7 +129,7 @@ function GameIconCard({ game }: { game: any }) {
   };
 
   return (
-    <div className="group/card block flex-shrink-0 transition-all duration-300 w-[64px] md:w-[130px]">
+    <div className="group/card block transition-all duration-300 w-[120px] md:w-[180px] flex-shrink-0">
       <Link href={`/catalog/${game.id}`} className="space-y-1 text-center">
         <div 
           className={`relative aspect-square w-full rounded-lg overflow-hidden border border-white/5 bg-card flex items-center justify-center transition-all duration-500 shadow-sm hover:border-primary/40`}
@@ -137,14 +137,14 @@ function GameIconCard({ game }: { game: any }) {
         >
            <div className={`absolute inset-0 bg-gradient-to-br ${brand.color} opacity-20 group-hover/card:opacity-40 transition-opacity`} />
            
-           <div className="relative w-full h-full p-1.5 md:p-3 game-logo z-10 flex items-center justify-center">
+           <div className="relative w-full h-full p-3 md:p-4 game-logo z-10 flex items-center justify-center">
               {!imgError ? (
                 <Image 
                   src={logoSrc}
                   alt={game.name}
                   fill
                   className={`object-contain p-1.5 transition-transform duration-700 logo-protected ${game.isComingSoon ? '' : 'group-hover/card:scale-105'}`}
-                  sizes="(max-width: 768px) 64px, 130px"
+                 sizes="(max-width: 768px) 120px, 180px"
                   onError={() => setImgError(true)}
                 />
               ) : (
@@ -164,18 +164,25 @@ function GameIconCard({ game }: { game: any }) {
            </div>
         </div>
         <div className="px-0.5 space-y-0.5">
-          <h4 className="font-bold text-[7px] md:text-[10px] text-[#F5F5F5] line-clamp-1 uppercase tracking-tight group-hover/card:text-primary transition-colors leading-none">
-            {game.name}
-          </h4>
-          {!game.isComingSoon ? (
-            <div className="flex items-center justify-center gap-0.5">
-               <span className="text-[5px] font-bold text-[#B8B8C0] uppercase tracking-widest opacity-50">₹</span>
-               <span className="text-[9px] md:text-[11px] font-headline font-black text-[#A855F7] tracking-tighter">{minPrice}</span>
-            </div>
-          ) : (
-            <p className="text-[6px] md:text-[8px] font-bold text-primary uppercase tracking-widest leading-none mt-0.5">Coming Soon</p>
-          )}
-        </div>
+  <h4 className="font-semibold text-[12px] md:text-base">
+    {game.name}
+  </h4>
+
+  {!game.isComingSoon ? (
+    <div className="flex items-center justify-center gap-0.5">
+      <span className="text-[5px] font-bold text-[#B8B8C0] tracking-widest opacity-50">
+        Rs
+      </span>
+      <span className="text-[9px] md:text-[11px] font-headline font-black text-[#A855F7] tracking-tighter">
+        {minPrice}
+      </span>
+    </div>
+  ) : (
+    <p className="text-[6px] md:text-[8px] font-bold text-primary uppercase tracking-widest leading-none mt-0.5">
+      Coming Soon
+    </p>
+  )}
+</div>
       </Link>
     </div>
   );

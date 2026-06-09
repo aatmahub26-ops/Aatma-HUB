@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 export function StatsSection() {
   const stats = [
     { label: "Elite Operators", value: "50K+", icon: Users, color: "text-blue-400", bg: "bg-blue-400/10" },
-    { label: "Total Dispatches", value: "1M+", icon: Zap, color: "text-primary", bg: "bg-primary/10" },
+    { label: "Total Orders", value: "1M+", icon: Zap, color: "text-primary", bg: "bg-primary/10" },
     { label: "Fulfillment Rate", value: "99.9%", icon: ShieldCheck, color: "text-green-500", bg: "bg-green-500/10" },
-    { label: "Nodes Active", value: "24/7", icon: Activity, color: "text-orange-500", bg: "bg-orange-500/10" },
+    { label: "Support Available", value: "24/7", icon: Activity, color: "text-orange-500", bg: "bg-orange-500/10" },
   ];
 
   return (

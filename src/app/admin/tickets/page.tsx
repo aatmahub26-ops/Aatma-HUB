@@ -70,7 +70,7 @@ export default function AdminTickets() {
     if (!selectedTicket) return;
     try {
       await updateDoc(doc(db, "tickets", selectedTicket.id), { status });
-      toast({ title: "Protocol Updated", description: `Ticket marked as ${status}.` });
+      toast({ title: "System Updated", description: `Ticket marked as ${status}.` });
     } catch (e: any) {
       toast({ title: "Update Failed", description: e.message, variant: "destructive" });
     }
@@ -83,7 +83,7 @@ export default function AdminTickets() {
       <div className="lg:col-span-4 flex flex-col gap-4 overflow-hidden">
          <div className="flex items-center justify-between">
             <h2 className="text-xl font-headline font-bold uppercase tracking-widest">Support Ledger</h2>
-            <Badge variant="outline" className="border-primary/20 text-primary">{tickets.length} Nodes</Badge>
+            <Badge variant="outline" className="border-primary/20 text-primary">{tickets.length} Items</Badge>
          </div>
          <Card className="bg-card border-white/5 flex-1 overflow-hidden flex flex-col">
             <CardHeader className="p-4 border-b border-white/5 bg-white/5">

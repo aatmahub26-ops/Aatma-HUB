@@ -43,7 +43,7 @@ export function OffersSection() {
                         <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest leading-relaxed">{offer.desc}</p>
                      </div>
                      <Link href="/catalog" className="flex items-center text-[9px] font-bold text-primary uppercase tracking-widest hover:underline">
-                        Activate Protocol <ArrowUpRight className="ml-1 h-3 w-3" />
+                        View Offer <ArrowUpRight className="ml-1 h-3 w-3" />
                      </Link>
                   </div>
                </CardContent>

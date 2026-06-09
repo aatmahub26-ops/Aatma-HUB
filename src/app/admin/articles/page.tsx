@@ -78,7 +78,7 @@ export default function AdminArticles() {
 
   const handlePublish = async () => {
     if (!newArticle.title || !newArticle.content) {
-      toast({ title: "Validation Error", description: "Intelligence payload cannot be empty.", variant: "destructive" });
+      toast({ title: "Validation Error", description: "Admin payload cannot be empty.", variant: "destructive" });
       return;
     }
     setIsPublishing(true);
@@ -92,7 +92,7 @@ export default function AdminArticles() {
         serverTimestamp: serverTimestamp(),
       });
       setNewArticle({ title: "", content: "", category: "Guide", gameId: "mlbb", tags: "" });
-      toast({ title: "Intelligence Live", description: "Strategy guide published to the HUB." });
+      toast({ title: "Article Published", description: "Strategy guide published to the HUB." });
     } catch (error: any) {
       toast({ title: "Transmission Failed", description: error.message, variant: "destructive" });
     } finally {
@@ -116,7 +116,7 @@ export default function AdminArticles() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Content Intelligence</h2>
+          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Content Management</h2>
           <p className="text-muted-foreground">Manage tier lists, builds, and tournament intel.</p>
         </div>
         
@@ -135,7 +135,7 @@ export default function AdminArticles() {
             <div className="space-y-6 py-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <Label>Intelligence Category</Label>
+                  <Label>Category</Label>
                   <Select value={newArticle.category} onValueChange={(v) => setNewArticle({...newArticle, category: v})}>
                     <SelectTrigger className="bg-black/40 border-white/10">
                       <SelectValue />
@@ -152,7 +152,7 @@ export default function AdminArticles() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>Game Node</Label>
+                  <Label>Game</Label>
                   <Select value={newArticle.gameId} onValueChange={(v) => setNewArticle({...newArticle, gameId: v})}>
                     <SelectTrigger className="bg-black/40 border-white/10">
                       <SelectValue />
@@ -190,7 +190,7 @@ export default function AdminArticles() {
               </div>
 
               <div className="space-y-2">
-                <Label>Intelligence Payload (Markdown)</Label>
+                <Label>Article Content (Markdown)</Label>
                 <Textarea 
                   className="min-h-[300px] bg-black/40 border-white/10 font-mono text-xs" 
                   placeholder="Write analysis here..." 
@@ -210,7 +210,7 @@ export default function AdminArticles() {
               </div>
 
               <Button className="w-full h-12 font-bold neon-glow" onClick={handlePublish} disabled={isPublishing}>
-                {isPublishing ? <Loader2 className="h-5 w-5 animate-spin" /> : "Deploy to Community Node"}
+                {isPublishing ? <Loader2 className="h-5 w-5 animate-spin" /> : "Publish Article"}
               </Button>
             </div>
           </DialogContent>
@@ -244,7 +244,7 @@ export default function AdminArticles() {
                 {loading ? (
                   <tr><td colSpan={5} className="py-10 text-center"><Loader2 className="h-6 w-6 animate-spin mx-auto text-primary" /></td></tr>
                 ) : filteredArticles.length === 0 ? (
-                  <tr><td colSpan={5} className="py-10 text-center text-muted-foreground">Intelligence database is empty.</td></tr>
+                  <tr><td colSpan={5} className="py-10 text-center text-muted-foreground">No articles available.</td></tr>
                 ) : (
                   filteredArticles.map((art) => (
                     <tr key={art.id} className="hover:bg-white/5 transition-colors">

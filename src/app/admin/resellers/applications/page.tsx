@@ -105,8 +105,8 @@ export default function ResellerApplications() {
              <table className="w-full text-left text-sm">
                 <thead className="border-b border-white/5 bg-white/5 font-bold uppercase tracking-widest text-[10px] text-muted-foreground">
                   <tr>
-                    <th className="px-6 py-4">Corporate Intelligence</th>
-                    <th className="px-6 py-4">Contact Protocol</th>
+                    <th className="px-6 py-4">Corporate Admin</th>
+                    <th className="px-6 py-4">Contact System</th>
                     <th className="px-6 py-4">Status</th>
                     <th className="px-6 py-4 text-right">Ops</th>
                   </tr>
@@ -184,7 +184,7 @@ export default function ResellerApplications() {
 
                <div className="flex gap-4 pt-4">
                   <Button variant="destructive" className="flex-1 h-12 font-bold uppercase text-xs" onClick={() => handleReview('Rejected')}>
-                     Terminate Node
+                     Terminate Item
                   </Button>
                   <Button className="flex-1 h-12 font-bold bg-green-600 hover:bg-green-700 text-white uppercase text-xs" onClick={() => handleReview('Approved')}>
                      Authorize B2B Access

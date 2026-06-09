@@ -43,7 +43,7 @@ export function DailyRewards() {
                    <Star className="h-5 w-5 fill-current" />
                 </div>
                 <div>
-                   <CardTitle className="text-lg font-headline font-bold uppercase tracking-widest">Daily Yield</CardTitle>
+                   <CardTitle className="text-lg font-headline font-bold uppercase tracking-widest">Daily Rewards</CardTitle>
                    <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Streak: 1 Day Active</p>
                 </div>
              </div>
@@ -71,7 +71,7 @@ export function DailyRewards() {
             disabled={claimed || loading}
             onClick={handleClaim}
           >
-             {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : claimed ? "Protocol Finalized" : "Sync Reward (₹5)"}
+             {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : claimed ? "Reward Claimed" : "Claim Reward (₹5)"}
           </Button>
        </CardContent>
     </Card>

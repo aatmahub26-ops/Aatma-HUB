@@ -64,7 +64,7 @@ function OrderTrackingContent() {
     { label: "Dispatch Placed", status: result?.id ? "completed" : "pending" },
     { label: "Liquidity Verified", status: result?.id ? "completed" : "pending" },
     { 
-      label: result?.status === 'Failed' ? "Protocol Failed" : result?.status === 'Completed' ? "Dispatched" : "Fulfillment Logic Active", 
+      label: result?.status === 'Failed' ? "Failed" : result?.status === 'Completed' ? "Completed" : "Processing", 
       status: result?.status === 'Completed' ? 'completed' : result?.status === 'Failed' ? 'failed' : result?.status === 'Processing' ? 'current' : 'pending' 
     },
     { label: "Execution Successful", status: result?.status === 'Completed' ? 'completed' : 'pending' },

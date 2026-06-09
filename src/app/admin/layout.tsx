@@ -1,17 +1,17 @@
 
 "use client";
 
-import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarInset, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { LayoutDashboard, Users, ShoppingCart, Settings, BellRing, ArrowLeft, ShieldAlert, CreditCard, Wallet, Loader2, ShieldCheck, Gamepad2, Gift, Briefcase, Megaphone, History, Activity, Tag, Database } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { logSecurityEvent } from "@/lib/admin-audit";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({ children }: { children: React.ReactItem }) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, profile, loading } = useAuth();
@@ -28,24 +28,26 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, [user, profile, loading, router, pathname]);
 
   const role = profile?.role || 'user';
+console.log("PROFILE =", profile);
+console.log("ROLE =", role);
 
   const adminMenu = [
     { title: "Dashboard", icon: LayoutDashboard, url: "/admin", roles: ['admin', 'staff', 'support'] },
     { title: "Manage Orders", icon: ShoppingCart, url: "/admin/orders", roles: ['admin', 'staff', 'support'] },
-    { title: "Coupons HUB", icon: Tag, url: "/admin/marketing/coupons", roles: ['admin'] },
-    { title: "Marketing HUB", icon: Megaphone, url: "/admin/marketing/popup", roles: ['admin'] },
-    { title: "Reseller HUB", icon: Briefcase, url: "/admin/resellers", roles: ['admin', 'staff'] },
-    { title: "Audit Trail", icon: Activity, url: "/admin/audit-logs", roles: ['admin'] },
-    { title: "Payments Registry", icon: CreditCard, url: "/admin/payments", roles: ['admin', 'staff'] },
-    { title: "B2B Catalog", icon: Gamepad2, url: "/admin/catalog", roles: ['admin', 'staff'] },
-    { title: "Affiliate Hub", icon: Gift, url: "/admin/referrals", roles: ['admin', 'staff'] },
-    { title: "User Database", icon: Users, url: "/admin/users", roles: ['admin', 'staff', 'support'] },
-    { title: "KYC Center", icon: ShieldCheck, url: "/admin/kyc", roles: ['admin', 'staff', 'support'] },
-    { title: "Recharge Queue", icon: Wallet, url: "/admin/recharges", roles: ['admin', 'staff', 'support'] },
-    { title: "System Logic", icon: Settings, url: "/admin/providers", roles: ['admin'] },
-{ title: "Media Manager", icon: Database, url: "/admin/media", roles: ['admin'] },
+    { title: "Coupons", icon: Tag, url: "/admin/marketing/coupons", roles: ['admin'] },
+    { title: "Marketing", icon: Megaphone, url: "/admin/marketing/popup", roles: ['admin'] },
+    { title: "Resellers", icon: Briefcase, url: "/admin/resellers", roles: ['admin', 'staff'] },
+    { title: "Audit Logs", icon: Activity, url: "/admin/audit-logs", roles: ['admin'] },
+    { title: "Payments", icon: CreditCard, url: "/admin/payments", roles: ['admin', 'staff'] },
+    { title: "Catalog", icon: Gamepad2, url: "/admin/catalog", roles: ['admin', 'staff'] },
+    { title: "Referrals", icon: Gift, url: "/admin/referrals", roles: ['admin', 'staff'] },
+    { title: "Users", icon: Users, url: "/admin/users", roles: ['admin', 'staff', 'support'] },
+    { title: "KYC", icon: ShieldCheck, url: "/admin/kyc", roles: ['admin', 'staff', 'support'] },
+    { title: "Recharges", icon: Wallet, url: "/admin/recharges", roles: ['admin', 'staff', 'support'] },
+    { title: "Providers", icon: Settings, url: "/admin/providers", roles: ['admin'] },
+{ title: "Media", icon: Database, url: "/admin/media", roles: ['admin'] },
 { title: "Articles", icon: BellRing, url: "/admin/articles", roles: ['admin'] },
-{ title: "Admin Tools", icon: Settings, url: "/admin/tools", roles: ['admin'] },
+{ title: "Tools", icon: Settings, url: "/admin/tools", roles: ['admin'] },
 { title: "Reseller Settings", icon: Briefcase, url: "/admin/resellers/settings", roles: ['admin'] },
 { title: "Reseller Users", icon: Users, url: "/admin/resellers/users", roles: ['admin'] },
 { title: "Reseller Earnings", icon: Wallet, url: "/admin/resellers/earnings", roles: ['admin'] },
@@ -57,7 +59,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="h-screen w-full flex items-center justify-center bg-background">
         <div className="text-center space-y-4">
            <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto" />
-           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Authenticating Admin Node...</p>
+           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">Loading Admin Panel...</p>
         </div>
       </div>
     );
@@ -88,9 +90,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   {adminMenu.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild isActive={pathname === item.url}>
-                        <Link href={item.url} className={`flex items-center space-x-3 px-3 py-3 rounded-xl transition-all`}>
+                        <Link href={item.url} onClick={() => document.body.click()} className={`flex items-center space-x-3 px-3 py-3 rounded-xl transition-all w-full`}>
                           <item.icon className={`h-5 w-5 ${pathname === item.url ? 'text-primary' : 'text-muted-foreground'}`} />
-                          <span className={`font-bold text-xs uppercase tracking-widest ${pathname === item.url ? 'text-foreground' : 'text-muted-foreground'}`}>{item.title}</span>
+                          <span className={`font-bold text-[10px] uppercase tracking-wide whitespace-normal break-words leading-tight ${pathname === item.url ? 'text-foreground' : 'text-muted-foreground'}`}>{item.title}</span>
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -113,7 +115,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div className="flex items-center gap-4">
               <SidebarTrigger />
               <h1 className="font-headline font-bold text-sm uppercase tracking-widest">
-                Intelligence <span className="text-muted-foreground">/</span> {adminMenu.find(m => m.url === pathname)?.title || "Overview"}
+                {adminMenu.find(m => m.url === pathname)?.title || "Overview"}
               </h1>
             </div>
             <div className="flex items-center gap-4">

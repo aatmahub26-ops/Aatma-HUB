@@ -57,7 +57,7 @@ export default function AdminUsers() {
 
   const handleManualAdjustment = async () => {
     if (!selectedUser || !adjustAmount || isNaN(parseFloat(adjustAmount)) || !adjustReason) {
-       toast({ title: "Protocol Violation", description: "Amount and Reason are mandatory.", variant: "destructive" });
+       toast({ title: "System Violation", description: "Amount and Reason are mandatory.", variant: "destructive" });
        return;
     }
     
@@ -100,7 +100,7 @@ export default function AdminUsers() {
         });
       });
 
-      toast({ title: "Intelligence Synced", description: `${adjustField.toUpperCase()} adjusted for ${selectedUser.firstName}` });
+      toast({ title: "Admin Synced", description: `${adjustField.toUpperCase()} adjusted for ${selectedUser.firstName}` });
       setWalletOpen(false);
       setAdjustAmount("");
       setAdjustReason("");
@@ -152,14 +152,14 @@ export default function AdminUsers() {
         </div>
         <Button size="sm" className="h-10 font-bold bg-primary text-primary-foreground neon-glow">
           <UserPlus className="mr-2 h-4 w-4" />
-          Provision Node
+          Provision Item
         </Button>
       </div>
 
       <div className="relative">
         <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
         <Input 
-          placeholder="Filter by Identity, Protocol or Email..." 
+          placeholder="Filter by Identity, System or Email..." 
           className="pl-10 bg-card/50 border-white/5 h-12" 
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -169,7 +169,7 @@ export default function AdminUsers() {
       <Tabs defaultValue="list" className="space-y-6">
         <TabsList className="bg-card border border-white/5 h-12 p-1 rounded-xl">
            <TabsTrigger value="list" className="rounded-lg px-6 font-bold uppercase text-[9px] tracking-widest">Active Database</TabsTrigger>
-           <TabsTrigger value="suspended" className="rounded-lg px-6 font-bold uppercase text-[9px] tracking-widest">Suspended Nodes</TabsTrigger>
+           <TabsTrigger value="suspended" className="rounded-lg px-6 font-bold uppercase text-[9px] tracking-widest">Suspended Items</TabsTrigger>
         </TabsList>
 
         <TabsContent value="list">
@@ -184,7 +184,7 @@ export default function AdminUsers() {
       <Dialog open={walletDialogOpen} onOpenChange={setWalletOpen}>
          <DialogContent className="bg-card border-white/10 max-w-md rounded-[2.5rem] p-10">
             <DialogHeader>
-               <DialogTitle className="text-2xl font-headline font-bold uppercase tracking-tight">Intelligence Override</DialogTitle>
+               <DialogTitle className="text-2xl font-headline font-bold uppercase tracking-tight">Admin Override</DialogTitle>
                <DialogDescription className="uppercase text-[10px] font-bold tracking-widest text-muted-foreground">
                   Adjusting {adjustField.toUpperCase()} for {selectedUser?.firstName}
                </DialogDescription>
@@ -196,13 +196,13 @@ export default function AdminUsers() {
                     className={`flex-1 h-12 font-bold uppercase text-[10px] rounded-xl transition-all ${adjustType === 'Credit' ? 'bg-green-600 text-white shadow-lg shadow-green-500/20' : 'bg-black/40 border border-white/5 text-muted-foreground'}`}
                     onClick={() => setAdjustType('Credit')}
                   >
-                     Credit Node
+                     Credit Item
                   </Button>
                   <Button 
                     className={`flex-1 h-12 font-bold uppercase text-[10px] rounded-xl transition-all ${adjustType === 'Debit' ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-black/40 border border-white/5 text-muted-foreground'}`}
                     onClick={() => setAdjustType('Debit')}
                   >
-                     Debit Node
+                     Debit Item
                   </Button>
                </div>
 
@@ -218,7 +218,7 @@ export default function AdminUsers() {
                </div>
 
                <div className="space-y-2">
-                  <Label className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">Reason Protocol</Label>
+                  <Label className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground">Reason System</Label>
                   <Input 
                     placeholder="e.g. Loyalty Compensation" 
                     className="h-12 bg-black/40 border-white/10 text-xs font-bold" 
@@ -230,7 +230,7 @@ export default function AdminUsers() {
 
             <DialogFooter>
                <Button className="w-full h-14 font-bold neon-glow text-lg uppercase tracking-tighter rounded-2xl" onClick={handleManualAdjustment} disabled={isAdjusting || !adjustAmount}>
-                  {isAdjusting ? <Loader2 className="h-6 w-6 animate-spin" /> : "Authorize Intelligence Change"}
+                  {isAdjusting ? <Loader2 className="h-6 w-6 animate-spin" /> : "Authorize Admin Change"}
                </Button>
             </DialogFooter>
          </DialogContent>
@@ -314,9 +314,9 @@ function UserTable({ users, onWalletAdjust, onToggleBan }: { users: any[], onWal
                                 <DropdownMenuLabel className="text-[9px] uppercase font-bold px-3 py-2 opacity-50">Governance</DropdownMenuLabel>
                                 <DropdownMenuItem className="p-3 rounded-xl cursor-pointer" onClick={() => onToggleBan(user)}>
                                    {user.isBanned ? (
-                                     <><Unlock className="mr-2 h-4 w-4 text-green-500" /> Restore Node</>
+                                     <><Unlock className="mr-2 h-4 w-4 text-green-500" /> Restore Item</>
                                    ) : (
-                                     <><Lock className="mr-2 h-4 w-4 text-destructive" /> Suspend Protocol</>
+                                     <><Lock className="mr-2 h-4 w-4 text-destructive" /> Suspend System</>
                                    )}
                                 </DropdownMenuItem>
                              </DropdownMenuContent>

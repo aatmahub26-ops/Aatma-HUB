@@ -66,7 +66,7 @@ export default function ResellerHub() {
         paymentMethod: "simulator"
       });
       
-      toast({ title: "Order Simulated", description: `Node #${orderRef.id.substring(0, 8)} created. Navigate to Manage Orders to complete it.` });
+      toast({ title: "Order Simulated", description: `Item #${orderRef.id.substring(0, 8)} created. Navigate to Manage Orders to complete it.` });
     } catch (e: any) {
       toast({ title: "Sim Failed", description: e.message, variant: "destructive" });
     } finally {
@@ -77,7 +77,7 @@ export default function ResellerHub() {
   const navCards = [
     { title: "B2B Partner List", count: stats.totalResellers, url: "/admin/resellers/users", icon: Users, color: "text-primary" },
     { title: "Active Partners", count: stats.activeResellers, url: "/admin/resellers/users", icon: CheckCircle2, color: "text-green-500" },
-    { title: "Total Yield Paid", count: stats.totalEarnings, url: "/admin/resellers/earnings", icon: DollarSign, color: "text-yellow-500", isCurrency: true },
+    { title: "Total Earnings Paid", count: stats.totalEarnings, url: "/admin/resellers/earnings", icon: DollarSign, color: "text-yellow-500", isCurrency: true },
     { title: "B2B Logic Setup", url: "/admin/resellers/settings", icon: Settings2, color: "text-blue-500" },
   ];
 
@@ -85,7 +85,7 @@ export default function ResellerHub() {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight text-white">B2B Intelligence Hub</h2>
+          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight text-white">B2B Admin Hub</h2>
           <p className="text-muted-foreground">Manage corporate distribution layers and monitor partner yield nodes.</p>
         </div>
         <Button className="h-10 font-bold bg-primary text-primary-foreground" asChild>
@@ -126,13 +126,13 @@ export default function ResellerHub() {
                <CardHeader className="border-b border-white/5 bg-white/5">
                   <CardTitle className="text-sm font-headline font-bold uppercase tracking-widest flex items-center gap-2">
                      <FlaskConical className="h-4 w-4 text-primary" />
-                     B2B Yield Simulator (Testing Mode)
+                     B2B Earnings Simulator (Testing Mode)
                   </CardTitle>
                </CardHeader>
                <CardContent className="p-8">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
                      <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Select Partner Node</label>
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Select Partner Item</label>
                         <Select value={simUser} onValueChange={setSimUser}>
                            <SelectTrigger className="bg-black/40 border-white/10">
                               <SelectValue placeholder="Select Reseller" />
@@ -149,7 +149,7 @@ export default function ResellerHub() {
                         <Input type="number" value={simAmount} onChange={(e) => setSimAmount(e.target.value)} className="bg-black/40 border-white/10" />
                      </div>
                      <Button className="font-bold uppercase tracking-widest bg-primary/20 text-primary border border-primary/30 hover:bg-primary/30" onClick={handleSimulateOrder} disabled={isSimulating}>
-                        {isSimulating ? <Loader2 className="h-4 w-4 animate-spin" /> : "Simulate Dispatch"}
+                        {isSimulating ? <Loader2 className="h-4 w-4 animate-spin" /> : "Simulate Order"}
                      </Button>
                   </div>
                   <div className="mt-6 p-4 bg-primary/5 border border-primary/10 rounded-xl">
@@ -164,7 +164,7 @@ export default function ResellerHub() {
                <CardHeader className="border-b border-white/5 bg-white/5">
                   <CardTitle className="text-sm font-headline font-bold uppercase tracking-widest flex items-center gap-2">
                      <History className="h-4 w-4 text-primary" />
-                     Global B2B Yield Analytics
+                     Global B2B Earnings Analytics
                   </CardTitle>
                </CardHeader>
                <CardContent className="p-0">

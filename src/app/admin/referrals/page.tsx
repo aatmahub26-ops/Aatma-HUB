@@ -39,14 +39,14 @@ export default function AdminReferrals() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Affiliate Intelligence</h2>
+          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Affiliate Admin</h2>
           <p className="text-muted-foreground">Audit squad recruitment logs and cross-node commissions.</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
          <StatCard label="Network Size" value={stats.totalReferrals.toString()} icon={Users} color="text-primary" />
-         <StatCard label="Intelligence Payouts" value={`₹${stats.totalCommissions.toFixed(2)}`} icon={DollarSign} color="text-green-500" />
+         <StatCard label="Admin Payouts" value={`₹${stats.totalCommissions.toFixed(2)}`} icon={DollarSign} color="text-green-500" />
          <StatCard label="Squad Master" value={stats.topReferrer} icon={Award} color="text-yellow-500" />
       </div>
 
@@ -64,7 +64,7 @@ export default function AdminReferrals() {
                     <tr>
                        <th className="px-6 py-4">Referrer (Squad Master)</th>
                        <th className="px-6 py-4">Recruit (Member)</th>
-                       <th className="px-6 py-4">Commission Yield</th>
+                       <th className="px-6 py-4">Commission Earnings</th>
                        <th className="px-6 py-4">Status</th>
                        <th className="px-6 py-4 text-right">Timestamp</th>
                     </tr>

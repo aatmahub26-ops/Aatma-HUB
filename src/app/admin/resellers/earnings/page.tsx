@@ -35,7 +35,7 @@ export default function ResellerEarnings() {
         
         const payoutSnap = await transaction.get(payoutRef);
         if (!payoutSnap.exists()) throw "Payout node not found";
-        if (payoutSnap.data().status !== 'Pending') throw "Protocol already finalized";
+        if (payoutSnap.data().status !== 'Pending') throw "System already finalized";
 
         // 1. Update payout status
         transaction.update(payoutRef, {
@@ -56,7 +56,7 @@ export default function ResellerEarnings() {
               userId: resellerId,
               amount,
               type: "Credit",
-              description: `Payout Protocol Rejected: Refund to B2B Wallet`,
+              description: `Payout System Rejected: Refund to B2B Wallet`,
               date: new Date().toISOString(),
               status: "Success",
               reference: id
@@ -68,7 +68,7 @@ export default function ResellerEarnings() {
               userId: resellerId,
               amount,
               type: "Debit",
-              description: `Payout Protocol Approved & Finalized`,
+              description: `Payout System Approved & Finalized`,
               date: new Date().toISOString(),
               status: "Success",
               reference: id
@@ -91,7 +91,7 @@ export default function ResellerEarnings() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight text-white">Yield & Payout Nodes</h2>
+          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight text-white">Earnings & Payout Items</h2>
           <p className="text-muted-foreground">Audit and authorize B2B withdrawal requests from verified partners.</p>
         </div>
       </div>
@@ -108,7 +108,7 @@ export default function ResellerEarnings() {
                 <thead className="border-b border-white/5 bg-white/5 font-bold uppercase tracking-widest text-[10px] text-muted-foreground">
                   <tr>
                     <th className="px-6 py-4">Corporate Entity</th>
-                    <th className="px-6 py-4">Yield Request</th>
+                    <th className="px-6 py-4">Earnings Request</th>
                     <th className="px-6 py-4">Bank / UPI Intel</th>
                     <th className="px-6 py-4">Status</th>
                     <th className="px-6 py-4 text-right">Ops</th>

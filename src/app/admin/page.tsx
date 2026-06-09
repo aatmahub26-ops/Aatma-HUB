@@ -112,7 +112,7 @@ export default function AdminDashboard() {
         [field]: !current,
         updatedAt: new Date().toISOString()
       }, { merge: true });
-      toast({ title: "Protocol Updated", description: `${label} status synchronized.` });
+      toast({ title: "System Updated", description: `${label} status synchronized.` });
     } catch (e: any) {
       toast({ title: "Update Failed", description: e.message, variant: "destructive" });
     }
@@ -136,7 +136,7 @@ export default function AdminDashboard() {
                     <ShieldCheck className="h-7 w-7 text-white" />
                  </div>
                  <div>
-                    <CardTitle className="text-2xl font-headline font-bold uppercase tracking-tight">Launch Readiness Hub</CardTitle>
+                    <CardTitle className="text-2xl font-headline font-bold uppercase tracking-tight">Admin Dashboard</CardTitle>
                     <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mt-1">Status: PRODUCTION HARDENED</p>
                  </div>
               </div>
@@ -145,23 +145,23 @@ export default function AdminDashboard() {
         </CardHeader>
         <CardContent className="p-8">
            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
-              <ReadinessItem icon={Database} label="Catalog Hub" status="Synchronized" desc={`${catalogStats.enabled} Active Nodes`} color="text-blue-500" />
-              <ReadinessItem icon={Wallet} label="Wallet Protocol" status="Encrypted" desc="Atomic Integrity Active" color="text-green-500" />
-              <ReadinessItem icon={CreditCard} label="Payment Gateways" status="Connected" desc="Razorpay & PhonePe Live" color="text-yellow-500" />
-              <ReadinessItem icon={Lock} label="Security Sync" status="Operational" desc="RBAC Rules Enforced" color="text-primary" />
+              <ReadinessItem icon={Database} label="Products" status="Synchronized" desc={`${catalogStats.enabled} Active Items`} color="text-blue-500" />
+              <ReadinessItem icon={Wallet} label="Wallet System" status="Encrypted" desc="Atomic Integrity Active" color="text-green-500" />
+              <ReadinessItem icon={CreditCard} label="Payment Methods" status="Connected" desc="Razorpay & PhonePe Live" color="text-yellow-500" />
+              <ReadinessItem icon={Lock} label="Security" status="Operational" desc="RBAC Rules Enforced" color="text-primary" />
            </div>
            <div className="mt-10 pt-8 border-t border-white/5 grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-black/40 rounded-2xl p-6 border border-white/5 space-y-3">
                  <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
                     <Globe className="h-3 w-3" />
-                    Marketplace Intelligence
+                    Website Status
                  </h4>
                  <p className="text-xs text-white leading-relaxed font-medium">The ultra-compact high-density intake layout is rendering 5-6 products horizontally across 360px-412px viewports. SEO Metadata and Sitemap nodes are verified.</p>
               </div>
               <div className="bg-black/40 rounded-2xl p-6 border border-white/5 space-y-3">
                  <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest flex items-center gap-2">
                     <Zap className="h-3 w-3" />
-                    Fulfillment Analytics
+                    Order Analytics
                  </h4>
                  <div className="flex items-end justify-between">
                     <p className="text-3xl font-headline font-bold text-white">{stats.completionRate.toFixed(1)}%</p>
@@ -178,7 +178,7 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard label="Total Revenue" value={`₹${stats.totalRevenue.toLocaleString()}`} change="Completed Only" icon={DollarSign} color="text-green-500" />
         <StatCard label="Active Users" value={stats.activeUsers.toString()} change="Ecosystem Size" icon={Users} color="text-primary" />
-        <StatCard label="Total Dispatches" value={stats.totalOrders.toString()} change="Lifetime Volume" icon={ShoppingBag} color="text-blue-500" />
+        <StatCard label="Total Orderes" value={stats.totalOrders.toString()} change="Lifetime Volume" icon={ShoppingBag} color="text-blue-500" />
         <StatCard label="Platform Pulse" value={`${stats.pendingOrders}`} change="Pending Signal" icon={Activity} color="text-orange-500" />
       </div>
 
@@ -186,9 +186,9 @@ export default function AdminDashboard() {
         <div className="lg:col-span-2 space-y-8">
           <Card className="bg-card border-white/5 rounded-[2rem] overflow-hidden">
             <CardHeader className="flex flex-row items-center justify-between border-b border-white/5 p-6 bg-white/5">
-              <CardTitle className="font-headline font-bold text-xl uppercase tracking-tighter">Live Order Buffer</CardTitle>
+              <CardTitle className="font-headline font-bold text-xl uppercase tracking-tighter">Recent Orders</CardTitle>
               <Button variant="ghost" size="sm" asChild className="text-[10px] uppercase font-bold text-primary">
-                <Link href="/admin/orders">Manage All Nodes</Link>
+                <Link href="/admin/orders">View All Orders</Link>
               </Button>
             </CardHeader>
             <CardContent className="pt-6">
@@ -216,29 +216,29 @@ export default function AdminDashboard() {
         <div className="space-y-8">
           <Card className="bg-card border-white/5">
             <CardHeader className="flex flex-row items-center justify-between pb-2 border-b border-white/5 bg-white/5">
-              <CardTitle className="text-xs font-headline font-bold uppercase tracking-widest flex items-center gap-2"><Settings2 className="h-4 w-4 text-primary" />System Governance</CardTitle>
+              <CardTitle className="text-xs font-headline font-bold uppercase tracking-widest flex items-center gap-2"><Settings2 className="h-4 w-4 text-primary" />System Settings</CardTitle>
             </CardHeader>
             <CardContent className="pt-6 space-y-6">
                <div className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5">
                  <div className="space-y-1">
-                   <p className="text-xs font-bold uppercase text-white">Live Activity Feed</p>
+                   <p className="text-xs font-bold uppercase text-white">Live Activity</p>
                    <p className="text-[10px] text-muted-foreground">Public real-time delivery ticker</p>
                  </div>
                  <Switch checked={liveActivityEnabled} onCheckedChange={() => { setLiveActivityEnabled(!liveActivityEnabled); toggleSetting("live_activity", liveActivityEnabled, "isEnabled", "Live Activity"); }} />
                </div>
                <div className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5">
                  <div className="space-y-1">
-                   <p className="text-xs font-bold uppercase text-white">AI Assistant Node</p>
+                   <p className="text-xs font-bold uppercase text-white">AI Assistant</p>
                    <p className="text-[10px] text-muted-foreground">Persistent LLM Interface</p>
                  </div>
                  <Switch checked={aiAssistantEnabled} onCheckedChange={() => { setAiAssistantEnabled(!aiAssistantEnabled); toggleSetting("ai_assistant", aiAssistantEnabled, "isEnabled", "AI Assistant"); }} />
                </div>
                <div className="flex items-center justify-between p-4 rounded-xl bg-destructive/10 border border-destructive/30">
                  <div className="space-y-1">
-                   <p className="text-xs font-bold uppercase text-destructive">Gateway Sandbox</p>
+                   <p className="text-xs font-bold uppercase text-destructive">Test Mode</p>
                    <p className="text-[10px] text-muted-foreground uppercase">Enable for UAT testing</p>
                  </div>
-                 <Switch checked={sandboxMode} onCheckedChange={() => { setSandboxMode(!sandboxMode); toggleSetting("gateways", sandboxMode, "sandboxMode", "Gateway Sandbox"); }} />
+                 <Switch checked={sandboxMode} onCheckedChange={() => { setSandboxMode(!sandboxMode); toggleSetting("gateways", sandboxMode, "sandboxMode", "Test Mode"); }} />
                </div>
             </CardContent>
           </Card>

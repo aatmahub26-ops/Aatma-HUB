@@ -126,7 +126,7 @@ export default function WalletPage() {
           <div className="space-y-8 animate-in fade-in duration-500">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="space-y-1">
-                <h1 className="text-4xl font-headline font-bold tracking-tighter uppercase leading-none">Hub <span className="text-primary">Liquidity</span></h1>
+                <h1 className="text-4xl font-headline font-bold tracking-tighter uppercase leading-none">Wallet</h1>
                 <p className="text-muted-foreground mt-1 text-sm uppercase font-bold tracking-widest opacity-60">Manage capital for high-speed digital dispatches</p>
               </div>
               <div className="flex gap-4">
@@ -293,7 +293,7 @@ export default function WalletPage() {
                         onClick={handleRedeemPoints}
                        >
                           {isRedeeming ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Zap className="h-4 w-4 mr-2 fill-current" />}
-                          Redeem Points Node
+                          Redeem Points
                        </Button>
                     </div>
                  </Card>

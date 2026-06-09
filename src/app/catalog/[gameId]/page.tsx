@@ -254,7 +254,7 @@ export default function GameProductPage() {
                  <div className="absolute bottom-8 left-8 right-8 space-y-1"><Badge className="bg-primary/20 text-primary border-none font-bold uppercase text-[9px] px-3">{game.category}</Badge><h1 className="font-headline text-2xl font-bold text-white tracking-tighter uppercase leading-none">{game.name}</h1></div>
               </div>
               <div className="glass-card p-6 rounded-2xl space-y-4 border-primary/20">
-                <div className="flex items-center space-x-3 text-primary"><ShieldCheck className="h-5 w-5" /><h2 className="font-headline font-bold uppercase text-xs tracking-widest">Integrity Protocol</h2></div>
+                <div className="flex items-center space-x-3 text-primary"><ShieldCheck className="h-5 w-5" /><h2 className="font-headline font-bold uppercase text-xs tracking-widest">Service Information</h2></div>
                 <p className="text-[10px] font-bold text-muted-foreground leading-relaxed uppercase">{game.description || "Verify account credentials before dispatch. Latency: 0-5 mins."}</p>
               </div>
             </div>
@@ -264,7 +264,7 @@ export default function GameProductPage() {
               <Card className="bg-card/50 border-white/5 rounded-[2rem] p-8 space-y-6">
                 <div className="flex items-center space-x-4">
                   <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center font-headline font-bold text-lg text-primary-foreground shadow-lg">1</div>
-                  <h2 className="text-xl font-headline font-bold uppercase tracking-tight">Identity Log</h2>
+                  <h2 className="text-xl font-headline font-bold uppercase tracking-tight">Account Details</h2>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -324,7 +324,7 @@ export default function GameProductPage() {
               <Card className="bg-card/50 border-white/5 rounded-[2rem] overflow-hidden min-h-[300px]">
                 <CardHeader className="bg-white/5 border-b border-white/5 p-6 flex flex-row items-center gap-4">
                   <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center font-headline font-bold text-lg text-primary-foreground shadow-lg">2</div>
-                  <CardTitle className="text-xl font-headline font-bold uppercase tracking-tight">Selection Rack</CardTitle>
+                  <CardTitle className="text-xl font-headline font-bold uppercase tracking-tight">Select Package</CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
                   {!hasPackages ? (

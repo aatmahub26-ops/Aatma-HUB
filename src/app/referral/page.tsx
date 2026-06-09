@@ -208,7 +208,7 @@ export default function ReferralPage() {
                   <Card className="bg-primary/5 border-primary/20 rounded-[2rem] p-8 space-y-6">
                      <h3 className="font-headline font-bold uppercase text-lg text-primary flex items-center gap-3">
                         <Zap className="h-5 w-5" />
-                        Yield Protocol
+                        Referral Earnings
                      </h3>
                      <div className="space-y-6">
                         {[
@@ -228,10 +228,10 @@ export default function ReferralPage() {
                   </Card>
 
                   <div className="bg-card border border-white/5 p-8 rounded-[2rem] text-center space-y-4">
-                     <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Transmit on Social Nodes</p>
+                     <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Share on Social Media</p>
                      <div className="flex flex-col gap-3">
                         <Button className="w-full h-14 bg-green-600 hover:bg-green-700 text-white rounded-2xl font-bold uppercase tracking-widest text-xs" onClick={shareToWhatsApp}>
-                          <MessageSquare className="mr-3 h-5 w-5" /> WhatsApp HQ
+                          <MessageSquare className="mr-3 h-5 w-5" /> WhatsApp
                         </Button>
                         <Button className="w-full h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-2xl font-bold uppercase tracking-widest text-xs" onClick={shareToTelegram}>
                           <Send className="mr-3 h-5 w-5" /> Telegram Cluster

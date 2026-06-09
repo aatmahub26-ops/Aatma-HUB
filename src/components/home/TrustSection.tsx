@@ -6,7 +6,7 @@ export function TrustSection() {
   const trustNodes = [
     { icon: Lock, title: "256-BIT ENCRYPTION", desc: "Every transaction node is secured via military-grade protocols." },
     { icon: Zap, title: "INSTANT DISPATCH", desc: "Automated distribution layer ensures 0-5 minute delivery." },
-    { icon: Headphones, title: "ELITE SUPPORT", desc: "24/7 dedicated HQ squad and AI-assisted troubleshooting." },
+    { icon: Headphones, title: "ELITE SUPPORT", desc: "24/7 customer support and AI-assisted help." },
     { icon: CheckCircle2, title: "VERIFIED PROVIDER", desc: "Official direct-topup integration with Moonton, Garena & Riot." },
   ];
 
@@ -14,7 +14,7 @@ export function TrustSection() {
     <div className="py-12 border-t border-white/5 bg-primary/5 -mx-4 px-4 mt-8">
        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12 space-y-2">
-             <h3 className="text-xl font-headline font-bold uppercase tracking-widest text-primary">Protocol Integrity</h3>
+             <h3 className="text-xl font-headline font-bold uppercase tracking-widest text-primary">Secure & Trusted</h3>
              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Trusted by 50K+ Elite Operators</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

@@ -34,7 +34,7 @@ export default function AdminOrders() {
   const [activeTab, setActiveTab] = useState("all");
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isDispatching, setIsDispatching] = useState<string | null>(null);
+  const [isOrdering, setIsOrdering] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -46,19 +46,19 @@ export default function AdminOrders() {
     return () => unsubscribe();
   }, []);
 
-  const handleAutoDispatch = async (orderId: string) => {
-    setIsDispatching(orderId);
+  const handleAutoOrder = async (orderId: string) => {
+    setIsOrdering(orderId);
     try {
       const result = await processFulfillment(orderId);
       if (result.success) {
-        toast({ title: "Auto-Dispatch Success", description: result.message });
+        toast({ title: "Auto-Order Success", description: result.message });
       } else {
-        toast({ title: "Auto-Dispatch Failed", description: result.error, variant: "destructive" });
+        toast({ title: "Auto-Order Failed", description: result.error, variant: "destructive" });
       }
     } catch (e: any) {
       toast({ title: "Fulfillment Breach", description: e.message, variant: "destructive" });
     } finally {
-      setIsDispatching(null);
+      setIsOrdering(null);
     }
   };
 
@@ -99,7 +99,7 @@ export default function AdminOrders() {
                   amount: commission,
                   orderId: orderId,
                   orderTotal: orderData.price,
-                  type: "Dispatch Yield",
+                  type: "Order Amount",
                   createdAt: new Date().toISOString()
                 });
 
@@ -108,7 +108,7 @@ export default function AdminOrders() {
                   userId: orderData.userId,
                   amount: commission,
                   type: "Credit",
-                  description: `B2B Yield: Completed Order #${orderId.substring(0, 8)}`,
+                  description: `B2B Amount: Completed Order #${orderId.substring(0, 8)}`,
                   status: "Success",
                   date: new Date().toISOString(),
                   reference: orderId
@@ -154,7 +154,7 @@ export default function AdminOrders() {
         });
       });
 
-      toast({ title: "Status Synchronized", description: `Protocol moved to ${newStatus}.` });
+      toast({ title: "Status Synchronized", description: `System moved to ${newStatus}.` });
       if (selectedOrder?.id === orderId) {
         setSelectedOrder(prev => ({ ...prev, status: newStatus }));
       }
@@ -178,7 +178,7 @@ export default function AdminOrders() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Dispatch Control Hub</h2>
+          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Order Management</h2>
           <p className="text-muted-foreground">Orchestrate automated and manual fulfillment nodes.</p>
         </div>
         <div className="flex items-center gap-2">
@@ -215,9 +215,9 @@ export default function AdminOrders() {
               <table className="w-full text-left text-sm">
                 <thead className="border-b border-white/5 bg-white/5 font-bold uppercase tracking-wider text-[10px] text-muted-foreground">
                   <tr>
-                    <th className="px-6 py-4">Protocol Identity</th>
+                    <th className="px-6 py-4">Order ID</th>
                     <th className="px-6 py-4">Target Identity</th>
-                    <th className="px-6 py-4">Yield</th>
+                    <th className="px-6 py-4">Amount</th>
                     <th className="px-6 py-4">Status</th>
                     <th className="px-6 py-4 text-right">Ops</th>
                   </tr>
@@ -260,10 +260,10 @@ export default function AdminOrders() {
                                 variant="outline" 
                                 size="icon" 
                                 className="h-8 w-8 border-primary/20 text-primary hover:bg-primary/10" 
-                                onClick={() => handleAutoDispatch(order.id)}
-                                disabled={isDispatching === order.id}
+                                onClick={() => handleAutoOrder(order.id)}
+                                disabled={isOrdering === order.id}
                                >
-                                 {isDispatching === order.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4 fill-current" />}
+                                 {isOrdering === order.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Zap className="h-4 w-4 fill-current" />}
                                </Button>
                              )}
                              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/10 text-primary" onClick={() => setSelectedOrder(order)}>
@@ -345,7 +345,7 @@ export default function AdminOrders() {
                            <span className="text-white font-bold uppercase">{selectedOrder?.productName}</span>
                         </div>
                         <div className="flex justify-between items-center text-xs pt-4 border-t border-white/5">
-                           <span className="text-muted-foreground uppercase font-bold tracking-widest text-[9px]">Total Yield</span>
+                           <span className="text-muted-foreground uppercase font-bold tracking-widest text-[9px]">Total Amount</span>
                            <span className="text-xl font-headline font-bold text-primary">₹{selectedOrder?.price}</span>
                         </div>
                      </div>
@@ -355,15 +355,15 @@ export default function AdminOrders() {
 
             <div className="p-8 bg-black/40 border-t border-white/5 flex gap-4">
                <Button className="flex-1 h-14 font-bold uppercase text-xs tracking-widest bg-green-600 hover:bg-green-700" onClick={() => handleUpdateStatus(selectedOrder.id, 'Completed')} disabled={isUpdating}>
-                  Finalize Protocol
+                  Complete Order
                </Button>
                <Button 
                 variant="secondary" 
                 className="flex-1 h-14 font-bold uppercase text-xs tracking-widest bg-primary text-white"
-                onClick={() => handleAutoDispatch(selectedOrder.id)}
-                disabled={isDispatching === selectedOrder?.id}
+                onClick={() => handleAutoOrder(selectedOrder.id)}
+                disabled={isOrdering === selectedOrder?.id}
                >
-                  {isDispatching === selectedOrder?.id ? <Loader2 className="h-5 w-5 animate-spin" /> : "Auto-Dispatch Node"}
+                  {isOrdering === selectedOrder?.id ? <Loader2 className="h-5 w-5 animate-spin" /> : "Process Order"}
                </Button>
                <Button variant="destructive" className="flex-1 h-14 font-bold uppercase text-xs tracking-widest" onClick={() => handleUpdateStatus(selectedOrder.id, 'Failed')} disabled={isUpdating}>
                   Mark Failed & Revert

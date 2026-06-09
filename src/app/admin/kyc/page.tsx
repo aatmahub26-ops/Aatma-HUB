@@ -162,15 +162,15 @@ export default function AdminKyc() {
             
             <div className="p-8">
                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                  <DetailNode icon={User} label="Legal Name" value={selectedSub?.fullName} />
-                  <DetailNode icon={Calendar} label="Date of Birth" value={selectedSub?.dob} />
-                  <DetailNode icon={Hash} label="ID Reference" value={`${selectedSub?.idType}: ${selectedSub?.idNumber}`} />
+                  <DetailItem icon={User} label="Legal Name" value={selectedSub?.fullName} />
+                  <DetailItem icon={Calendar} label="Date of Birth" value={selectedSub?.dob} />
+                  <DetailItem icon={Hash} label="ID Reference" value={`${selectedSub?.idType}: ${selectedSub?.idNumber}`} />
                </div>
 
                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                  <ImageAuditNode label="Front Document" url={selectedSub?.frontUrl} />
-                  <ImageAuditNode label="Back Document" url={selectedSub?.backUrl} />
-                  <ImageAuditNode label="Live Selfie" url={selectedSub?.selfieUrl} />
+                  <ImageAuditItem label="Front Document" url={selectedSub?.frontUrl} />
+                  <ImageAuditItem label="Back Document" url={selectedSub?.backUrl} />
+                  <ImageAuditItem label="Live Selfie" url={selectedSub?.selfieUrl} />
                </div>
 
                <div className="space-y-4 pt-8 border-t border-white/5">
@@ -197,7 +197,7 @@ export default function AdminKyc() {
   );
 }
 
-function DetailNode({ icon: Icon, label, value }: any) {
+function DetailItem({ icon: Icon, label, value }: any) {
   return (
     <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
        <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
@@ -211,7 +211,7 @@ function DetailNode({ icon: Icon, label, value }: any) {
   );
 }
 
-function ImageAuditNode({ label, url }: any) {
+function ImageAuditItem({ label, url }: any) {
   return (
     <div className="space-y-4">
        <p className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest">{label}</p>

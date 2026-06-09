@@ -99,17 +99,25 @@ const [open, setOpen] = useState(false);
             </div>
             
             <div className="p-6 overflow-y-auto max-h-[calc(70vh-200px)] space-y-2">
-               <ProfileMenuItem href="/profile" icon={User} label="My Player Identity" onClick={() => setOpen(false)} />
+               <ProfileMenuItem href="/profile" icon={User} label="Profile" onClick={() => setOpen(false)} />
 
-<ProfileMenuItem href="/wallet" icon={Wallet} label="Liquidity Nodes" onClick={() => setOpen(false)} />
+<ProfileMenuItem href="/wallet" icon={Wallet} label="Wallet" onClick={() => setOpen(false)} />
 
-<ProfileMenuItem href="/referral" icon={Gift} label="Squad Recruitment" onClick={() => setOpen(false)} />
+<ProfileMenuItem href="/referral" icon={Gift} label="Referral" onClick={() => setOpen(false)} />
 
-<ProfileMenuItem href="/orders" icon={History} label="Fulfillment Log" onClick={() => setOpen(false)} />
+<ProfileMenuItem href="/orders" icon={History} label="Orders" onClick={() => setOpen(false)} />
 
-<ProfileMenuItem href="/dashboard" icon={LayoutDashboard} label="Dashboard Hub" onClick={() => setOpen(false)} />
+<ProfileMenuItem href="/dashboard" icon={LayoutDashboard} label="Dashboard" onClick={() => setOpen(false)} />
 
-<ProfileMenuItem href="/admin" icon={Settings} label="Admin HQ Control" color="text-destructive" onClick={() => setOpen(false)} />
+{profile?.role === "admin" && (
+  <ProfileMenuItem
+    href="/admin"
+    icon={Settings}
+    label="Admin HQ Control"
+    color="text-destructive"
+    onClick={() => setOpen(false)}
+  />
+)}
                
                <button 
                 onClick={handleLogout}

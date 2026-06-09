@@ -70,7 +70,7 @@ export default function DashboardOverview() {
          <Link href="/wallet" className="glass-card p-6 rounded-3xl border-primary/20 group hover:bg-primary/5 transition-all">
             <div className="flex items-center justify-between">
                <div>
-                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Available Liquidity</p>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Wallet Balance</p>
                   <p className="text-3xl font-headline font-bold text-white mt-1">₹{profile?.walletBalance?.toFixed(2) || "0.00"}</p>
                </div>
                <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
@@ -92,7 +92,7 @@ export default function DashboardOverview() {
          <Link href="/orders" className="glass-card p-6 rounded-3xl border-white/5 group hover:bg-white/5 transition-all">
             <div className="flex items-center justify-between">
                <div>
-                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Total Dispatches</p>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Total Orders</p>
                   <p className="text-3xl font-headline font-bold text-white mt-1">{profile?.totalOrders || 0}</p>
                </div>
                <div className="h-12 w-12 rounded-2xl bg-white/5 flex items-center justify-center text-muted-foreground group-hover:scale-110 transition-transform">
@@ -136,7 +136,7 @@ export default function DashboardOverview() {
              <CardHeader className="flex flex-row items-center justify-between border-b border-white/5 pb-4 bg-white/5">
                <CardTitle className="text-sm font-headline font-bold uppercase tracking-widest flex items-center gap-2">
                   <History className="h-4 w-4 text-primary" />
-                  Recent Intelligence
+                  Recent Activity
                </CardTitle>
                <Button variant="ghost" size="sm" asChild className="text-[10px] uppercase font-bold text-primary">
                  <Link href="/orders">View Ledger</Link>
@@ -149,7 +149,7 @@ export default function DashboardOverview() {
                  ) : recentOrders.length === 0 ? (
                    <div className="text-center py-10 opacity-30">
                      <Package className="h-12 w-12 mx-auto mb-4" />
-                     <p className="text-xs uppercase font-bold tracking-widest">Awaiting First Dispatch</p>
+                     <p className="text-xs uppercase font-bold tracking-widest">Awaiting First Order</p>
                    </div>
                  ) : (
                    recentOrders.map((order) => (
@@ -230,7 +230,7 @@ export default function DashboardOverview() {
               <CardHeader className="bg-primary/10 border-b border-primary/10">
                  <CardTitle className="text-xs font-headline font-bold uppercase tracking-widest flex items-center gap-2">
                     <Bot className="h-4 w-4 text-primary" />
-                    AI Strategy Node
+                    AI Assistant
                  </CardTitle>
               </CardHeader>
               <CardContent className="p-6 space-y-4">

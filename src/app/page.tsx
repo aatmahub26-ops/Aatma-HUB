@@ -64,19 +64,19 @@ export default function Home() {
            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               <div className="lg:col-span-8 space-y-6">
                  
-                 <MarketplaceSection title="Mobile Legends" icon={Globe} category="MOBILE LEGENDS" badge="GLOBAL" accentColor="text-blue-400" />
-                 
-                 <MarketplaceSection title="Battlegrounds" icon={Trophy} category="BATTLEGROUNDS" badge="PRO" accentColor="text-orange-400" />
-                 
-                 <MarketplaceSection title="MOBA GAMES" icon={Swords} category="MOBA GAMES" badge="ELITE" accentColor="text-cyan-400" />
-                 
-                 <MarketplaceSection title="Premium OTT" icon={Tv} category="OTT SERVICES" badge="VIP" accentColor="text-red-500" />
-                 
-                 <MarketplaceSection title="Social Services" icon={Smartphone} category="SOCIAL SERVICES" badge="GROWTH" accentColor="text-pink-400" />
-                 
-                 <MarketplaceSection title="Gift Card Rack" icon={CreditCard} category="GIFT CARDS" badge="CODE" accentColor="text-orange-300" />
-                 
-                 <MarketplaceSection title="Coming Soon" icon={History} category="COMING SOON" badge="QUEUE" accentColor="text-muted-foreground" />
+                <MarketplaceSection title="Mobile Legends" icon={Globe} category="MOBILE LEGENDS" badge="GLOBAL" accentColor="text-blue-400" />
+
+<MarketplaceSection title="Battlegrounds" icon={Trophy} category="BATTLEGROUNDS" badge="PRO" accentColor="text-orange-400" />
+
+<MarketplaceSection title="MOBA Games" icon={Swords} category="MOBA GAMES" badge="ELITE" accentColor="text-cyan-400" />
+
+<MarketplaceSection title="OTT Services" icon={Tv} category="OTT SERVICES" badge="VIP" accentColor="text-red-500" />
+
+<MarketplaceSection title="Social Services" icon={Smartphone} category="SOCIAL SERVICES" badge="GROWTH" accentColor="text-pink-400" />
+
+<MarketplaceSection title="Gift Cards" icon={CreditCard} category="GIFT CARDS" badge="CODE" accentColor="text-orange-300" />
+
+<MarketplaceSection title="Coming Soon" icon={History} category="COMING SOON" badge="QUEUE" accentColor="text-muted-foreground" />
 
               </div>
               
@@ -89,7 +89,7 @@ export default function Home() {
                     <div className="flex items-center gap-2.5 relative z-10">
                        <div className="h-8 w-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary border border-primary/20 shadow-lg"><Zap className="h-3.5 w-3.5" /></div>
                        <div>
-                          <h4 className="font-headline font-bold text-white uppercase tracking-widest text-[9px] leading-none">Aatma Dispatch Node</h4>
+                          <h4 className="font-headline font-bold text-white uppercase tracking-widest text-[9px] leading-none">Aatma HUB</h4>
                           <p className="text-[7px] font-bold text-green-500 uppercase tracking-widest mt-1 flex items-center gap-1">
                              <span className="h-1 rounded-full w-1 bg-green-500 animate-pulse" />
                              Operational

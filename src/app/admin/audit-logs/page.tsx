@@ -58,8 +58,8 @@ export default function AuditTrail() {
               <thead className="border-b border-white/5 bg-white/5 font-bold uppercase tracking-widest text-[10px] text-muted-foreground">
                 <tr>
                   <th className="px-8 py-5">Operator</th>
-                  <th className="px-8 py-5">Protocol</th>
-                  <th className="px-8 py-5">Intelligence Payload</th>
+                  <th className="px-8 py-5">System</th>
+                  <th className="px-8 py-5">Admin Payload</th>
                   <th className="px-8 py-5 text-right">Timestamp</th>
                 </tr>
               </thead>

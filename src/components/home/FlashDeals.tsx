@@ -43,7 +43,7 @@ export function FlashDeals() {
                 <h3 className="font-headline font-bold text-2xl md:text-3xl uppercase tracking-tighter">Flash Deals</h3>
                 <Badge className="bg-destructive text-white border-none text-[10px] animate-pulse px-3 py-1">LIVE NOW</Badge>
              </div>
-             <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest mt-1">Exclusive Tier-1 Distribution Dispatches</p>
+             <p className="text-[10px] md:text-xs font-bold text-muted-foreground uppercase tracking-widest mt-1">Exclusive Limited-Time Offers</p>
           </div>
        </div>
 

@@ -56,7 +56,7 @@ export default function CouponManager() {
         code,
         updatedAt: new Date().toISOString()
       });
-      toast({ title: "Coupon Synced", description: `Protocol ${code} is now live.` });
+      toast({ title: "Coupon Synced", description: `Coupon created successfully.` });
       setFormData({ code: "", type: "percentage", value: 0, minAmount: 0, maxDiscount: 0, expiry: "", usageLimit: 0, isEnabled: true });
     } catch (e: any) {
       toast({ title: "Sync Failed", description: e.message, variant: "destructive" });
@@ -70,7 +70,7 @@ export default function CouponManager() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Declassify this coupon node?")) return;
+    if (!confirm("Delete this coupon?")) return;
     await deleteDoc(doc(db, "coupons", id));
   };
 
@@ -78,25 +78,25 @@ export default function CouponManager() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Coupon Intelligence</h2>
-          <p className="text-muted-foreground">Orchestrate discount protocols and marketing yields.</p>
+          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Coupon Management</h2>
+          <p className="text-muted-foreground">Manage discount coupons and offers.</p>
         </div>
         
         <Dialog>
           <DialogTrigger asChild>
             <Button className="h-10 font-bold bg-primary text-primary-foreground neon-glow">
               <Plus className="mr-2 h-4 w-4" />
-              Generate Protocol
+              Generate Coupon
             </Button>
           </DialogTrigger>
           <DialogContent className="bg-card border-white/10 max-w-lg">
             <DialogHeader>
-              <DialogTitle className="text-xl font-headline font-bold uppercase">Initialize Coupon Node</DialogTitle>
+              <DialogTitle className="text-xl font-headline font-bold uppercase">Create Coupon</DialogTitle>
               <DialogDescription>Define discount logic and eligibility thresholds.</DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Protocol Code</Label>
+                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Coupon Code</Label>
                 <Input value={form.code} onChange={(e) => setFormData({...form, code: e.target.value})} placeholder="e.g. AATMA50" className="bg-black/40 font-mono" />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -111,7 +111,7 @@ export default function CouponManager() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-[10px] uppercase font-bold text-muted-foreground">Yield Value</Label>
+                  <Label className="text-[10px] uppercase font-bold text-muted-foreground">Discount Value</Label>
                   <Input type="number" value={form.value} onChange={(e) => setFormData({...form, value: parseFloat(e.target.value)})} className="bg-black/40" />
                 </div>
               </div>
@@ -126,11 +126,11 @@ export default function CouponManager() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Expiration Node</Label>
+                <Label className="text-[10px] uppercase font-bold text-muted-foreground">Expiry Date</Label>
                 <Input type="date" value={form.expiry} onChange={(e) => setFormData({...form, expiry: e.target.value})} className="bg-black/40" />
               </div>
               <Button className="w-full h-12 font-bold neon-glow mt-4" onClick={handleSave} disabled={isSaving}>
-                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Commit Coupon Logic"}
+                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save Coupon"}
               </Button>
             </div>
           </DialogContent>
@@ -143,18 +143,18 @@ export default function CouponManager() {
             <table className="w-full text-left text-sm">
               <thead className="border-b border-white/5 bg-white/5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                 <tr>
-                  <th className="px-6 py-4">Protocol Code</th>
-                  <th className="px-6 py-4">Yield Layer</th>
-                  <th className="px-6 py-4">Thresholds</th>
+                  <th className="px-6 py-4">Coupon Code</th>
+                  <th className="px-6 py-4">Discount</th>
+                  <th className="px-6 py-4">Conditions</th>
                   <th className="px-6 py-4">Status</th>
-                  <th className="px-6 py-4 text-right">Ops</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {loading ? (
                   <tr><td colSpan={5} className="py-20 text-center"><Loader2 className="h-6 w-6 animate-spin mx-auto text-primary" /></td></tr>
                 ) : coupons.length === 0 ? (
-                  <tr><td colSpan={5} className="py-20 text-center text-muted-foreground uppercase font-bold tracking-widest text-xs">No active coupons in buffer.</td></tr>
+                  <tr><td colSpan={5} className="py-20 text-center text-muted-foreground uppercase font-bold tracking-widest text-xs">No coupons available.</td></tr>
                 ) : (
                   coupons.map((c) => (
                     <tr key={c.id} className="hover:bg-white/5 transition-colors group">

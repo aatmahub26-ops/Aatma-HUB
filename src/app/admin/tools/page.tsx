@@ -49,7 +49,7 @@ export default function AdminTools() {
     try {
       const newSettings = { ...settings, [key]: !settings[key as keyof typeof settings] };
       await setDoc(doc(db, "system_settings", "mlbb_tools"), newSettings, { merge: true });
-      toast({ title: "Protocol Updated", description: `${key.toUpperCase()} node status changed.` });
+      toast({ title: "System Updated", description: `${key.toUpperCase()} node status changed.` });
     } catch (e: any) {
       toast({ title: "Update Failed", description: e.message, variant: "destructive" });
     }
@@ -128,10 +128,10 @@ export default function AdminTools() {
               <table className="w-full text-left text-sm">
                 <thead className="bg-white/5 border-b border-white/5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                   <tr>
-                    <th className="px-6 py-4">Tool Node</th>
+                    <th className="px-6 py-4">Tool Item</th>
                     <th className="px-6 py-4">Player Details</th>
                     <th className="px-6 py-4">Scan Timestamp</th>
-                    <th className="px-6 py-4">User Cluster</th>
+                    <th className="px-6 py-4">User System</th>
                     <th className="px-6 py-4 text-right">Ops</th>
                   </tr>
                 </thead>

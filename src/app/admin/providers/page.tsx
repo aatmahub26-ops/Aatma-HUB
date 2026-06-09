@@ -56,7 +56,7 @@ export default function AdminProviders() {
         details: `Provider ${id} status set to ${!current ? 'Enabled' : 'Disabled'}`
       });
 
-      toast({ title: "Node Updated", description: `${id} visibility changed.` });
+      toast({ title: "Item Updated", description: `${id} visibility changed.` });
     } catch (e: any) {
       toast({ title: "Failed", description: e.message, variant: "destructive" });
     }
@@ -96,7 +96,7 @@ export default function AdminProviders() {
     const newMode = routingMode === 'auto' ? 'manual' : 'auto';
     try {
       await setDoc(doc(db, "system_settings", "routing"), { mode: newMode, updatedAt: new Date().toISOString() });
-      toast({ title: "Routing Protocol Updated", description: `Engine switched to ${newMode.toUpperCase()} mode.` });
+      toast({ title: "Routing System Updated", description: `Engine switched to ${newMode.toUpperCase()} mode.` });
     } catch (e: any) {
       toast({ title: "Update Failed", description: e.message, variant: "destructive" });
     }
@@ -104,7 +104,7 @@ export default function AdminProviders() {
 
   const stats = {
     totalBalance: providers.reduce((acc, p) => acc + (p.balance || 0), 0),
-    activeNodes: providers.filter(p => p.isEnabled).length,
+    activeItems: providers.filter(p => p.isEnabled).length,
     avgSuccess: providers.length > 0 ? (providers.reduce((acc, p) => acc + (p.successRate || 0), 0) / providers.length).toFixed(1) : "0"
   };
 
@@ -124,14 +124,14 @@ export default function AdminProviders() {
           </Button>
           <Button size="lg" className="h-12 font-bold neon-glow" onClick={syncBalances} disabled={isSyncing}>
             {isSyncing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Zap className="mr-2 h-4 w-4 fill-current" />}
-            Sync All Nodes
+            Sync All Items
           </Button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-         <StatCard label="Operational Nodes" value={stats.activeNodes.toString()} icon={Globe} color="text-primary" />
+         <StatCard label="Operational Items" value={stats.activeItems.toString()} icon={Globe} color="text-primary" />
         <StatCard label="Multi-Provider Liquidity" value={stats.totalBalance.toLocaleString()} icon={Wallet} color="text-green-400" />
          <StatCard label="Aggregate Success Rate" value={`${stats.avgSuccess}%`} icon={Activity} color="text-blue-400" />
       </div>
@@ -195,7 +195,7 @@ export default function AdminProviders() {
                 </div>
 
                 <div className="space-y-2">
-                   <Label className="text-[8px] uppercase font-bold text-muted-foreground">Endpoint Cluster</Label>
+                   <Label className="text-[8px] uppercase font-bold text-muted-foreground">Endpoint System</Label>
                    <p className="text-[9px] font-mono truncate text-white border border-white/5 p-2 rounded bg-black/40">{provider.endpoint}</p>
                 </div>
               </CardContent>

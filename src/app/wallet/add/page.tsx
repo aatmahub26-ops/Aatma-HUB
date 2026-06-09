@@ -65,7 +65,7 @@ export default function AddFundsPage() {
         amount: order.amount,
         currency: "INR",
         name: "Aatma HUB",
-        description: `Wallet Recharge Protocol ${isSandbox ? '(SANDBOX)' : ''}`,
+        description: `Wallet Recharge ${isSandbox ? '(SANDBOX)' : ''}`,
         order_id: order.id,
         handler: async (response: any) => {
           try {
@@ -87,7 +87,7 @@ export default function AddFundsPage() {
               router.push("/wallet/failed");
             }
           } catch (e) {
-            toast({ title: "Verification Failed", description: "Node error. Contact support.", variant: "destructive" });
+            toast({ title: "Verification Failed", description: "Payment verification failed. Contact support.", variant: "destructive" });
           }
         },
         prefill: {
@@ -102,7 +102,7 @@ export default function AddFundsPage() {
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error: any) {
-      toast({ title: "API Node Error", description: error.message, variant: "destructive" });
+      toast({ title: "API Error", description: error.message, variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }
@@ -213,7 +213,7 @@ export default function AddFundsPage() {
                   </div>
 
                   <div className="space-y-4 pt-6 border-t border-white/5">
-                    <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Payment Protocol</Label>
+                    <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Payment Method</Label>
                     <div className="grid grid-cols-1 gap-4">
                       {[
                         { id: 'razorpay', title: 'Instant Auto-Recharge', desc: 'Cards, Netbanking, UPI', icon: Zap, color: 'text-primary' },
@@ -269,7 +269,7 @@ export default function AddFundsPage() {
                     </div>
                     <div className="p-4 bg-black/40 rounded-2xl border border-white/10 flex items-center justify-between max-w-sm mx-auto">
                       <div className="text-left">
-                        <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Admin UPI Node</p>
+                        <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">Admin UPI ID</p>
                         <p className="font-mono font-bold text-orange-500 text-sm">{upiId}</p>
                       </div>
                       <Button size="icon" variant="ghost" onClick={() => { navigator.clipboard.writeText(upiId); toast({ title: "Copied" }); }}><Copy className="h-4 w-4" /></Button>

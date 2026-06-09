@@ -68,14 +68,14 @@ export default function AdminRecharges() {
           description: `Approved (UTR: ${request.utr || request.transactionId})`,
           status: "success",
           createdAt: new Date().toISOString(),
-          processedBy: adminProfile?.email || "Admin Node"
+          processedBy: adminProfile?.email || "Admin Item"
         });
 
         const requestRef = doc(db, "deposit_requests", request.id);
         transaction.update(requestRef, {
           status: "approved",
           updatedAt: serverTimestamp(),
-          processedBy: adminProfile?.email || "Admin Node"
+          processedBy: adminProfile?.email || "Admin Item"
         });
 
         // Audit Logging
@@ -88,7 +88,7 @@ export default function AdminRecharges() {
         });
       });
 
-      toast({ title: "Intelligence Synced", description: "Player liquidity updated." });
+      toast({ title: "Admin Synced", description: "Player liquidity updated." });
     } catch (error: any) {
       toast({ title: "Sync Failed", description: error.message, variant: "destructive" });
     }
@@ -104,7 +104,7 @@ export default function AdminRecharges() {
         status: "rejected",
         rejectionReason: reason,
         updatedAt: serverTimestamp(),
-        processedBy: adminProfile?.email || "Admin Node"
+        processedBy: adminProfile?.email || "Admin Item"
       });
 
       logAdminAction({
@@ -130,7 +130,7 @@ export default function AdminRecharges() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Recharge Intelligence</h2>
+          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Recharge Admin</h2>
           <p className="text-muted-foreground">Verify manual payment proofs and synchronize player liquidity nodes.</p>
         </div>
       </div>
@@ -171,7 +171,7 @@ function RechargeTable({ requests, onApprove, onReject, loading }: any) {
             <table className="w-full text-left text-sm">
               <thead className="border-b border-white/5 bg-white/5 font-bold uppercase tracking-widest text-[10px] text-muted-foreground">
                 <tr>
-                  <th className="px-8 py-5">Player Node</th>
+                  <th className="px-8 py-5">Player Item</th>
                   <th className="px-8 py-5">UTR Payload</th>
                   <th className="px-8 py-5">Liquidity</th>
                   <th className="px-8 py-5">Status</th>

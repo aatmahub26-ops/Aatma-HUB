@@ -59,7 +59,7 @@ export default function AdminPayments() {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Payment Intelligence</h2>
+          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Payment Management</h2>
           <p className="text-muted-foreground">Monitor automated gateway protocols and coordinate manual reconciliations.</p>
         </div>
         <div className="flex gap-2">
@@ -72,7 +72,7 @@ export default function AdminPayments() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
          <StatCard label="Aggregate Deposits" value={`₹${stats.totalRevenue.toLocaleString()}`} icon={DollarSign} color="text-green-500" />
          <StatCard label="Success Events" value={stats.successCount.toString()} icon={CheckCircle2} color="text-blue-500" />
-         <StatCard label="Failed Protocols" value={stats.failedCount.toString()} icon={XCircle} color="text-destructive" />
+         <StatCard label="Failed Payments" value={stats.failedCount.toString()} icon={XCircle} color="text-destructive" />
          <StatCard label="Verification Queue" value={stats.pendingCount.toString()} icon={AlertCircle} color="text-orange-500" />
       </div>
 
@@ -91,7 +91,7 @@ export default function AdminPayments() {
             </CardHeader>
             <CardContent>
               <Button variant="ghost" size="sm" className="w-full justify-between text-[10px] font-bold border border-white/5 hover:bg-white/5 uppercase tracking-widest">
-                Configure Protocol
+                Configure Payment
                 <TrendingUp className="h-3 w-3" />
               </Button>
             </CardContent>
@@ -120,10 +120,10 @@ export default function AdminPayments() {
              <table className="w-full text-left text-xs">
                <thead className="border-b border-white/5 bg-black/20 font-bold uppercase tracking-widest text-[9px] text-muted-foreground">
                  <tr>
-                   <th className="px-6 py-4">Protocol Reference</th>
-                   <th className="px-6 py-4">Player Intelligence</th>
+                   <th className="px-6 py-4">Payment ID</th>
+                   <th className="px-6 py-4">Player Admin</th>
                    <th className="px-6 py-4">Description</th>
-                   <th className="px-6 py-4">Yield</th>
+                   <th className="px-6 py-4">Earnings</th>
                    <th className="px-6 py-4">Status</th>
                    <th className="px-6 py-4 text-right">Timestamp</th>
                  </tr>

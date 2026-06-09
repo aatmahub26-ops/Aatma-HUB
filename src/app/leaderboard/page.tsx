@@ -136,7 +136,7 @@ export default function LeaderboardPage() {
                              </Avatar>
                              <div>
                                 <h3 className="font-bold text-lg md:text-xl">{user.firstName}</h3>
-                                <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Master Squad Recruitment</p>
+                                <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Top Referrals</p>
                              </div>
                           </div>
                           <div className="text-right">

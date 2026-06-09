@@ -41,7 +41,7 @@ export default function ResellerSettings() {
         ...settings,
         updatedAt: new Date().toISOString()
       }, { merge: true });
-      toast({ title: "Protocol Synchronized", description: "B2B Program settings updated globally." });
+      toast({ title: "System Synchronized", description: "B2B Program settings updated globally." });
     } catch (e: any) {
       toast({ title: "Failed", description: e.message, variant: "destructive" });
     } finally {
@@ -63,7 +63,7 @@ export default function ResellerSettings() {
             <CardHeader className="bg-white/5 border-b border-white/5">
                <CardTitle className="text-sm font-headline font-bold uppercase tracking-widest flex items-center gap-2">
                   <Percent className="h-4 w-4 text-primary" />
-                  Yield Architecture
+                  Earnings Architecture
                </CardTitle>
             </CardHeader>
             <CardContent className="p-8 space-y-6">
@@ -77,7 +77,7 @@ export default function ResellerSettings() {
                      <Input type="number" className="h-12 bg-black/40 border-white/10" value={settings.minWithdrawal} onChange={(e) => setSettings({...settings, minWithdrawal: parseFloat(e.target.value)})} />
                   </div>
                   <div className="space-y-2">
-                     <Label className="text-[10px] uppercase font-bold tracking-widest">Enrollment Node Fee (₹)</Label>
+                     <Label className="text-[10px] uppercase font-bold tracking-widest">Enrollment Item Fee (₹)</Label>
                      <Input type="number" className="h-12 bg-black/40 border-white/10" value={settings.registrationFee} onChange={(e) => setSettings({...settings, registrationFee: parseFloat(e.target.value)})} />
                   </div>
                </div>
@@ -103,7 +103,7 @@ export default function ResellerSettings() {
                <div className="p-6 bg-primary/5 border border-primary/20 rounded-2xl flex items-start gap-4">
                   <Info className="h-5 w-5 text-primary shrink-0 mt-0.5" />
                   <div className="space-y-1">
-                     <p className="text-[10px] font-bold text-white uppercase tracking-widest">Protocol Intelligence</p>
+                     <p className="text-[10px] font-bold text-white uppercase tracking-widest">System Admin</p>
                      <p className="text-[9px] text-muted-foreground leading-relaxed uppercase font-bold">
                         Changes to commission rates apply to all new dispatches instantly. Lifetime volumes are recalculated at the start of every sync cycle.
                      </p>

@@ -55,7 +55,7 @@ export default function CatalogManager() {
 
   const handleSaveProduct = async () => {
     if (!form.name || !form.id) {
-      toast({ title: "Missing Node Identity", description: "ID and Title are mandatory.", variant: "destructive" });
+      toast({ title: "Missing Product Information", description: "ID and Title are mandatory.", variant: "destructive" });
       return;
     }
 
@@ -64,7 +64,7 @@ export default function CatalogManager() {
         ...form,
         updatedAt: new Date().toISOString()
       });
-      toast({ title: "Intelligence Synced", description: `${form.name} node updated.` });
+      toast({ title: "Product Updated", description: `${form.name} node updated.` });
       setIsEditing(null);
       resetForm();
     } catch (e: any) {
@@ -167,13 +167,13 @@ export default function CatalogManager() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight text-white">Marketplace Intelligence</h2>
+          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight text-white">Product Catalog</h2>
           <p className="text-muted-foreground">Manage game nodes, manual package pricing, and distribution layers.</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" className="h-10 border-primary/20 bg-primary/5 font-bold" onClick={seedMarketplace} disabled={isSyncing}>
             {isSyncing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <DatabaseZap className="mr-2 h-4 w-4" />}
-            Sync Library Nodes
+            Import Products
           </Button>
 
           <Dialog open={!!isEditing || form.id !== ""} onOpenChange={(open) => {
@@ -184,19 +184,19 @@ export default function CatalogManager() {
           }}>
             <DialogTrigger asChild>
               <Button size="sm" className="h-10 font-bold bg-primary text-primary-foreground neon-glow" onClick={resetForm}>
-                <Plus className="mr-2 h-4 w-4" /> Initialize Node
+                <Plus className="mr-2 h-4 w-4" /> Add Product
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto bg-card border-white/10">
               <DialogHeader>
-                <DialogTitle className="text-2xl font-headline font-bold uppercase tracking-tighter">Configure Marketplace Node</DialogTitle>
+                <DialogTitle className="text-2xl font-headline font-bold uppercase tracking-tighter">Configure Product</DialogTitle>
                 <DialogDescription>Define retail packages, prices, and provider mappings for this product.</DialogDescription>
               </DialogHeader>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-6">
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Internal Node ID</Label>
+                    <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Product ID</Label>
                     <Input className="bg-black/40 border-white/10" value={form.id} onChange={(e) => setFormData({...form, id: e.target.value})} placeholder="e.g. mlbb-promo" />
                   </div>
                   <div className="space-y-2">
@@ -261,7 +261,7 @@ export default function CatalogManager() {
                   {(form.formFields || []).map((field: any, idx: number) => (
                     <div key={field.id} className="bg-black/20 p-4 rounded-2xl border border-white/5 space-y-4">
                        <div className="flex justify-between items-center">
-                          <Badge variant="outline" className="text-[8px] uppercase border-primary/20">Field Node #{idx + 1}</Badge>
+                          <Badge variant="outline" className="text-[8px] uppercase border-primary/20">Field #{idx + 1}</Badge>
                           <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive" onClick={() => removeField(idx)}><Trash2 className="h-3.5 w-3.5" /></Button>
                        </div>
                        <div className="grid grid-cols-2 gap-3">
@@ -310,7 +310,7 @@ export default function CatalogManager() {
                     Retail Packages & Tiers
                   </h3>
                   <Button variant="outline" size="sm" onClick={addPackage} className="text-[10px] font-bold uppercase tracking-widest border-primary/20">
-                    <Plus className="h-3 w-3 mr-2" /> Add Package Node
+                    <Plus className="h-3 w-3 mr-2" /> Add Package
                   </Button>
                 </div>
                 
@@ -373,7 +373,7 @@ export default function CatalogManager() {
               </div>
 
               <Button className="w-full h-14 font-bold neon-glow mt-8 text-lg uppercase tracking-tighter" onClick={handleSaveProduct}>
-                <Save className="h-5 w-5 mr-3" /> Commit Node Configuration
+                <Save className="h-5 w-5 mr-3" /> Save Product
               </Button>
             </DialogContent>
           </Dialog>
@@ -391,9 +391,9 @@ export default function CatalogManager() {
             <table className="w-full text-left text-sm">
               <thead className="border-b border-white/5 bg-white/5 font-bold uppercase tracking-widest text-[10px] text-muted-foreground">
                 <tr>
-                  <th className="px-6 py-4">Node Identity</th>
+                  <th className="px-6 py-4">Product</th>
                   <th className="px-6 py-4">Status</th>
-                  <th className="px-6 py-4">Form Node</th>
+                  <th className="px-6 py-4">Form Field</th>
                   <th className="px-6 py-4">Packages</th>
                   <th className="px-6 py-4">Price Range</th>
                   <th className="px-6 py-4 text-right">Ops</th>

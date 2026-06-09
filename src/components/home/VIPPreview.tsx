@@ -35,7 +35,7 @@ export function VIPPreview() {
        <CardContent className="p-6 md:p-8 space-y-8 flex-1">
           <div className="flex items-center justify-between">
              <div className="space-y-1">
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Current Node Status</p>
+                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Current Status</p>
                 <h4 className={`text-2xl md:text-3xl font-headline font-bold uppercase tracking-tight ${currentRank.color}`}>{currentRank.tier}</h4>
              </div>
              <div className="text-right space-y-1">

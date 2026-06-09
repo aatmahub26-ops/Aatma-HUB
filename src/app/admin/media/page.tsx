@@ -43,7 +43,7 @@ export default function MediaManager() {
 
   const handleUpload = async (id: string, file: File, folder: string) => {
     if (file.size > 5 * 1024 * 1024) {
-      toast({ title: "Payload Too Heavy", description: "Protocol limit is 5MB.", variant: "destructive" });
+      toast({ title: "Payload Too Heavy", description: "System limit is 5MB.", variant: "destructive" });
       return;
     }
 
@@ -74,7 +74,7 @@ export default function MediaManager() {
              if (existingIdx > -1) {
                currentList[existingIdx] = { ...currentList[existingIdx], imageUrl: downloadURL };
              } else {
-               currentList.push({ id, imageUrl: downloadURL, title: "New Node", subtitle: "Active Deployment", badge: "Exclusive", link: "/" });
+               currentList.push({ id, imageUrl: downloadURL, title: "New Banner", subtitle: "Active", badge: "Exclusive", link: "/" });
              }
              
              await setDoc(doc(db, "system_settings", "banners"), { list: currentList });
@@ -82,7 +82,7 @@ export default function MediaManager() {
              await updateDoc(doc(db, "catalog", id), { imageUrl: downloadURL });
           }
 
-          toast({ title: "Intelligence Synced", description: "Node updated in cloud cluster." });
+          toast({ title: "Admin Synced", description: "Media updated successfully." });
           setUploadingId(null);
         }
       );
@@ -108,7 +108,7 @@ export default function MediaManager() {
         await updateDoc(doc(db, "catalog", id), { imageUrl: null });
       }
 
-      toast({ title: "Asset Purged", description: "Node successfully declassified." });
+      toast({ title: "Asset Purged", description: "Media deleted successfully." });
     } catch (e: any) {
       toast({ title: "Purge Failed", description: e.message, variant: "destructive" });
     }
@@ -129,12 +129,12 @@ export default function MediaManager() {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Media Intelligence Hub</h2>
+          <h2 className="text-3xl font-headline font-bold uppercase tracking-tight">Media Manager</h2>
           <p className="text-muted-foreground">Orchestrate platform visual nodes and branded distribution assets.</p>
         </div>
         <div className="flex items-center gap-2">
            <Badge variant="outline" className="border-primary/20 text-primary uppercase font-bold text-[10px] tracking-widest px-3 py-1">
-              <Cloud className="mr-2 h-3 w-3" /> Storage Cluster Active
+              <Cloud className="mr-2 h-3 w-3" /> Storage Active
            </Badge>
         </div>
       </div>
@@ -216,7 +216,7 @@ export default function MediaManager() {
                   <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
                     <cat.icon className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="font-headline font-bold text-lg uppercase tracking-tight">{cat.name} Logic Nodes</h3>
+                  <h3 className="font-headline font-bold text-lg uppercase tracking-tight">{cat.name} Logic Items</h3>
                </div>
 
                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8 gap-4">
