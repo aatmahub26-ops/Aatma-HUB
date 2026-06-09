@@ -53,7 +53,7 @@ export default function GameProductPage() {
     if (!gameIdParam) return;
     const unsub = onSnapshot(doc(db, "catalog", gameIdParam), (docSnap) => {
       if (docSnap.exists()) {
-        setGame({ id: docSnap.id, ...docSnap.data() });
+        const staticGame = GAMES.find(g => g.id === gameIdParam); setGame({ ...staticGame, id: docSnap.id, ...docSnap.data(), packages: (docSnap.data().packages?.length ? docSnap.data().packages : staticGame?.packages) });
       } else {
         const staticGame = GAMES.find(g => g.id === gameIdParam);
         if (staticGame) setGame(staticGame);
@@ -333,12 +333,12 @@ export default function GameProductPage() {
                       <div className="space-y-1"><p className="font-bold text-white uppercase text-sm">Packages Awaiting Launch</p></div>
                     </div>
                   ) : (
-                    <Tabs defaultValue="large" className="space-y-6">
+                    <Tabs defaultValue="small" className="space-y-6">
                       <TabsList className="grid grid-cols-4 bg-black/40 h-12 p-1 rounded-xl">
                         {['small', 'large', 'pass', 'double'].map(s => <TabsTrigger key={s} value={s} className="text-[9px] uppercase font-bold">{s}</TabsTrigger>)}
                       </TabsList>
                       {['small', 'large', 'pass', 'double'].map(s => (
-                        <TabsContent key={s} value={s} className="grid grid-cols-2 sm:grid-cols-3 gap-3 animate-in fade-in duration-300">
+                        <TabsContent key={s} value={s} className="grid grid-cols-3 sm:grid-cols-4 gap-3 animate-in fade-in duration-300">
                           {game.packages.filter((p: any) => p.section === s).map((p: any) => (
                             <button key={p.id} onClick={() => setSelectedPkg(p.id)} className={`relative p-5 rounded-2xl border-2 text-left transition-all duration-300 ${selectedPkg === p.id ? "border-primary bg-primary/10 shadow-[0_0_20px_rgba(158,102,255,0.25)]" : "border-white/5 bg-black/20 hover:border-white/20"}`}>
                                <div className="space-y-1"><p className="font-bold text-sm text-white uppercase leading-tight truncate">{p.amount}</p><p className="text-[9px] font-bold uppercase text-muted-foreground truncate">{p.description}</p></div>

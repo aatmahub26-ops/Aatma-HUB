@@ -34,29 +34,26 @@ export interface GameProduct {
 }
 
 const MLBB_PACKAGES = [
-  { id: 'mlbb-3', amount: '3 Diamonds', price: 7, description: '3+0 Bonus', section: 'small' },
-  { id: 'mlbb-5', amount: '5 Diamonds', price: 9, description: '5+0 Bonus', section: 'small' },
-  { id: 'mlbb-11', amount: '11 Diamonds', price: 17, description: '10+1 Bonus', section: 'small' },
-  { id: 'mlbb-14', amount: '14 Diamonds', price: 23, description: '13+1 Bonus', section: 'small' },
-  { id: 'mlbb-22', amount: '22 Diamonds', price: 34, description: '20+2 Bonus', section: 'small' },
-  { id: 'mlbb-28', amount: '28 Diamonds', price: 42, description: '25+2 Bonus', section: 'small' },
-  { id: 'mlbb-44', amount: '44 Diamonds', price: 67, description: '40+4 Bonus', section: 'small' },
-  { id: 'mlbb-56', amount: '56 Diamonds', price: 83, description: '51+5 Bonus', section: 'small' }
+  { id: 'mlbb-3', amount: '3 Diamonds', price: 10, description: 'Small', section: 'small' },
+  { id: 'mlbb-86', amount: '86 Diamonds', price: 165, description: 'Popular', section: 'large' },
+  { id: 'mlbb-172', amount: '172 Diamonds', price: 325, description: 'Popular', section: 'large' },
+  { id: 'mlbb-wdp', amount: 'Weekly Diamond Pass', price: 160, description: 'Best Value', section: 'pass' },
 ];
+
 export const GAMES: GameProduct[] = [
   // --- 1. MOBILE LEGENDS ---
   { id: 'mlbb-in', name: 'MLBB India', flag: '🇮🇳', category: 'MOBILE LEGENDS', image: 'mlbb-in', requiresServer: true, isEnabled: true, description: 'India Server Dispatch', packages: MLBB_PACKAGES },
-  { id: 'mlbb-ph', name: 'MLBB Philippines', flag: '🇵🇭', category: 'MOBILE LEGENDS', image: 'mlbb-ph', requiresServer: true, isEnabled: false, description: 'PH Server Dispatch', packages: MLBB_PACKAGES },
-  { id: 'mlbb-id', name: 'MLBB Indonesia', flag: '🇮🇩', category: 'MOBILE LEGENDS', image: 'mlbb-id', requiresServer: true, isEnabled: false, description: 'ID Server Dispatch', packages: MLBB_PACKAGES },
-  { id: 'mlbb-my', name: 'MLBB Malaysia', flag: '🇲🇾', category: 'MOBILE LEGENDS', image: 'mlbb-my', requiresServer: true, isEnabled: false, description: 'MY Server Dispatch', packages: MLBB_PACKAGES },
-  { id: 'mlbb-mm', name: 'MLBB Myanmar', flag: '🇲🇲', category: 'MOBILE LEGENDS', image: 'mlbb-mm', requiresServer: true, isEnabled: false, description: 'MM Server Dispatch', packages: MLBB_PACKAGES },
-  { id: 'mlbb-sg', name: 'MLBB Singapore', flag: '🇸🇬', category: 'MOBILE LEGENDS', image: 'mlbb-sg', requiresServer: true, isEnabled: false, description: 'SG Server Dispatch', packages: MLBB_PACKAGES },
-  { id: 'mlbb-br', name: 'MLBB Brazil', flag: '🇧🇷', category: 'MOBILE LEGENDS', image: 'mlbb-br', requiresServer: true, isEnabled: false, description: 'BR Server Dispatch', packages: MLBB_PACKAGES },
-  { id: 'mlbb-tr', name: 'MLBB Turkey', flag: '🇹🇷', category: 'MOBILE LEGENDS', image: 'mlbb-tr', requiresServer: true, isEnabled: false, description: 'TR Server Dispatch', packages: MLBB_PACKAGES },
-  { id: 'mlbb-mena', name: 'MLBB MENA', flag: '🌍', category: 'MOBILE LEGENDS', image: 'mlbb-mena', requiresServer: true, isEnabled: false, description: 'MENA Server Dispatch', packages: MLBB_PACKAGES },
+  { id: 'mlbb-ph', name: 'MLBB Philippines', flag: '🇵🇭', category: 'MOBILE LEGENDS', image: 'mlbb-ph', requiresServer: true, isEnabled: true, description: 'PH Server Dispatch', packages: MLBB_PACKAGES },
+  { id: 'mlbb-id', name: 'MLBB Indonesia', flag: '🇮🇩', category: 'MOBILE LEGENDS', image: 'mlbb-id', requiresServer: true, isEnabled: true, description: 'ID Server Dispatch', packages: MLBB_PACKAGES },
+  { id: 'mlbb-my', name: 'MLBB Malaysia', flag: '🇲🇾', category: 'MOBILE LEGENDS', image: 'mlbb-my', requiresServer: true, isEnabled: true, description: 'MY Server Dispatch', packages: MLBB_PACKAGES },
+  { id: 'mlbb-mm', name: 'MLBB Myanmar', flag: '🇲🇲', category: 'MOBILE LEGENDS', image: 'mlbb-mm', requiresServer: true, isEnabled: true, description: 'MM Server Dispatch', packages: MLBB_PACKAGES },
+  { id: 'mlbb-sg', name: 'MLBB Singapore', flag: '🇸🇬', category: 'MOBILE LEGENDS', image: 'mlbb-sg', requiresServer: true, isEnabled: true, description: 'SG Server Dispatch', packages: MLBB_PACKAGES },
+  { id: 'mlbb-br', name: 'MLBB Brazil', flag: '🇧🇷', category: 'MOBILE LEGENDS', image: 'mlbb-br', requiresServer: true, isEnabled: true, description: 'BR Server Dispatch', packages: MLBB_PACKAGES },
+  { id: 'mlbb-tr', name: 'MLBB Turkey', flag: '🇹🇷', category: 'MOBILE LEGENDS', image: 'mlbb-tr', requiresServer: true, isEnabled: true, description: 'TR Server Dispatch', packages: MLBB_PACKAGES },
+  { id: 'mlbb-mena', name: 'MLBB MENA', flag: '🌍', category: 'MOBILE LEGENDS', image: 'mlbb-mena', requiresServer: true, isEnabled: true, description: 'MENA Server Dispatch', packages: MLBB_PACKAGES },
   { id: 'mlbb-gl', name: 'MLBB All Regions', flag: '🌍', category: 'MOBILE LEGENDS', image: 'mlbb-gl', requiresServer: true, isEnabled: true, description: 'Global Server Dispatch', packages: MLBB_PACKAGES },
-  { id: 'mlbb-wp-item', name: 'Weekly Pass', category: 'MOBILE LEGENDS', image: 'mlbb-wp', requiresServer: true, isEnabled: false, description: 'Weekly Diamond Pass', packages: [{ id: 'wp-1', amount: 'Weekly Pass', price: 160, description: 'Best Value' }] },
-  { id: 'mlbb-tp-item', name: 'Twilight Pass', category: 'MOBILE LEGENDS', image: 'mlbb-tp', requiresServer: true, isEnabled: false, description: 'Seasonal Rewards', packages: [{ id: 'tp-1', amount: 'Twilight Pass', price: 750, description: 'Level Up' }] },
+  { id: 'mlbb-wp-item', name: 'Weekly Pass', category: 'MOBILE LEGENDS', image: 'mlbb-wp', requiresServer: true, isEnabled: true, description: 'Weekly Diamond Pass', packages: [{ id: 'wp-1', amount: 'Weekly Pass', price: 160, description: 'Best Value' }] },
+  { id: 'mlbb-tp-item', name: 'Twilight Pass', category: 'MOBILE LEGENDS', image: 'mlbb-tp', requiresServer: true, isEnabled: true, description: 'Seasonal Rewards', packages: [{ id: 'tp-1', amount: 'Twilight Pass', price: 750, description: 'Level Up' }] },
 
   // --- 2. BATTLEGROUNDS ---
   { id: 'bgmi', name: 'BGMI India', category: 'BATTLEGROUNDS', image: 'bgmi', requiresServer: false, isEnabled: true, description: 'Battlegrounds Mobile India', packages: [{ id: 'bgmi-60', amount: '60 UC', price: 75, description: 'Basic' }, { id: 'bgmi-300', amount: '300+25 UC', price: 380, description: 'Popular' }] },

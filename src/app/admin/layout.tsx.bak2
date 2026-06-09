@@ -35,13 +35,23 @@ console.log("ROLE =", role);
     { title: "Dashboard", icon: LayoutDashboard, url: "/admin", roles: ['admin', 'staff', 'support'] },
     { title: "Manage Orders", icon: ShoppingCart, url: "/admin/orders", roles: ['admin', 'staff', 'support'] },
     { title: "Coupons", icon: Tag, url: "/admin/marketing/coupons", roles: ['admin'] },
+    { title: "Marketing", icon: Megaphone, url: "/admin/marketing/popup", roles: ['admin'] },
+    { title: "Resellers", icon: Briefcase, url: "/admin/resellers", roles: ['admin', 'staff'] },
+    { title: "Audit Logs", icon: Activity, url: "/admin/audit-logs", roles: ['admin'] },
     { title: "Payments", icon: CreditCard, url: "/admin/payments", roles: ['admin', 'staff'] },
     { title: "Catalog", icon: Gamepad2, url: "/admin/catalog", roles: ['admin', 'staff'] },
     { title: "Referrals", icon: Gift, url: "/admin/referrals", roles: ['admin', 'staff'] },
     { title: "Users", icon: Users, url: "/admin/users", roles: ['admin', 'staff', 'support'] },
+    { title: "KYC", icon: ShieldCheck, url: "/admin/kyc", roles: ['admin', 'staff', 'support'] },
     { title: "Recharges", icon: Wallet, url: "/admin/recharges", roles: ['admin', 'staff', 'support'] },
+    { title: "Providers", icon: Settings, url: "/admin/providers", roles: ['admin'] },
 { title: "Media", icon: Database, url: "/admin/media", roles: ['admin'] },
+{ title: "Articles", icon: BellRing, url: "/admin/articles", roles: ['admin'] },
 { title: "Tools", icon: Settings, url: "/admin/tools", roles: ['admin'] },
+{ title: "Reseller Settings", icon: Briefcase, url: "/admin/resellers/settings", roles: ['admin'] },
+{ title: "Reseller Users", icon: Users, url: "/admin/resellers/users", roles: ['admin'] },
+{ title: "Reseller Earnings", icon: Wallet, url: "/admin/resellers/earnings", roles: ['admin'] },
+{ title: "Applications", icon: ShieldCheck, url: "/admin/resellers/applications", roles: ['admin'] },
   ].filter(item => item.roles.includes(role));
 
   if (loading || (user && profile && !['admin', 'staff', 'support'].includes(profile.role || ''))) {

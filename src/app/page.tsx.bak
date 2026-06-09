@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { Search, Zap, Flame, Gamepad2, Tv, CreditCard, ChevronRight, Smartphone, Swords, Trophy, ShieldCheck, Globe, Target } from "lucide-react";
+import { Search, Zap, Flame, Gamepad2, Tv, CreditCard, ChevronRight, History, Smartphone, Swords, Trophy, ShieldCheck, Globe, Target } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -76,6 +76,7 @@ export default function Home() {
 
 <MarketplaceSection title="Gift Cards" icon={CreditCard} category="GIFT CARDS" badge="CODE" accentColor="text-orange-300" />
 
+<MarketplaceSection title="Coming Soon" icon={History} category="COMING SOON" badge="QUEUE" accentColor="text-muted-foreground" />
 
               </div>
               
