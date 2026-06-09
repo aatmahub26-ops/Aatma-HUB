@@ -90,7 +90,7 @@ console.log("ROLE =", role);
                   {adminMenu.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild isActive={pathname === item.url}>
-                        <Link href={item.url} onClick={() => document.body.click()} className={`flex items-center space-x-3 px-3 py-3 rounded-xl transition-all w-full`}>
+                        <Link href={item.url} onClick={() => { document.body.click(); setOpenMobile(false); }} className={`flex items-center space-x-3 px-3 py-3 rounded-xl transition-all w-full`}>
                           <item.icon className={`h-5 w-5 ${pathname === item.url ? 'text-primary' : 'text-muted-foreground'}`} />
                           <span className={`font-bold text-[10px] uppercase tracking-wide whitespace-normal break-words leading-tight ${pathname === item.url ? 'text-foreground' : 'text-muted-foreground'}`}>{item.title}</span>
                         </Link>
