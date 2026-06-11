@@ -48,10 +48,33 @@ export function FeaturedGames({ category }: FeaturedGamesProps) {
   const [products, setProducts] = useState<any[]>([]);
 
   useEffect(() => {
-    const filtered = GAMES.filter(item => item.isEnabled && isItemInCategory(item, category));
-console.log("PRODUCTS", filtered);
-    setProducts(filtered);
-    setLoading(false);
+    const q = query(collection(db, "catalog"), where("isEnabled", "==", true));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const liveItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const allPossible = [...GAMES];
+      
+      liveItems.forEach(live => {
+        const idx = allPossible.findIndex(p => p.id === live.id);
+        if (idx > -1) allPossible[idx] = { ...allPossible[idx], ...live };
+        else allPossible.push(live);
+      });
+
+      const filtered = allPossible.filter(item => {
+        if (!item.isEnabled) return false;
+        return isItemInCategory(item, category);
+      });
+
+      setProducts(filtered);
+      setLoading(false);
+    }, (error) => {
+      const filtered = GAMES.filter(item => {
+        if (!item.isEnabled) return false;
+        return isItemInCategory(item, category);
+      });
+      setProducts(filtered);
+      setLoading(false);
+    });
+    return () => unsubscribe();
   }, [category]);
 
   if (loading) {
@@ -87,12 +110,11 @@ console.log("PRODUCTS", filtered);
 
 function GameIconCard({ game }: { game: any }) {
   const brand = getBrandConfig(game.name, game.category);
-  const placeholder = PlaceHolderImages.find(p => p.id === game.image);
   const minPrice = game.packages?.length > 0 ? Math.min(...game.packages.map((p: any) => p.price)) : 0;
+  const placeholder = PlaceHolderImages.find(p => p.id === game.image);
   const logoSrc = game.imageUrl?.startsWith('http') ? game.imageUrl : (placeholder?.imageUrl || '/logos/default.png');
   const [imgError, setImgError] = useState(false);
-  console.log("CARD:", game.id, "IMAGE:", game.image, "LOGO:", logoSrc);
-  console.log("CARD:", game.id, "IMAGE:", game.image, "PLACEHOLDER:", placeholder?.imageUrl, "LOGO:", logoSrc);
+
   // Logic for dynamic initials if image is missing
   const getInitials = (name: string) => {
     return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();

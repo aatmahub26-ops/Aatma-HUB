@@ -147,23 +147,10 @@
     },
     {
       "id": "mlbb-ph",
-  },
-  {
-    "id": "mlbb-in",
-    "description": "MLBB India",
-    "imageUrl": "/logos/mlbb-in.webp",
-    "imageHint": "mlbb india"
-
       "description": "Mobile Legends Philippines",
       "imageUrl": "/logos/mlbb-ph.webp",
       "imageHint": "mlbb"
     },
-  {
-    "id": "mcg",
-    "description": "Magic Chess Go Go",
-    "imageUrl": "/logos/mcg.webp",
-    "imageHint": "magic chess"
-  },
       "id": "genshin",
       "description": "Genshin Impact",
       "imageUrl": "/logos/genshin.png",

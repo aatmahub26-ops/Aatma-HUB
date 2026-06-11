@@ -64,6 +64,7 @@ export default function Home() {
            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               <div className="lg:col-span-8 space-y-6">
 <MarketplaceSection title="All Products" icon={Globe} category="MOBILE GAMES" badge="GAMES" accentColor="text-blue-400" />
+<MarketplaceSection title="OTT Services" icon={Tv} category="SOCIAL SERVICES" badge="OTT" accentColor="text-pink-400" />
 
 
               </div>
