@@ -15,7 +15,6 @@ import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 function getCatalogBrandIcon(name: string, category: string) {
   const n = name.toLowerCase();
@@ -116,7 +115,6 @@ function ProductCard({ game }: { game: any }) {
   const DefaultIcon = game.category === 'OTT Services' ? Tv : game.category === 'Gift Cards' ? CreditCard : Gamepad2;
   
   // Resolve image from placeholder registry if not a direct URL
-  const placeholder = PlaceHolderImages.find(p => p.id === game.image);
   const resolvedImg = '/logos/' + game.image + '.webp';
 
   return (
