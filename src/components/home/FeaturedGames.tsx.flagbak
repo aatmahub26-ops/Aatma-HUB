@@ -29,7 +29,7 @@ const isItemInCategory = (item: any, target: string) => {
       return itemCat === "SOCIAL SERVICES";
 
     default:
-      return true;
+      return false;
   }
 };
 function getBrandConfig(name: string, category: string) {
@@ -151,8 +151,8 @@ function GameIconCard({ game }: { game: any }) {
                 <Badge className="bg-primary text-white text-[5px] font-bold px-1.5 py-0.5 border-none uppercase tracking-widest shadow-2xl">SOON</Badge>
              </div>
            )}
-           <div className="absolute top-2 right-2 z-20">
-              <span className="text-xl">{game.flag}</span>
+           <div className="absolute top-1 right-1 z-20 scale-50 md:scale-75">
+              {game.flag && <span className="text-[10px] drop-shadow-2xl">{game.flag}</span>}
            </div>
         </div>
         <div className="px-0.5 space-y-0.5">

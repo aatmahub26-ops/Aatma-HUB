@@ -24,7 +24,6 @@ const [open, setOpen] = useState(false);
 
   const navItems = [
     { label: "Home", icon: Home, href: "/" },
-    { label: "Catalog", icon: LayoutGrid, href: "/catalog" },
     { label: "Wallet", icon: Wallet, href: "/wallet" },
     { label: "Orders", icon: History, href: "/orders" },
   ];
