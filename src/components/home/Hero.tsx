@@ -2,10 +2,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight, Zap, Trophy, ShieldCheck, Gamepad2 } from "lucide-react";
 import Image from "next/image";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export function Hero() {
-  const heroImg = PlaceHolderImages.find(img => img.id === 'hero-bg') || PlaceHolderImages[0];
 
   return (
     <section className="relative w-full py-20 lg:py-32 overflow-hidden border-b border-white/5">

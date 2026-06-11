@@ -10,7 +10,6 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 interface FeaturedGamesProps {
   category: string;
@@ -87,12 +86,10 @@ console.log("PRODUCTS", filtered);
 
 function GameIconCard({ game }: { game: any }) {
   const brand = getBrandConfig(game.name, game.category);
-  const placeholder = PlaceHolderImages.find(p => p.id === game.image);
   const minPrice = game.packages?.length > 0 ? Math.min(...game.packages.map((p: any) => p.price)) : 0;
-  const logoSrc = game.imageUrl?.startsWith('http') ? game.imageUrl : (placeholder?.imageUrl || '/logos/default.png');
+  const logoSrc = game.imageUrl || '/logos/default.png';
   const [imgError, setImgError] = useState(false);
   console.log("CARD:", game.id, "IMAGE:", game.image, "LOGO:", logoSrc);
-  console.log("CARD:", game.id, "IMAGE:", game.image, "PLACEHOLDER:", placeholder?.imageUrl, "LOGO:", logoSrc);
   // Logic for dynamic initials if image is missing
   const getInitials = (name: string) => {
     return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();

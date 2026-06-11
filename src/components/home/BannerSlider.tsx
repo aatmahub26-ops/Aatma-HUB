@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, Zap, Gift, Trophy } from "lucide-react";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Skeleton } from "@/components/ui/skeleton";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -85,8 +84,7 @@ export function BannerSlider() {
       >
         <CarouselContent>
           {banners.map((banner) => {
-            const placeholder = PlaceHolderImages.find(img => img.id === banner.id);
-            const imgUrl = banner.imageUrl || placeholder?.imageUrl;
+            const imgUrl = banner.imageUrl;
             
             return (
               <CarouselItem key={banner.id}>
