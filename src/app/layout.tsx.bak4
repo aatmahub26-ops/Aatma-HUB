@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { FirebaseErrorListener } from "@/components/FirebaseErrorListener";
 import { AnnouncementBanner } from "@/components/layout/AnnouncementBanner";
@@ -86,6 +87,7 @@ export default function RootLayout({
           <AuthProvider>
             <ThemeProvider>
               <CartProvider>
+                <WishlistProvider>
                   <FirebaseErrorListener />
                  
                   <div className="flex flex-col min-h-screen relative z-10 bg-background text-foreground">
@@ -97,6 +99,7 @@ export default function RootLayout({
                     <FloatingSupport />
                   </div>
                   <Toaster />
+                </WishlistProvider>
               </CartProvider>
             </ThemeProvider>
           </AuthProvider>

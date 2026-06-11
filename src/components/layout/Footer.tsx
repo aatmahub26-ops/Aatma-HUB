@@ -49,7 +49,7 @@ export function Footer() {
               <h3 className="font-headline font-bold text-white uppercase tracking-widest text-[10px] opacity-60">Squad Hub</h3>
               <ul className="space-y-2">
                 <li><Link href="/dashboard" className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors">My Dashboard</Link></li>
-                <li><Link href="/referral" className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors">Recruit Squad</Link></li>
+                <li><Link href="/wallet">Aatma Coins</Link></li>
                 <li><Link href="/leaderboard" className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors">Leaderboards</Link></li>
                 <li><Link href="/community" className="text-xs font-medium text-muted-foreground hover:text-primary transition-colors">Community</Link></li>
               </ul>

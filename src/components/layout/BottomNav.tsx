@@ -102,7 +102,6 @@ const [open, setOpen] = useState(false);
 
 <ProfileMenuItem href="/wallet" icon={Wallet} label="Wallet" onClick={() => setOpen(false)} />
 
-<ProfileMenuItem href="/referral" icon={Gift} label="Referral" onClick={() => setOpen(false)} />
 
 <ProfileMenuItem href="/orders" icon={History} label="Orders" onClick={() => setOpen(false)} />
 

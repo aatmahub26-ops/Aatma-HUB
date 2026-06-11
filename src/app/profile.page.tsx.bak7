@@ -110,9 +110,53 @@ export default function ProfilePage() {
 
                  <div className="grid grid-cols-2 gap-4">
                     <StatsCard label="Vault Points" value={loyaltyPoints.toLocaleString()} icon={Coins} color="text-yellow-500" />
+                    <StatsCard label="Squad Master" value={`₹${profile?.totalReferralEarnings?.toFixed(2) || 0}`} icon={Gift} color="text-primary" />
                  </div>
 
+                 <Card className="bg-primary/5 border-primary/20 p-6 rounded-2xl space-y-4">
+                    <div className="flex items-center gap-3">
+                       <ShieldCheck className="h-5 w-5 text-primary" />
+                       <span className="text-xs font-bold uppercase tracking-widest">Account Integrity</span>
+                    </div>
+                    <p className="text-[10px] text-muted-foreground uppercase font-bold leading-relaxed">Identity verification is mandatory for B2B features and squadron yields.</p>
+                    <Button className="w-full h-10 font-bold uppercase text-[9px] tracking-widest" asChild>
+                       <Link href="/kyc">{kycStatus === 'Approved' ? 'Audit Status' : 'Initiate Verification'}</Link>
+                    </Button>
+                 </Card>
+                 
+                 <Button variant="destructive" className="w-full h-12 font-bold uppercase tracking-widest text-xs rounded-xl" onClick={logout}>
+                    <LogOut className="mr-2 h-4 w-4" /> Terminate Session
+                 </Button>
+              </div>
 
+              {/* Right Side: Settings & VIP Intel */}
+              <div className="lg:col-span-8 space-y-6">
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Card className="bg-card border-white/5 relative overflow-hidden">
+                       <div className="absolute top-0 right-0 p-6 opacity-5 rotate-12"><Trophy className="h-20 w-20" /></div>
+                       <CardHeader className="bg-white/5 border-b border-white/5">
+                          <CardTitle className="text-sm font-headline font-bold uppercase tracking-widest flex items-center gap-2">
+                             <Star className="h-4 w-4 text-primary fill-current" />
+                             VIP Intelligence
+                          </CardTitle>
+                       </CardHeader>
+                       <CardContent className="p-6 space-y-4">
+                          <div className="flex justify-between items-center">
+                             <span className="text-[10px] font-bold text-muted-foreground uppercase">Point Multiplier</span>
+                             <span className="text-sm font-bold text-white">x{currentRank.pointMultiplier} Dispatch Yield</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                             <span className="text-[10px] font-bold text-muted-foreground uppercase">Support</span>
+                             <span className="text-sm font-bold text-primary">{currentRank.threshold > 10000 ? 'PRIORITY' : 'STANDARD'}</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                             <span className="text-[10px] font-bold text-muted-foreground uppercase">Escalation Goal</span>
+                             <span className="text-sm font-bold text-white">₹{lifetimeAmount.toLocaleString()} / ₹{getUserRank(lifetimeAmount + 1).threshold.toLocaleString()}</span>
+                          </div>
+                       </CardContent>
+                    </Card>
+
+                 </div>
 
                  <Card className="bg-card border-white/5">
                     <CardHeader className="border-b border-white/5 bg-white/5">

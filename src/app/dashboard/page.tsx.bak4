@@ -78,6 +78,17 @@ export default function DashboardOverview() {
                </div>
             </div>
          </Link>
+         <Link href="/referral" className="glass-card p-6 rounded-3xl border-secondary/20 group hover:bg-secondary/5 transition-all">
+            <div className="flex items-center justify-between">
+               <div>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Squad Earnings</p>
+                  <p className="text-3xl font-headline font-bold text-white mt-1">₹{referralStats.earnings.toFixed(2)}</p>
+               </div>
+               <div className="h-12 w-12 rounded-2xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+                  <Gift className="h-6 w-6" />
+               </div>
+            </div>
+         </Link>
          <Link href="/orders" className="glass-card p-6 rounded-3xl border-white/5 group hover:bg-white/5 transition-all">
             <div className="flex items-center justify-between">
                <div>

@@ -10,6 +10,7 @@ export function QuickActions() {
   const actions = [
     { label: "Add Money", icon: Wallet, href: "/wallet/add", color: "text-green-500", bg: "bg-green-500/10" },
     { label: "My Orders", icon: History, href: "/orders", color: "text-primary", bg: "bg-primary/10" },
+    { label: "Invite Squad", icon: Users, href: "/referral", color: "text-blue-400", bg: "bg-blue-400/10" },
     { label: "Redeem", icon: Ticket, href: "/catalog", color: "text-orange-500", bg: "bg-orange-500/10" },
   ];
 

@@ -24,7 +24,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { title: "My Orders", icon: History, url: "/orders" },
     { title: "Wallet & Funds", icon: Wallet, url: "/wallet" },
     { title: "Personalization", icon: Palette, url: "/settings/personalization" },
-    { title: "Identity Verification", icon: ShieldCheck, url: "/kyc" },
     { title: "Refer & Earn", icon: Gift, url: "/referral" },
     { title: "Profile Settings", icon: UserCircle, url: "/profile" },
   ];

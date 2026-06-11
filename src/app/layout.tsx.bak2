@@ -3,11 +3,14 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { PersonalizationProvider } from "@/context/PersonalizationContext";
 import { FirebaseErrorListener } from "@/components/FirebaseErrorListener";
 import { AnnouncementBanner } from "@/components/layout/AnnouncementBanner";
 import { FloatingSupport } from "@/components/layout/FloatingSupport";
 import { BottomNav } from "@/components/layout/BottomNav";
+import { WelcomeEventPopup } from "@/components/modals/WelcomeEventPopup";
 
 import Script from "next/script";
 
@@ -83,10 +86,13 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Poppins:wght@400;600;700&family=Orbitron:wght@400;700&family=Exo+2:wght@400;700&family=Rajdhani:wght@400;700&family=Outfit:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased min-h-screen relative">
+        <PersonalizationProvider>
           <AuthProvider>
             <ThemeProvider>
               <CartProvider>
+                <WishlistProvider>
                   <FirebaseErrorListener />
+                  <WelcomeEventPopup />
                  
                   <div className="flex flex-col min-h-screen relative z-10 bg-background text-foreground">
                     <AnnouncementBanner />
@@ -97,9 +103,11 @@ export default function RootLayout({
                     <FloatingSupport />
                   </div>
                   <Toaster />
+                </WishlistProvider>
               </CartProvider>
             </ThemeProvider>
           </AuthProvider>
+        </PersonalizationProvider>
         <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       </body>
     </html>
