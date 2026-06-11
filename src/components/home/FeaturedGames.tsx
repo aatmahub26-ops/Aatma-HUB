@@ -15,31 +15,23 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 interface FeaturedGamesProps {
   category: string;
 }
-
 const isItemInCategory = (item: any, target: string) => {
   const itemCat = item.category?.toUpperCase();
   const targetCat = target?.toUpperCase();
 
-  if (targetCat === 'COMING SOON') return !!item.isComingSoon;
+  if (targetCat === "COMING SOON") return !!item.isComingSoon;
 
   switch (targetCat) {
-    case 'MOBILE LEGENDS':
-      return itemCat === 'MOBILE LEGENDS';
-    case 'BATTLEGROUNDS':
-      return itemCat === 'BATTLEGROUNDS' || itemCat === 'BATTLE ROYALE' || itemCat === 'SHOOTER GAMES';
-    case 'MOBA GAMES':
-      return itemCat === 'MOBA GAMES' || itemCat === 'ANIME & RPG' || itemCat === 'SUPERCELL';
-    case 'OTT SERVICES':
-      return itemCat === 'OTT SERVICES';
-    case 'SOCIAL SERVICES':
-      return itemCat === 'SOCIAL SERVICES';
-    case 'GIFT CARDS':
-      return itemCat === 'GIFT CARDS';
+    case "MOBILE GAMES":
+      return itemCat === "MOBILE GAMES";
+
+    case "SOCIAL SERVICES":
+      return itemCat === "SOCIAL SERVICES";
+
     default:
       return false;
   }
 };
-
 function getBrandConfig(name: string, category: string) {
   const n = name.toLowerCase();
   if (n.includes('mobile legends')) return { color: 'from-blue-600/20 to-blue-900/10' };
@@ -107,7 +99,7 @@ export function FeaturedGames({ category }: FeaturedGamesProps) {
 
   return (
     <div className="relative w-full">
-      <div className="flex items-start gap-1.5 md:gap-3 overflow-x-auto pb-2 scrollbar-hide scroll-smooth">
+      <div className="flex items-start gap-3 md:gap-4 overflow-x-auto pb-2 scrollbar-hide scroll-smooth">
         {products.map((game) => (
           <GameIconCard key={game.id} game={game} />
         ))}
@@ -129,7 +121,7 @@ function GameIconCard({ game }: { game: any }) {
   };
 
   return (
-    <div className="group/card block transition-all duration-300 w-[120px] md:w-[180px] flex-shrink-0">
+    <div className="group/card block transition-all duration-300 w-[150px] md:w-[200px] flex-shrink-0">
       <Link href={`/catalog/${game.id}`} className="space-y-1 text-center">
         <div 
           className={`relative aspect-square w-full rounded-lg overflow-hidden border border-white/5 bg-card flex items-center justify-center transition-all duration-500 shadow-sm hover:border-primary/40`}

@@ -63,18 +63,8 @@ export default function Home() {
         <div className="container mx-auto px-4 py-1 space-y-6">
            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               <div className="lg:col-span-8 space-y-6">
-                 
-                <MarketplaceSection title="Mobile Legends" icon={Globe} category="MOBILE LEGENDS" badge="GLOBAL" accentColor="text-blue-400" />
-
-<MarketplaceSection title="Battlegrounds" icon={Trophy} category="BATTLEGROUNDS" badge="PRO" accentColor="text-orange-400" />
-
-<MarketplaceSection title="MOBA Games" icon={Swords} category="MOBA GAMES" badge="ELITE" accentColor="text-cyan-400" />
-
-<MarketplaceSection title="OTT Services" icon={Tv} category="OTT SERVICES" badge="VIP" accentColor="text-red-500" />
-
+<MarketplaceSection title="Mobile Games" icon={Globe} category="MOBILE GAMES" badge="GAMES" accentColor="text-blue-400" />
 <MarketplaceSection title="Social Services" icon={Smartphone} category="SOCIAL SERVICES" badge="GROWTH" accentColor="text-pink-400" />
-
-<MarketplaceSection title="Gift Cards" icon={CreditCard} category="GIFT CARDS" badge="CODE" accentColor="text-orange-300" />
 
 
               </div>

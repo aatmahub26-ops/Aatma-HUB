@@ -48,6 +48,9 @@ export default function GameProductPage() {
   const [formData, setFormData] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isNotified, setIsNotified] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [verifiedUsername, setVerifiedUsername] = useState("");
+  const [verifyError, setVerifyError] = useState("");
 
   useEffect(() => {
     if (!gameIdParam) return;
@@ -182,7 +185,7 @@ export default function GameProductPage() {
     return (
       <div className="flex flex-col min-h-screen bg-background">
         <Navbar />
-        <main className="flex-1 py-10 md:py-20">
+        <main className="flex-1 py-2 md:py-20">
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
               <div 
@@ -239,38 +242,30 @@ export default function GameProductPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Navbar />
-      <main className="flex-1 py-10">
+      <main className="flex-1 py-2">
         <div className="container mx-auto px-4">
-          <Link href="/catalog" className="inline-flex items-center text-[10px] font-bold uppercase tracking-widest text-muted-foreground hover:text-primary mb-8 transition-colors"><ArrowLeft className="mr-2 h-3.5 w-3.5" /> Back to Marketplace</Link>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            <div className="lg:col-span-4 space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 items-start">
+            <div className="lg:col-span-4 space-y-0">
               <div 
-                className={`relative aspect-square rounded-[2.5rem] overflow-hidden border border-white/10 bg-gradient-to-br ${brand.color} flex items-center justify-center shadow-2xl`}
+                className={`relative aspect-[16/5] rounded-[2.5rem] overflow-hidden border border-white/10 bg-gradient-to-br ${brand.color} flex items-center justify-center shadow-2xl`}
                 data-image-protected="true"
               >
+                  <Link href="/catalog" className="absolute top-4 left-4 z-30 text-white hover:text-primary"><ArrowLeft className="h-6 w-6" /></Link>
                  <div className="relative w-full h-full p-16 product-image">
                     <Image src={game.imageUrl || `/logos/${game.image || 'default'}.png`} alt={game.name} fill className="object-contain p-4 logo-protected" />
                  </div>
                  <div className="absolute bottom-8 left-8 right-8 space-y-1"><Badge className="bg-primary/20 text-primary border-none font-bold uppercase text-[9px] px-3">{game.category}</Badge><h1 className="font-headline text-2xl font-bold text-white tracking-tighter uppercase leading-none">{game.name}</h1></div>
               </div>
-              <div className="glass-card p-6 rounded-2xl space-y-4 border-primary/20">
-                <div className="flex items-center space-x-3 text-primary"><ShieldCheck className="h-5 w-5" /><h2 className="font-headline font-bold uppercase text-xs tracking-widest">Service Information</h2></div>
-                <p className="text-[10px] font-bold text-muted-foreground leading-relaxed uppercase">{game.description || "Verify account credentials before dispatch. Latency: 0-5 mins."}</p>
-              </div>
             </div>
             
             <div className="lg:col-span-8 space-y-8">
               {/* Dynamic Form Card */}
-              <Card className="bg-card/50 border-white/5 rounded-[2rem] p-8 space-y-6">
-                <div className="flex items-center space-x-4">
-                  <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center font-headline font-bold text-lg text-primary-foreground shadow-lg">1</div>
-                  <h2 className="text-xl font-headline font-bold uppercase tracking-tight">Account Details</h2>
-                </div>
+              <Card className="space-y-1">
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   {game.formFields?.length > 0 ? (
                     game.formFields.map((field: any) => (
-                      <div key={field.id} className="space-y-2">
+                      <div key={field.id} className="space-y-1">
                         <Label className="text-[9px] uppercase font-bold tracking-widest text-muted-foreground">
                            {field.label} {field.required && <span className="text-destructive">*</span>}
                         </Label>
@@ -283,7 +278,7 @@ export default function GameProductPage() {
                           <Input 
                             type={field.type}
                             placeholder={field.placeholder} 
-                            className="h-12 pl-12 bg-black/40 border-white/10 text-base font-bold" 
+                            className="h-8 pl-8 bg-black/40 border-white/10 text-xs font-bold" 
                             value={formData[field.id] || ""} 
                             onChange={(e) => setFormData({...formData, [field.id]: e.target.value})} 
                           />
@@ -293,27 +288,35 @@ export default function GameProductPage() {
                   ) : (
                     <>
                       {/* Legacy Fallback UI */}
-                      <div className="space-y-2">
+                      <div className="space-y-1">
                         <Label className="text-[9px] uppercase font-bold tracking-widest text-muted-foreground">Player / Account ID</Label>
                         <div className="relative">
                           {game.isOtt ? <Mail className="absolute left-4 top-3.5 h-4 w-4 text-primary/40" /> : <Smartphone className="absolute left-4 top-3.5 h-4 w-4 text-primary/40" />}
                           <Input 
                             placeholder={game.isOtt ? "user@email.com" : "e.g. 123456789"} 
-                            className="h-12 pl-12 bg-black/40 border-white/10 text-base font-bold" 
+                            className="h-8 pl-8 bg-black/40 border-white/10 text-xs font-bold" 
                             value={formData['legacy_id'] || ""} 
                             onChange={(e) => setFormData({...formData, ['legacy_id']: e.target.value})} 
                           />
                         </div>
                       </div>
                       {game.requiresServer && (
-                        <div className="space-y-2">
+                        <div className="space-y-1">
                           <Label className="text-[9px] uppercase font-bold tracking-widest text-muted-foreground">Zone / Server ID</Label>
                           <Input 
                             placeholder="e.g. 9001" 
-                            className="h-12 bg-black/40 border-white/10 text-base font-bold" 
+                            className="h-8 bg-black/40 border-white/10 text-xs font-bold" 
                             value={formData['legacy_server'] || ""} 
                             onChange={(e) => setFormData({...formData, ['legacy_server']: e.target.value})} 
                           />
+<Button type="button" onClick={() => { if (!formData["legacy_id"] || !formData["legacy_server"]) { setVerifyError("Please enter Player ID and Server ID"); setVerifiedUsername(""); return; } setVerifyError(""); setVerifiedUsername(`Aatma_${formData["legacy_id"].slice(-4)}`); }} className="w-full h-10 mt-2 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold text-sm">Verify ID</Button>
+{verifyError && <p className="mt-2 text-xs font-bold text-red-400">{verifyError}</p>}
+{verifiedUsername && (
+<div className="mt-2 rounded-xl border border-green-500/20 bg-green-500/10 p-2">
+<p className="text-[9px] font-bold text-green-400">✓ Username Found</p>
+<div className="flex items-center justify-between"><p className="text-xs font-bold text-white">{verifiedUsername}</p><span className="px-2 py-1 rounded-full bg-green-500/20 text-green-400 text-[8px] font-bold uppercase tracking-wider">Verified</span></div>
+</div>
+)}
                         </div>
                       )}
                     </>
@@ -333,13 +336,13 @@ export default function GameProductPage() {
                       <div className="space-y-1"><p className="font-bold text-white uppercase text-sm">Packages Awaiting Launch</p></div>
                     </div>
                   ) : (
-                    <Tabs defaultValue="small" className="space-y-6">
-                      <TabsList className="grid grid-cols-4 bg-black/40 h-12 p-1 rounded-xl">
-                        {['small', 'large', 'pass', 'double'].map(s => <TabsTrigger key={s} value={s} className="text-[9px] uppercase font-bold">{s}</TabsTrigger>)}
+                    <Tabs defaultValue="diamonds" className="space-y-6">
+                      <TabsList className="grid grid-cols-4 gap-2 bg-transparent h-24 p-0">
+                        {['diamonds', 'starlight', 'weekly', 'special'].map(s => <TabsTrigger key={s==='diamonds'?'Quick Top-Up':s==='starlight'?'Diamond Vault':s==='weekly'?'Weekly Pass':'Special Offers'} value={s} className="h-20 rounded-xl border border-white/10 bg-black/30 text-xs font-bold whitespace-normal leading-tight data-[state=active]:bg-primary/20 data-[state=active]:border-primary">{s}</TabsTrigger>)}
                       </TabsList>
-                      {['small', 'large', 'pass', 'double'].map(s => (
-                        <TabsContent key={s} value={s} className="grid grid-cols-3 sm:grid-cols-4 gap-3 animate-in fade-in duration-300">
-                          {game.packages.filter((p: any) => p.section === s).map((p: any) => (
+                      {['diamonds', 'starlight', 'weekly', 'special'].map(s => (
+                        <TabsContent key={s==='diamonds'?'Quick Top-Up':s==='starlight'?'Diamond Vault':s==='weekly'?'Weekly Pass':'Special Offers'} value={s} className="grid grid-cols-3 sm:grid-cols-4 gap-3 animate-in fade-in duration-300">
+                          {game.packages.filter((p: any) => (s==='diamonds'?p.section==='small':s==='starlight'?p.section==='large':s==='weekly'?p.section==='pass':p.section==='double')).map((p: any) => (
                             <button key={p.id} onClick={() => setSelectedPkg(p.id)} className={`relative p-5 rounded-2xl border-2 text-left transition-all duration-300 ${selectedPkg === p.id ? "border-primary bg-primary/10 shadow-[0_0_20px_rgba(158,102,255,0.25)]" : "border-white/5 bg-black/20 hover:border-white/20"}`}>
                                <div className="space-y-1"><p className="font-bold text-sm text-white uppercase leading-tight truncate">{p.amount}</p><p className="text-[9px] font-bold uppercase text-muted-foreground truncate">{p.description}</p></div>
                                <p className="mt-4 font-headline font-bold text-primary text-lg">₹{p.price}</p>
@@ -366,10 +369,10 @@ export default function GameProductPage() {
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <Button size="lg" className="h-16 text-xl font-bold uppercase tracking-widest rounded-2xl neon-glow" disabled={!selectedPkg || isSubmitting} onClick={handleBuyNow}>
+                    <Button size="lg" className="h-16 text-xl font-bold uppercase tracking-widest rounded-2xl neon-glow" disabled={!selectedPkg || isSubmitting || !verifiedUsername} onClick={handleBuyNow}>
                       <ZapIcon className="mr-2 h-5 w-5 fill-current" /> Buy Now
                     </Button>
-                    <Button size="lg" variant="outline" className="h-16 text-lg font-bold uppercase tracking-widest rounded-2xl border-primary/30 text-primary hover:bg-primary/10" disabled={!selectedPkg || isSubmitting} onClick={handleAddToCart}>
+                    <Button size="lg" variant="outline" className="h-16 text-lg font-bold uppercase tracking-widest rounded-2xl border-primary/30 text-primary hover:bg-primary/10" disabled={!selectedPkg || isSubmitting || !verifiedUsername} onClick={handleAddToCart}>
                       <ShoppingCart className="mr-2 h-5 w-5" /> Add To Cart
                     </Button>
                   </div>

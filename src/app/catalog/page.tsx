@@ -117,7 +117,7 @@ function ProductCard({ game }: { game: any }) {
   
   // Resolve image from placeholder registry if not a direct URL
   const placeholder = PlaceHolderImages.find(p => p.id === game.image);
-  const resolvedImg = game.imageUrl?.startsWith('http') ? game.imageUrl : (placeholder?.imageUrl || '/logos/default.png');
+  const resolvedImg = '/logos/' + game.image + '.webp';
 
   return (
     <Link href={`/catalog/${game.id}`} className={`group relative bg-card rounded-[2rem] overflow-hidden border border-white/5 hover:border-primary/50 transition-all duration-500 hover:-translate-y-1 shadow-xl ${game.isComingSoon ? 'opacity-70' : ''}`}>

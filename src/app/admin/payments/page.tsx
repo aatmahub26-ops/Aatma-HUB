@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CreditCard, Smartphone, Landmark, CheckCircle as CheckCircle2, AlertCircle, History, TrendingUp, DollarSign, Loader2, Search, Zap, XCircle } from "lucide-react";
 import { useState, useEffect } from "react";
-import { collection, onSnapshot, query, orderBy, where } from "firebase/firestore";
+import { collection, onSnapshot, query, orderBy, doc, updateDoc, getDoc, addDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Input } from "@/components/ui/input";
 
@@ -35,6 +35,57 @@ export default function AdminPayments() {
       unsubRec();
     };
   }, []);
+
+  const handleApproveDeposit = async (req: any) => {
+    try {
+      const userRef = doc(db, "users", req.userId);
+      const userSnap = await getDoc(userRef);
+      if (!userSnap.exists()) return;
+
+      if (req.status === "Approved") {
+        alert("Deposit already approved");
+        return;
+      }
+
+      const currentBalance = userSnap.data().walletBalance || 0;
+
+      await updateDoc(userRef, {
+        walletBalance: currentBalance + Number(req.amount)
+      });
+
+      await updateDoc(doc(db, "deposit_requests", req.id), {
+        status: "Approved"
+      });
+
+      await addDoc(collection(db, "transactions"), {
+        userId: req.userId,
+        amount: req.amount,
+        type: "deposit",
+        description: "Manual UPI Deposit Approved",
+        createdAt: new Date().toISOString()
+      });
+
+      alert("Deposit Approved Successfully");
+    } catch (e) {
+      console.error(e);
+      alert("Approval Failed");
+    }
+  };
+
+
+
+  const handleRejectDeposit = async (req: any) => {
+    try {
+      await updateDoc(doc(db, "deposit_requests", req.id), {
+        status: "Rejected"
+      });
+
+      alert("Deposit Rejected");
+    } catch (e) {
+      console.error(e);
+      alert("Reject Failed");
+    }
+  };
 
   const filteredTransactions = transactions.filter(t => 
     t.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -98,6 +149,29 @@ export default function AdminPayments() {
           </Card>
         ))}
       </div>
+
+      <Card className="bg-card border-white/5">
+        <CardHeader>
+          <CardTitle className="text-sm font-bold uppercase">Pending Deposit Requests</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {requests.filter(r => r.status === "pending" || r.status === "Pending").map((req) => (
+              <div key={req.id} className="border border-white/10 rounded-lg p-4 flex flex-col gap-2">
+                <div><b>User:</b> {req.userEmail}</div>
+                <div><b>Amount:</b> ₹{req.amount}</div>
+                <div><b>UTR:</b> {req.utr}</div>
+                <div><b>Sender:</b> {req.senderName || "-"}</div>
+                {req.proofUrl && (
+                  <a href={req.proofUrl} target="_blank" className="text-primary underline">View Screenshot</a>
+                )}
+                <Button onClick={() => handleApproveDeposit(req)}>Approve Deposit</Button>
+                <Button variant="destructive" onClick={() => handleRejectDeposit(req)}>Reject Deposit</Button>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       <Card className="bg-card border-white/5">
         <CardHeader className="flex flex-row items-center justify-between border-b border-white/5 pb-4 bg-white/5">

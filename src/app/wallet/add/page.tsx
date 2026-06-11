@@ -11,8 +11,9 @@ import { Info, ArrowLeft, Loader2, QrCode, Copy, CreditCard, Smartphone, CheckCi
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { db } from "@/lib/firebase";
+import { db, storage } from "@/lib/firebase";
 import { collection, addDoc, serverTimestamp, doc, onSnapshot } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
@@ -28,6 +29,8 @@ export default function AddFundsPage() {
   const router = useRouter();
   const [amount, setAmount] = useState("");
   const [txnId, setTxnId] = useState("");
+  const [senderName, setSenderName] = useState("");
+  const [proofFile, setProofFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [step, setStep] = useState(1);
   const [method, setMethod] = useState<"razorpay" | "phonepe" | "manual" | null>(null);
@@ -102,7 +105,7 @@ export default function AddFundsPage() {
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error: any) {
-      toast({ title: "API Error", description: error.message, variant: "destructive" });
+      toast({ title: "API Error", description: JSON.stringify(error), variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }
@@ -144,19 +147,25 @@ export default function AddFundsPage() {
 
     setIsSubmitting(true);
     try {
+      console.log("DEBUG: proofUrl generated");
+      console.log("DEBUG: before addDoc");
       await addDoc(collection(db, "deposit_requests"), {
         userId: user.uid,
         userEmail: user.email,
         amount: numAmount,
         utr: txnId,
+      senderName: senderName,
         paymentMethod: "Manual UPI",
         status: "pending",
-        createdAt: new Date().toISOString(),
+        createdAt: serverTimestamp(),
       });
+      console.log("DEBUG: after addDoc");
       toast({ title: "Request Submitted", description: "Audit squad will verify in 5-30 mins." });
-      router.push("/wallet");
+      setIsSubmitting(false);
+      window.location.href = "/wallet";
     } catch (error: any) {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
+      console.error("ADD MONEY ERROR:", error);
+      toast({ title: "Error", description: JSON.stringify(error), variant: "destructive" });
       setIsSubmitting(false);
     }
   };
@@ -216,8 +225,6 @@ export default function AddFundsPage() {
                     <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Payment Method</Label>
                     <div className="grid grid-cols-1 gap-4">
                       {[
-                        { id: 'razorpay', title: 'Instant Auto-Recharge', desc: 'Cards, Netbanking, UPI', icon: Zap, color: 'text-primary' },
-                        { id: 'phonepe', title: 'PhonePe Direct', desc: 'High Speed Gateway', icon: Smartphone, color: 'text-blue-500' },
                         { id: 'manual', title: 'Manual UPI Transfer', desc: 'Verify via UTR Payload', icon: QrCode, color: 'text-orange-500' }
                       ].map((m) => (
                         <button 
@@ -277,6 +284,8 @@ export default function AddFundsPage() {
                   </div>
                   <form onSubmit={handleManualSubmit} className="space-y-6">
                     <div className="space-y-2">
+                      <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Sender Name</Label>
+                      <Input placeholder="Enter Sender Name" className="h-14 bg-black/40 border-white/10 text-center" value={senderName} onChange={(e) => setSenderName(e.target.value)} required />
                       <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">UTR / Transaction ID</Label>
                       <Input placeholder="Enter 12 digit Ref No." className="h-14 bg-black/40 border-white/10 text-center font-mono text-xl tracking-widest" value={txnId} onChange={(e) => setTxnId(e.target.value)} required />
                     </div>

@@ -128,6 +128,7 @@ function CheckoutContent() {
 
   const handleCheckout = async () => {
     if (!profile || !pkg || !user) return;
+    if (!playerGameId || !playerServerId) { toast({ title: "Verification Required", description: "Please verify Player ID before checkout.", variant: "destructive" }); return; }
     
     if (profile.walletBalance < finalPrice) {
       toast({ title: "Insufficient Funds", description: "Please load funds to your wallet.", variant: "destructive" });
@@ -224,7 +225,7 @@ if (referrerSnap && referrerSnap.exists()) {
           fulfillmentType: product.fulfillmentType || "auto",
           category: product.category || "Games",
           createdAt: new Date().toISOString(),
-          paymentMethod: 'wallet'
+          paymentMethod: paymentMethod
         };
         transaction.set(orderRef, orderData);
 
@@ -362,7 +363,6 @@ if (referrerSnap && referrerSnap.exists()) {
                   <h3 className="text-[10px] font-headline font-bold uppercase tracking-widest text-muted-foreground px-4">Payment Protocol</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                      <PaymentMethodCard id="wallet" icon={Wallet} title="Hub Wallet" desc={`₹${profile?.walletBalance?.toFixed(2) || "0.00"}`} active={paymentMethod === 'wallet'} onClick={() => setPaymentMethod('wallet')} />
-                     <PaymentMethodCard id="upi" icon={QrCode} title="UPI Transfer" desc="Manual Audit" active={paymentMethod === 'upi'} onClick={() => setPaymentMethod('upi')} />
                   </div>
                </div>
             </div>
@@ -392,7 +392,7 @@ if (referrerSnap && referrerSnap.exists()) {
 
                      <Button 
                         className="w-full h-16 md:h-20 font-bold neon-glow text-lg md:text-xl uppercase tracking-tighter rounded-[1.5rem]" 
-                        disabled={isProcessing || (profile?.walletBalance || 0) < finalPrice}
+                        disabled={isProcessing || (paymentMethod === 'wallet' && (profile?.walletBalance || 0) < finalPrice)}
                         onClick={handleCheckout}
                      >
                         {isProcessing ? <Loader2 className="animate-spin mr-2 h-6 w-6" /> : <><Send className="mr-3 h-6 w-6" /> Place Order</>}
