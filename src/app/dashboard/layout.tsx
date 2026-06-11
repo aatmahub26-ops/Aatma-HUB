@@ -20,10 +20,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const menuItems = [
     { title: "Overview", icon: LayoutDashboard, url: "/dashboard" },
-    { title: "AI Assistant", icon: Bot, url: "/ai-assistant" },
     { title: "My Orders", icon: History, url: "/orders" },
     { title: "Wallet & Funds", icon: Wallet, url: "/wallet" },
-    { title: "Personalization", icon: Palette, url: "/settings/personalization" },
     { title: "Refer & Earn", icon: Gift, url: "/referral" },
     { title: "Profile Settings", icon: UserCircle, url: "/profile" },
   ];

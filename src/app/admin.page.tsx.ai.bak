@@ -226,6 +226,13 @@ export default function AdminDashboard() {
                  </div>
                  <Switch checked={liveActivityEnabled} onCheckedChange={() => { setLiveActivityEnabled(!liveActivityEnabled); toggleSetting("live_activity", liveActivityEnabled, "isEnabled", "Live Activity"); }} />
                </div>
+               <div className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5">
+                 <div className="space-y-1">
+                   <p className="text-xs font-bold uppercase text-white">AI Assistant</p>
+                   <p className="text-[10px] text-muted-foreground">Persistent LLM Interface</p>
+                 </div>
+                 <Switch checked={aiAssistantEnabled} onCheckedChange={() => { setAiAssistantEnabled(!aiAssistantEnabled); toggleSetting("ai_assistant", aiAssistantEnabled, "isEnabled", "AI Assistant"); }} />
+               </div>
                <div className="flex items-center justify-between p-4 rounded-xl bg-destructive/10 border border-destructive/30">
                  <div className="space-y-1">
                    <p className="text-xs font-bold uppercase text-destructive">Test Mode</p>

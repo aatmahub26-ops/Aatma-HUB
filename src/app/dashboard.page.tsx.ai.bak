@@ -215,6 +215,20 @@ export default function DashboardOverview() {
 
            <LiveActivityFeed />
            
+           <Card className="bg-primary/5 border-primary/20 rounded-[2rem] overflow-hidden">
+              <CardHeader className="bg-primary/10 border-b border-primary/10">
+                 <CardTitle className="text-xs font-headline font-bold uppercase tracking-widest flex items-center gap-2">
+                    <Bot className="h-4 w-4 text-primary" />
+                    AI Assistant
+                 </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6 space-y-4">
+                 <p className="text-[10px] text-muted-foreground leading-relaxed font-medium">Aatma AI can track orders, suggest meta builds, and resolve wallet queries instantly.</p>
+                 <Button className="w-full h-10 font-bold uppercase tracking-widest text-[10px] neon-glow" asChild>
+                    <Link href="/ai-assistant">Initialize Chat</Link>
+                 </Button>
+              </CardContent>
+           </Card>
         </div>
       </div>
     </div>
