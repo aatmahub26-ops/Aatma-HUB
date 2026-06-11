@@ -87,8 +87,6 @@ export default function AdminUsers() {
             processedBy: adminProfile?.email || "Admin HUB"
           });
         } else {
-          const currentPoints = userSnap.data().loyaltyPoints || 0;
-          transaction.update(userRef, { loyaltyPoints: currentPoints + (amount * multiplier) });
         }
 
         logAdminAction({
@@ -285,11 +283,8 @@ function UserTable({ users, onWalletAdjust, onToggleBan }: { users: any[], onWal
                              <div className="flex items-center gap-1.5 font-bold text-green-500 text-xs">
                                <Wallet className="h-3 w-3" /> ₹{user.walletBalance?.toFixed(2) || "0.00"}
                              </div>
-                             <div className="flex items-center gap-1.5 font-bold text-yellow-500 text-[10px] uppercase">
-                               <Star className="h-3 w-3 fill-current" /> {user.loyaltyPoints || 0} Points
-                             </div>
-                          </div>
-                        </td>
+                              </div>
+                          </td>
                         <td className="px-8 py-6">
                           <Badge className={`${user.role === 'admin' ? 'bg-destructive' : user.role === 'reseller' ? 'bg-primary' : 'bg-muted'} text-white border-none text-[8px] font-bold uppercase tracking-widest h-4`}>
                              {user.role?.toUpperCase() || 'PLAYER'}

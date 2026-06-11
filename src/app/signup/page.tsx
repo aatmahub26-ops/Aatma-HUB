@@ -24,7 +24,6 @@ export default function SignupPage() {
     email: "",
     password: "",
     confirmPassword: "",
-    referralCode: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -45,22 +44,6 @@ export default function SignupPage() {
 
     setIsLoading(true);
     try {
-      // 1. Verify Referral Code if provided
-      let referrerUid = null;
-      if (formData.referralCode) {
-        try {
-          const q = query(collection(db, "users"), where("referralCode", "==", formData.referralCode.trim().toUpperCase()));
-          const snap = await getDocs(q);
-          if (snap.empty) {
-            toast({ title: "Invalid Protocol", description: "The referral code entered does not exist in the HUB.", variant: "destructive" });
-            setIsLoading(false);
-            return;
-          }
-          referrerUid = snap.docs[0].id;
-        } catch (ruleError: any) {
-          console.error("Referral check permission error:", ruleError);
-        }
-      }
 
       // 2. Create the Auth user
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
@@ -75,29 +58,15 @@ export default function SignupPage() {
         walletBalance: 0,
         totalDeposits: 0,
         totalSpent: 0,
-        totalReferralEarnings: 0,
         totalOrders: 0,
         lifetimeRechargeAmount: 0,
         currentRank: "Recruit",
-        referralCode: `AATMA-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-        referredBy: referrerUid,
         role: "user",
         kycStatus: "None",
         kycVerified: false,
         createdAt: serverTimestamp(),
       });
 
-      // 4. Create internal referral record if linked
-      if (referrerUid) {
-        await setDoc(doc(db, "referrals", user.uid), {
-          referrerId: referrerUid,
-          userId: user.uid,
-          username: formData.firstName,
-          earnings: 0,
-          status: "Active",
-          date: new Date().toISOString()
-        });
-      }
 
       toast({ title: "Protocol Initialized", description: "Account created successfully. Welcome to Aatma HUB." });
       
@@ -191,51 +160,6 @@ export default function SignupPage() {
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
                   />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="referralCode">Referral Code (Optional)</Label>
-                <div className="relative">
-                  <Users className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input 
-                    id="referralCode" 
-                    placeholder="AATMA-XXXXXX" 
-                    className="pl-10 h-12 bg-black/40 border-white/10 uppercase font-mono"
-                    value={formData.referralCode}
-                    onChange={(e) => setFormData({...formData, referralCode: e.target.value})}
-                  />
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                      id="password" 
-                      type="password" 
-                      className="pl-10 h-12 bg-black/40 border-white/10"
-                      required
-                      value={formData.password}
-                      onChange={(e) => setFormData({...formData, password: e.target.value})}
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                      id="confirmPassword" 
-                      type="password" 
-                      className="pl-10 h-12 bg-black/40 border-white/10"
-                      required
-                      value={formData.confirmPassword}
-                      onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-                    />
-                  </div>
                 </div>
               </div>
 

@@ -37,7 +37,6 @@ console.log("ROLE =", role);
     { title: "Coupons", icon: Tag, url: "/admin/marketing/coupons", roles: ['admin'] },
     { title: "Payments", icon: CreditCard, url: "/admin/payments", roles: ['admin', 'staff'] },
     { title: "Catalog", icon: Gamepad2, url: "/admin/catalog", roles: ['admin', 'staff'] },
-    { title: "Referrals", icon: Gift, url: "/admin/referrals", roles: ['admin', 'staff'] },
     { title: "Users", icon: Users, url: "/admin/users", roles: ['admin', 'staff', 'support'] },
     { title: "Recharges", icon: Wallet, url: "/admin/recharges", roles: ['admin', 'staff', 'support'] },
 { title: "Media", icon: Database, url: "/admin/media", roles: ['admin'] },

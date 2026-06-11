@@ -12,7 +12,6 @@ interface UserProfile {
   firstName: string;
   lastName: string;
   walletBalance: number;
-  referralCode: string;
   country?: string;
   currency?: string;
   preferredLanguage?: string;
@@ -21,7 +20,6 @@ interface UserProfile {
   resellerLevel?: string;
   role?: string;
   lifetimeRechargeAmount?: number;
-  totalReferralEarnings?: number;
   totalOrders?: number;
   totalSpent?: number;
   totalDeposits?: number;

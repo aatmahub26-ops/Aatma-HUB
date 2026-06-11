@@ -24,12 +24,6 @@ export default function LeaderboardPage() {
       limit(10)
     );
 
-    // Top Referrers sorted by actual yields
-    const qReferrers = query(
-      collection(db, "users"),
-      orderBy("totalReferralEarnings", "desc"),
-      limit(10)
-    );
 
     const unsubSpenders = onSnapshot(qSpenders, (snap) => {
       setTopSpenders(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
@@ -113,41 +107,6 @@ export default function LeaderboardPage() {
                </div>
             </TabsContent>
 
-            <TabsContent value="referrers" className="animate-in fade-in slide-in-from-bottom-4">
-               <div className="grid grid-cols-1 gap-4">
-                  {loading ? (
-                    <div className="py-20 text-center"><Loader2 className="h-10 w-10 animate-spin mx-auto text-primary" /></div>
-                  ) : topReferrers.length === 0 ? (
-                    <Card className="bg-primary/5 border-primary/20 p-12 text-center">
-                       <Award className="h-16 w-16 text-primary mx-auto mb-4" />
-                       <h2 className="text-2xl font-headline font-bold uppercase mb-2">Squad Leaderboard Resetting</h2>
-                       <p className="text-muted-foreground">The Squad Master leaderboard is calculated at the end of each month based on verified referral recharges.</p>
-                    </Card>
-                  ) : topReferrers.map((user, i) => (
-                    <Card key={user.id} className={`bg-card/50 border-white/5 overflow-hidden group hover:border-primary/30 transition-all ${i < 3 ? 'border-primary/20' : ''}`}>
-                       <CardContent className="p-4 md:p-6 flex items-center justify-between">
-                          <div className="flex items-center gap-6">
-                             <div className="w-8 text-xl font-headline font-bold text-muted-foreground italic">
-                                #{i + 1}
-                             </div>
-                             <Avatar className={`h-12 w-12 md:h-16 md:w-16 border-2 border-white/5`}>
-                                <AvatarImage src={`https://picsum.photos/seed/ref-${user.id}/64/64`} />
-                                <AvatarFallback>{user.firstName?.charAt(0)}</AvatarFallback>
-                             </Avatar>
-                             <div>
-                                <h3 className="font-bold text-lg md:text-xl">{user.firstName}</h3>
-                                <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-widest">Top Referrals</p>
-                             </div>
-                          </div>
-                          <div className="text-right">
-                             <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Earnings</p>
-                             <p className="text-xl md:text-2xl font-headline font-bold text-green-500">₹{user.totalReferralEarnings?.toLocaleString() || '0'}</p>
-                          </div>
-                       </CardContent>
-                    </Card>
-                  ))}
-               </div>
-            </TabsContent>
           </Tabs>
 
           <div className="mt-20 glass-card p-8 rounded-[2rem] border-dashed border-white/10 text-center">

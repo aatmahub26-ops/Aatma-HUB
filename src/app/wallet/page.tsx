@@ -20,7 +20,6 @@ export default function WalletPage() {
   const [transactions, setTransactions] = useState<any[]>([]);
   const [recharges, setRecharges] = useState<any[]>([]);
   const [loadingData, setLoadingData] = useState(true);
-  const [isRedeeming, setIsRedeeming] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -65,58 +64,9 @@ export default function WalletPage() {
     }
   }, [user]);
 
-  const handleRedeemPoints = async () => {
-     if (!user || !profile) return;
-     const points = (profile as any).loyaltyPoints || 0;
-     if (points < 1000) {
-        toast({ title: "Insufficient Points", description: "Minimum 1,000 points required for redemption.", variant: "destructive" });
-        return;
-     }
-
-     setIsRedeeming(true);
-     const redeemAmount = Math.floor(points / 100) * 1; // 100 points = ₹1 logic
-     
-     try {
-        await runTransaction(db, async (transaction) => {
-           const userRef = doc(db, "users", user.uid);
-           const userSnap = await transaction.get(userRef);
-           if (!userSnap.exists()) throw "User not found";
-
-           const currentPoints = userSnap.data().loyaltyPoints || 0;
-           const currentBalance = userSnap.data().walletBalance || 0;
-
-           if (currentPoints < 1000) throw "Points balance conflict";
-
-           // 1. Convert Points to Balance
-           transaction.update(userRef, {
-              loyaltyPoints: currentPoints - (redeemAmount * 100),
-              walletBalance: currentBalance + redeemAmount
-           });
-
-           // 2. Log Transaction
-           const txnRef = doc(collection(db, "transactions"));
-           transaction.set(txnRef, {
-              userId: user.uid,
-              amount: redeemAmount,
-              type: "Credit",
-              description: `Loyalty Redemption: ${redeemAmount * 100} Points`,
-              date: new Date().toISOString(),
-              createdAt: new Date().toISOString(),
-              status: "Success"
-           });
-        });
-
-        toast({ title: "Redemption Successful", description: `₹${redeemAmount} added to your hub wallet.` });
-     } catch (e: any) {
-        toast({ title: "Redemption Failed", description: e.toString(), variant: "destructive" });
-     } finally {
-        setIsRedeeming(false);
-     }
-  };
 
   if (loading) return <div className="h-screen flex items-center justify-center bg-background"><Loader2 className="animate-spin text-primary" /></div>;
 
-  const loyaltyPoints = (profile as any)?.loyaltyPoints || 0;
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -131,7 +81,6 @@ export default function WalletPage() {
               </div>
               <div className="flex gap-4">
                  <Button variant="outline" asChild className="h-12 border-white/5 rounded-2xl font-bold uppercase tracking-widest text-[10px]">
-                    <Link href="/referral"><Gift className="mr-2 h-4 w-4 text-primary" /> Squad Earnings</Link>
                  </Button>
                  <Button asChild className="h-12 px-10 font-bold neon-glow-hover transition-all rounded-2xl">
                     <Link href="/wallet/add">
@@ -161,18 +110,6 @@ export default function WalletPage() {
                  value={`₹${profile?.totalDeposits?.toLocaleString() || "0"}`} 
                  icon={PiggyBank} 
                  color="text-green-500" 
-               />
-               <StatCard 
-                 label="Loyalty HUB Points" 
-                 value={loyaltyPoints.toLocaleString()} 
-                 icon={Star} 
-                 color="text-yellow-500" 
-               />
-               <StatCard 
-                 label="Squad Earnings" 
-                 value={`₹${profile?.totalReferralEarnings?.toLocaleString() || "0"}`} 
-                 icon={CreditCard} 
-                 color="text-primary" 
                />
             </div>
 
@@ -273,30 +210,6 @@ export default function WalletPage() {
               </div>
 
               <div className="lg:col-span-4 space-y-6">
-                 <Card className="bg-primary/5 border-primary/20 rounded-[2rem] p-8 space-y-6 overflow-hidden relative">
-                    <div className="absolute top-0 right-0 p-4 opacity-5 rotate-12">
-                       <Coins className="h-32 w-32" />
-                    </div>
-                    <div className="relative z-10">
-                       <h3 className="font-headline font-bold uppercase text-lg text-white mb-2">Points Vault</h3>
-                       <p className="text-xs text-muted-foreground leading-relaxed uppercase font-bold tracking-tight mb-6">
-                          Convert your gaming loyalty into real liquidity. 1,000 Points = ₹10 credit.
-                       </p>
-                       <div className="bg-black/40 p-5 rounded-2xl border border-white/5 mb-6 text-center">
-                          <p className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Redeemable Credit</p>
-                          <p className="text-3xl font-headline font-bold text-primary">₹{Math.floor(loyaltyPoints / 100)}</p>
-                       </div>
-                       <Button 
-                        variant="default" 
-                        className="w-full h-14 neon-glow font-bold uppercase text-[10px] tracking-widest rounded-xl"
-                        disabled={loyaltyPoints < 1000 || isRedeeming}
-                        onClick={handleRedeemPoints}
-                       >
-                          {isRedeeming ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Zap className="h-4 w-4 mr-2 fill-current" />}
-                          Redeem Points
-                       </Button>
-                    </div>
-                 </Card>
               </div>
             </div>
           </div>

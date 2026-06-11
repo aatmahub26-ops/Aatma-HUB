@@ -62,64 +62,6 @@ export default function CartPage() {
           totalOrders: increment(items.length)
         });
 
-        // 2. Process Referral Commission (B2B Tiered or Retail 0.5%)
-        if (userData.referredBy) {
-          const referrerRef = doc(db, "users", userData.referredBy);
-          const referrerSnap = await transaction.get(referrerRef);
-          
-          if (referrerSnap.exists()) {
-             const rData = referrerSnap.data();
-             let rate = 0.005; // Default Retail 0.5%
-
-             // If referrer is a Reseller, apply tier rate
-             if (rData.role === 'reseller') {
-                const tier = RESELLER_LEVELS.find(l => l.level === (rData.resellerLevel || 'Bronze'));
-                rate = (tier?.commission || 1) / 100;
-             }
-
-             const commission = totalPrice * rate;
-
-             transaction.update(referrerRef, {
-               walletBalance: increment(commission),
-               totalReferralEarnings: increment(commission)
-             });
-
-             // Log referral event
-             const refLogRef = doc(collection(db, "referrals"), `${user.uid}_${Date.now()}`);
-             transaction.set(refLogRef, {
-               referrerId: userData.referredBy,
-               userId: user.uid,
-               username: userData.firstName,
-               earnings: commission,
-               status: "Active",
-               date: new Date().toISOString()
-             });
-
-             // Create a commission record for reseller audit
-             if (rData.role === 'reseller') {
-                const commRef = doc(collection(db, "reseller_commissions"));
-                transaction.set(commRef, {
-                   resellerId: userData.referredBy,
-                   amount: commission,
-                   orderTotal: totalPrice,
-                   recruitId: user.uid,
-                   recruitName: userData.firstName,
-                   createdAt: new Date().toISOString()
-                });
-             }
-
-             // Log transaction for squad master
-             const refTxnRef = doc(collection(db, "wallet_transactions"));
-             transaction.set(refTxnRef, {
-               userId: userData.referredBy,
-               amount: commission,
-               type: "Credit",
-               description: `Squad Yield: Purchase by ${userData.firstName}`,
-               date: new Date().toISOString(),
-               status: "Success"
-             });
-          }
-        }
 
         // 3. Create Orders
         for (const item of items) {

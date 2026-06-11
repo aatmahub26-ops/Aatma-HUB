@@ -49,8 +49,6 @@ export default function ProfilePage() {
 
   const lifetimeAmount = profile?.lifetimeRechargeAmount || 0;
   const currentRank = getUserRank(lifetimeAmount);
-  const kycStatus = (profile as any)?.kycStatus || "None";
-  const loyaltyPoints = (profile as any)?.loyaltyPoints || 0;
 
   const handleUpdate = async () => {
     setIsSaving(true);
@@ -99,9 +97,6 @@ export default function ProfilePage() {
                                    VIP {currentRank.vipTier}
                                 </Badge>
                              </div>
-                             {kycStatus === 'Approved' && (
-                               <Badge variant="outline" className="border-green-500/20 text-green-500 bg-green-500/5 text-[8px] font-bold">VERIFIED IDENTITY</Badge>
-                             )}
                           </div>
                           <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-tighter mt-4 opacity-50">UUID: {user.uid.substring(0, 16)}</p>
                        </div>
@@ -109,7 +104,6 @@ export default function ProfilePage() {
                  </Card>
 
                  <div className="grid grid-cols-2 gap-4">
-                    <StatsCard label="Vault Points" value={loyaltyPoints.toLocaleString()} icon={Coins} color="text-yellow-500" />
                  </div>
 
 
@@ -182,8 +176,8 @@ function StatsCard({ label, value, icon: Icon, color }: { label: string, value: 
           <div className="overflow-hidden">
              <p className="text-[8px] font-bold uppercase text-muted-foreground tracking-widest truncate">{label}</p>
              <p className="text-sm font-headline font-bold text-white uppercase truncate">{value}</p>
-          </div>
-       </div>
-    </Card>
-  );
+            </div>
+         </div>
+      </Card>
+   );
 }

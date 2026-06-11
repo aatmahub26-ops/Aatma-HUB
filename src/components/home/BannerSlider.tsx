@@ -35,15 +35,6 @@ const DEFAULT_BANNERS = [
     badge: "Instant",
     icon: Zap
   },
-  {
-    id: "banner-referral",
-    title: "SQUAD YIELD PROGRAM",
-    subtitle: "Earn lifetime recurring commissions on dispatches.",
-    cta: "Recruit Now",
-    link: "/referral",
-    badge: "Rewards",
-    icon: Gift
-  }
 ];
 
 export function BannerSlider() {

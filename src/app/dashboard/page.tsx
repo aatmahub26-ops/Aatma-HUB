@@ -18,7 +18,6 @@ import { FirestorePermissionError } from '@/firebase/errors';
 export default function DashboardOverview() {
   const { user, profile } = useAuth();
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
-  const [referralStats, setReferralStats] = useState({ count: 0, earnings: 0 });
   const [loadingOrders, setLoadingOrders] = useState(true);
 
   useEffect(() => {
@@ -36,24 +35,12 @@ export default function DashboardOverview() {
         setLoadingOrders(false);
       });
 
-      const qRefs = query(collection(db, "referrals"), where("referrerId", "==", user.uid));
-      const unsubscribeRefs = onSnapshot(qRefs, (snapshot) => {
-        const refs = snapshot.docs.map(doc => doc.data());
-        const earnings = refs.reduce((sum, r) => sum + (r.earnings || 0), 0);
-        setReferralStats({ count: refs.length, earnings });
-      }, async (serverError) => {
-        const permissionError = new FirestorePermissionError({
-          path: `referrals?referrerId=${user.uid}`,
-          operation: 'list',
-        });
-        errorEmitter.emit('permission-error', permissionError);
-      });
 
-      return () => {
-        unsubscribeOrders();
-        unsubscribeRefs();
-      };
-    }
+        return () => {
+          unsubscribeOrders();
+        };
+      }
+    
   }, [user]);
 
   const lifetimeAmount = profile?.lifetimeRechargeAmount || 0;
@@ -167,51 +154,6 @@ export default function DashboardOverview() {
         </div>
 
         <div className="lg:col-span-4 space-y-6">
-           {/* KYC Status Node */}
-           <Card className="bg-card border-white/5 rounded-[2rem] overflow-hidden">
-              <CardHeader className="bg-white/5 border-b border-white/5">
-                 <CardTitle className="text-xs font-headline font-bold uppercase tracking-widest flex items-center gap-2">
-                    <ShieldCheck className="h-4 w-4 text-primary" />
-                    Security & Identity
-                 </CardTitle>
-              </CardHeader>
-              <CardContent className="p-6 space-y-6">
-                 <div className="flex items-center justify-between">
-                    <div>
-                       <p className="text-[10px] font-bold uppercase text-muted-foreground mb-1">KYC STATUS</p>
-                       <div className="flex items-center gap-2">
-                          {kycStatus === 'Approved' ? (
-                            <div className="flex items-center gap-2 text-green-500 font-bold text-xs">
-                               <CheckCircle2 className="h-4 w-4" />
-                               <span>VERIFIED NODE</span>
-                            </div>
-                          ) : kycStatus === 'Pending' ? (
-                            <div className="flex items-center gap-2 text-orange-500 font-bold text-xs">
-                               <Clock className="h-4 w-4 animate-pulse" />
-                               <span>AUDIT IN PROGRESS</span>
-                            </div>
-                          ) : (
-                            <div className="flex items-center gap-2 text-destructive font-bold text-xs">
-                               <AlertTriangle className="h-4 w-4" />
-                               <span>NOT VERIFIED</span>
-                            </div>
-                          )}
-                       </div>
-                    </div>
-                    {kycStatus === 'Approved' && (
-                      <div className="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/20">
-                         <ShieldCheck className="h-5 w-5 text-green-500" />
-                      </div>
-                    )}
-                 </div>
-                 
-                 {kycStatus !== 'Approved' && (
-                    <Button className="w-full h-10 font-bold uppercase text-[9px] tracking-widest rounded-xl" asChild>
-                       <Link href="/kyc">{kycStatus === 'Pending' ? 'View Submission' : 'Initialize KYC'}</Link>
-                    </Button>
-                 )}
-              </CardContent>
-           </Card>
 
            <LiveActivityFeed />
            

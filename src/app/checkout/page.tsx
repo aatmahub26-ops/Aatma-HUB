@@ -151,54 +151,7 @@ function CheckoutContent() {
 
         // 1. VIP & Points Logic
         const rank = getUserRank(currentLifetime);
-        const pointsEarned = Math.floor((finalPrice / 10) * rank.pointMultiplier);
 
-       let referrerRef = null;
-let referrerSnap = null;
-
-if (userData.referredBy) {
-  referrerRef = doc(db, "users", userData.referredBy);
-  referrerSnap = await transaction.get(referrerRef);
-}
-
-// 2. Update User Profile
-transaction.update(userRef, {
-  walletBalance: currentBalance - finalPrice,
-  totalSpent: currentSpent + finalPrice,
-  totalOrders: increment(1),
-  loyaltyPoints: increment(pointsEarned)
-});
-
-// 3. Process Referral Payout
-if (referrerSnap && referrerSnap.exists()) {
-          
-          if (referrerSnap.exists()) {
-             const rData = referrerSnap.data();
-             let rate = 0.005; // 0.5% default
-
-             if (rData.role === 'reseller') {
-                const tier = RESELLER_LEVELS.find(l => l.level === (rData.resellerLevel || 'Bronze'));
-                rate = (tier?.commission || 1) / 100;
-             }
-
-             const commission = finalPrice * rate;
-             transaction.update(referrerRef, {
-               walletBalance: increment(commission),
-               totalReferralEarnings: increment(commission)
-             });
-
-             // Log referral yield
-             const refLogRef = doc(collection(db, "referrals"), `${user.uid}_${Date.now()}`);
-             transaction.set(refLogRef, {
-               referrerId: userData.referredBy,
-               userId: user.uid,
-               username: userData.firstName,
-               earnings: commission,
-               status: "Active",
-               date: new Date().toISOString()
-             });
-          }
-        }
 
         if (appliedCoupon) {
           const usageRef = doc(db, "users", user.uid, "user_coupons", appliedCoupon.id);
@@ -218,7 +171,6 @@ if (referrerSnap && referrerSnap.exists()) {
           originalPrice: pkg.price,
           discount: discount,
           couponCode: appliedCoupon?.id || null,
-          pointsEarned,
           playerGameId,
           playerServerId: playerServerId || null,
           status: "Pending",
@@ -240,19 +192,9 @@ if (referrerSnap && referrerSnap.exists()) {
           reference: orderRef.id
         });
 
-        // Trigger Notification
-        const notifRef = doc(collection(db, "notifications"));
-        transaction.set(notifRef, {
-           userId: user.uid,
-           type: "achievement",
-           title: "Loyalty Points Synchronized",
-           message: `You earned ${pointsEarned} HUB Points for this dispatch!`,
-           read: false,
-           createdAt: new Date().toISOString()
-        });
       });
 
-      toast({ title: "Order Successful", description: "Dispatch protocol initiated. Loyalty points synced." });
+      toast({ title: "Order Successful", description: "Dispatch protocol initiated. Order created successfully." });
       router.push("/orders");
     } catch (e: any) {
       toast({ title: "Checkout Error", description: e.message, variant: "destructive" });
