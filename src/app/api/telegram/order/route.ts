@@ -1,0 +1,62 @@
+import { NextResponse } from "next/server";
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+
+    const token = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId = process.env.TELEGRAM_CHAT_ID;
+
+    if (!token || !chatId) {
+      return NextResponse.json(
+        { error: "Telegram env missing" },
+        { status: 500 }
+      );
+    }
+
+    const text = `🛒 NEW ORDER
+
+👤 User: ${body.userName}
+🎮 Product: ${body.productName}
+📦 Package: ${body.packageName}
+💰 Amount: ₹${body.price}
+🆔 Player ID: ${body.playerGameId}
+🌐 Server ID: ${body.playerServerId || "N/A"}
+📄 Order ID: ${body.orderId}`;
+
+    await fetch(
+      `https://api.telegram.org/bot${token}/sendMessage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text,
+          reply_markup: {
+            inline_keyboard: [
+              [
+                {
+                  text: "✅ Approve",
+                  callback_data: `approve_${body.orderId}`
+                },
+                {
+                  text: "❌ Reject",
+                  callback_data: `reject_${body.orderId}`
+                }
+              ]
+            ]
+          }
+        }),
+      }
+    );
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Telegram send failed" },
+      { status: 500 }
+    );
+  }
+}

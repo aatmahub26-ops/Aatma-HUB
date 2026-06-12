@@ -71,3 +71,4 @@ node_modules/
 .next/
 .next/
 .env.local
+firebase-admin.json

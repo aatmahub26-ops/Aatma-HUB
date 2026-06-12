@@ -137,6 +137,7 @@ function CheckoutContent() {
 
     setIsProcessing(true);
     try {
+    let createdOrderId = "";
       await runTransaction(db, async (transaction) => {
         const userRef = doc(db, "users", user.uid);
         const userSnap = await transaction.get(userRef);
@@ -159,6 +160,7 @@ function CheckoutContent() {
         }
 
         const orderRef = doc(collection(db, "orders"));
+        createdOrderId = orderRef.id;
         const orderData = {
           userId: user.uid,
           userEmail: user.email,
@@ -172,6 +174,7 @@ function CheckoutContent() {
           discount: discount,
           couponCode: appliedCoupon?.id || null,
           playerGameId,
+        playerServerId,
           playerServerId: playerServerId || null,
           status: "Pending",
           fulfillmentType: product.fulfillmentType || "auto",
@@ -195,6 +198,20 @@ function CheckoutContent() {
       });
 
       toast({ title: "Order Successful", description: "Dispatch protocol initiated. Order created successfully." });
+      await fetch("/api/telegram/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userName: user.displayName || user.email || "User",
+          productName: product.name,
+          packageName: pkg.amount,
+          price: finalPrice,
+          playerGameId,
+        playerServerId,
+          orderId: createdOrderId
+        })
+      });
+
       router.push("/orders");
     } catch (e: any) {
       toast({ title: "Checkout Error", description: e.message, variant: "destructive" });
